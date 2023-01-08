@@ -1,0 +1,628 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261F7D03292473EF002D3010 /* SkyBlueWXApp.swift */; };
+		261F7D06292473EF002D3010 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261F7D05292473EF002D3010 /* WeatherView.swift */; };
+		261F7D08292473F3002D3010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 261F7D07292473F3002D3010 /* Assets.xcassets */; };
+		261F7D0B292473F3002D3010 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 261F7D0A292473F3002D3010 /* Preview Assets.xcassets */; };
+		261F7D15292473F3002D3010 /* SkyBlueWXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261F7D14292473F3002D3010 /* SkyBlueWXTests.swift */; };
+		261F7D1F292473F3002D3010 /* SkyBlueWXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261F7D1E292473F3002D3010 /* SkyBlueWXUITests.swift */; };
+		261F7D21292473F3002D3010 /* SkyBlueWXUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261F7D20292473F3002D3010 /* SkyBlueWXUITestsLaunchTests.swift */; };
+		261F7D2E292475F3002D3010 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261F7D2D292475F3002D3010 /* Logic.swift */; };
+		262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262952F5292480FE00F2A644 /* AddsGetData.swift */; };
+		4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */; };
+		4E1E0B94294E9AF5006F51E7 /* airdata.db in Resources */ = {isa = PBXBuildFile; fileRef = 4E1E0B93294E9AF5006F51E7 /* airdata.db */; };
+		4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDB529529AF9005D8DC3 /* MainView.swift */; };
+		4E83BDB829529BB0005D8DC3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDB729529BB0005D8DC3 /* SettingsView.swift */; };
+		4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */; };
+		4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBB29529BE0005D8DC3 /* ListView.swift */; };
+		4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBD29529E1A005D8DC3 /* MapView.swift */; };
+		4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */; };
+		4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDC1295AA250005D8DC3 /* Core.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		261F7D11292473F3002D3010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 261F7CF8292473EF002D3010 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 261F7CFF292473EF002D3010;
+			remoteInfo = SkyBlueWX;
+		};
+		261F7D1B292473F3002D3010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 261F7CF8292473EF002D3010 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 261F7CFF292473EF002D3010;
+			remoteInfo = SkyBlueWX;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		261F7D00292473EF002D3010 /* SkyBlueWX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyBlueWX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		261F7D03292473EF002D3010 /* SkyBlueWXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyBlueWXApp.swift; sourceTree = "<group>"; };
+		261F7D05292473EF002D3010 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		261F7D07292473F3002D3010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		261F7D0A292473F3002D3010 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		261F7D10292473F3002D3010 /* SkyBlueWXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyBlueWXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		261F7D14292473F3002D3010 /* SkyBlueWXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyBlueWXTests.swift; sourceTree = "<group>"; };
+		261F7D1A292473F3002D3010 /* SkyBlueWXUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyBlueWXUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		261F7D1E292473F3002D3010 /* SkyBlueWXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyBlueWXUITests.swift; sourceTree = "<group>"; };
+		261F7D20292473F3002D3010 /* SkyBlueWXUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyBlueWXUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		261F7D2D292475F3002D3010 /* Logic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
+		262952F5292480FE00F2A644 /* AddsGetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddsGetData.swift; sourceTree = "<group>"; };
+		4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMgmt.swift; sourceTree = "<group>"; };
+		4E1E0B93294E9AF5006F51E7 /* airdata.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = airdata.db; sourceTree = "<group>"; };
+		4E83BDB529529AF9005D8DC3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		4E83BDB729529BB0005D8DC3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPlanView.swift; sourceTree = "<group>"; };
+		4E83BDBB29529BE0005D8DC3 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		4E83BDBD29529E1A005D8DC3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
+		4E83BDC1295AA250005D8DC3 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		261F7CFD292473EF002D3010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		261F7D0D292473F3002D3010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		261F7D17292473F3002D3010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		261F7CF7292473EF002D3010 = {
+			isa = PBXGroup;
+			children = (
+				261F7D02292473EF002D3010 /* SkyBlueWX */,
+				261F7D13292473F3002D3010 /* SkyBlueWXTests */,
+				261F7D1D292473F3002D3010 /* SkyBlueWXUITests */,
+				261F7D01292473EF002D3010 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		261F7D01292473EF002D3010 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				261F7D00292473EF002D3010 /* SkyBlueWX.app */,
+				261F7D10292473F3002D3010 /* SkyBlueWXTests.xctest */,
+				261F7D1A292473F3002D3010 /* SkyBlueWXUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		261F7D02292473EF002D3010 /* SkyBlueWX */ = {
+			isa = PBXGroup;
+			children = (
+				4E83BDC1295AA250005D8DC3 /* Core.swift */,
+				4E83BDB529529AF9005D8DC3 /* MainView.swift */,
+				4E83BDB729529BB0005D8DC3 /* SettingsView.swift */,
+				4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */,
+				4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */,
+				4E83BDBB29529BE0005D8DC3 /* ListView.swift */,
+				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
+				4E1E0B93294E9AF5006F51E7 /* airdata.db */,
+				261F7D03292473EF002D3010 /* SkyBlueWXApp.swift */,
+				261F7D05292473EF002D3010 /* WeatherView.swift */,
+				4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */,
+				261F7D2D292475F3002D3010 /* Logic.swift */,
+				261F7D07292473F3002D3010 /* Assets.xcassets */,
+				261F7D09292473F3002D3010 /* Preview Content */,
+				262952F5292480FE00F2A644 /* AddsGetData.swift */,
+			);
+			path = SkyBlueWX;
+			sourceTree = "<group>";
+		};
+		261F7D09292473F3002D3010 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				261F7D0A292473F3002D3010 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		261F7D13292473F3002D3010 /* SkyBlueWXTests */ = {
+			isa = PBXGroup;
+			children = (
+				261F7D14292473F3002D3010 /* SkyBlueWXTests.swift */,
+			);
+			path = SkyBlueWXTests;
+			sourceTree = "<group>";
+		};
+		261F7D1D292473F3002D3010 /* SkyBlueWXUITests */ = {
+			isa = PBXGroup;
+			children = (
+				261F7D1E292473F3002D3010 /* SkyBlueWXUITests.swift */,
+				261F7D20292473F3002D3010 /* SkyBlueWXUITestsLaunchTests.swift */,
+			);
+			path = SkyBlueWXUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		261F7CFF292473EF002D3010 /* SkyBlueWX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 261F7D24292473F3002D3010 /* Build configuration list for PBXNativeTarget "SkyBlueWX" */;
+			buildPhases = (
+				261F7CFC292473EF002D3010 /* Sources */,
+				261F7CFD292473EF002D3010 /* Frameworks */,
+				261F7CFE292473EF002D3010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SkyBlueWX;
+			productName = SkyBlueWX;
+			productReference = 261F7D00292473EF002D3010 /* SkyBlueWX.app */;
+			productType = "com.apple.product-type.application";
+		};
+		261F7D0F292473F3002D3010 /* SkyBlueWXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 261F7D27292473F3002D3010 /* Build configuration list for PBXNativeTarget "SkyBlueWXTests" */;
+			buildPhases = (
+				261F7D0C292473F3002D3010 /* Sources */,
+				261F7D0D292473F3002D3010 /* Frameworks */,
+				261F7D0E292473F3002D3010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				261F7D12292473F3002D3010 /* PBXTargetDependency */,
+			);
+			name = SkyBlueWXTests;
+			productName = SkyBlueWXTests;
+			productReference = 261F7D10292473F3002D3010 /* SkyBlueWXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		261F7D19292473F3002D3010 /* SkyBlueWXUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 261F7D2A292473F3002D3010 /* Build configuration list for PBXNativeTarget "SkyBlueWXUITests" */;
+			buildPhases = (
+				261F7D16292473F3002D3010 /* Sources */,
+				261F7D17292473F3002D3010 /* Frameworks */,
+				261F7D18292473F3002D3010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				261F7D1C292473F3002D3010 /* PBXTargetDependency */,
+			);
+			name = SkyBlueWXUITests;
+			productName = SkyBlueWXUITests;
+			productReference = 261F7D1A292473F3002D3010 /* SkyBlueWXUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		261F7CF8292473EF002D3010 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					261F7CFF292473EF002D3010 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					261F7D0F292473F3002D3010 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 261F7CFF292473EF002D3010;
+					};
+					261F7D19292473F3002D3010 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 261F7CFF292473EF002D3010;
+					};
+				};
+			};
+			buildConfigurationList = 261F7CFB292473EF002D3010 /* Build configuration list for PBXProject "SkyBlueWX" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 261F7CF7292473EF002D3010;
+			productRefGroup = 261F7D01292473EF002D3010 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				261F7CFF292473EF002D3010 /* SkyBlueWX */,
+				261F7D0F292473F3002D3010 /* SkyBlueWXTests */,
+				261F7D19292473F3002D3010 /* SkyBlueWXUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		261F7CFE292473EF002D3010 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				261F7D0B292473F3002D3010 /* Preview Assets.xcassets in Resources */,
+				4E1E0B94294E9AF5006F51E7 /* airdata.db in Resources */,
+				261F7D08292473F3002D3010 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		261F7D0E292473F3002D3010 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		261F7D18292473F3002D3010 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		261F7CFC292473EF002D3010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E83BDB829529BB0005D8DC3 /* SettingsView.swift in Sources */,
+				261F7D06292473EF002D3010 /* WeatherView.swift in Sources */,
+				4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */,
+				4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */,
+				4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */,
+				261F7D2E292475F3002D3010 /* Logic.swift in Sources */,
+				4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */,
+				4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */,
+				262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */,
+				4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */,
+				261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */,
+				4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		261F7D0C292473F3002D3010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				261F7D15292473F3002D3010 /* SkyBlueWXTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		261F7D16292473F3002D3010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				261F7D1F292473F3002D3010 /* SkyBlueWXUITests.swift in Sources */,
+				261F7D21292473F3002D3010 /* SkyBlueWXUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		261F7D12292473F3002D3010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 261F7CFF292473EF002D3010 /* SkyBlueWX */;
+			targetProxy = 261F7D11292473F3002D3010 /* PBXContainerItemProxy */;
+		};
+		261F7D1C292473F3002D3010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 261F7CFF292473EF002D3010 /* SkyBlueWX */;
+			targetProxy = 261F7D1B292473F3002D3010 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		261F7D22292473F3002D3010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		261F7D23292473F3002D3010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		261F7D25292473F3002D3010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SkyBlueWX/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		261F7D26292473F3002D3010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SkyBlueWX/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		261F7D28292473F3002D3010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkyBlueWX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SkyBlueWX";
+			};
+			name = Debug;
+		};
+		261F7D29292473F3002D3010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkyBlueWX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SkyBlueWX";
+			};
+			name = Release;
+		};
+		261F7D2B292473F3002D3010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWXUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SkyBlueWX;
+			};
+			name = Debug;
+		};
+		261F7D2C292473F3002D3010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWXUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SkyBlueWX;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		261F7CFB292473EF002D3010 /* Build configuration list for PBXProject "SkyBlueWX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				261F7D22292473F3002D3010 /* Debug */,
+				261F7D23292473F3002D3010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		261F7D24292473F3002D3010 /* Build configuration list for PBXNativeTarget "SkyBlueWX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				261F7D25292473F3002D3010 /* Debug */,
+				261F7D26292473F3002D3010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		261F7D27292473F3002D3010 /* Build configuration list for PBXNativeTarget "SkyBlueWXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				261F7D28292473F3002D3010 /* Debug */,
+				261F7D29292473F3002D3010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		261F7D2A292473F3002D3010 /* Build configuration list for PBXNativeTarget "SkyBlueWXUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				261F7D2B292473F3002D3010 /* Debug */,
+				261F7D2C292473F3002D3010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 261F7CF8292473EF002D3010 /* Project object */;
+}
