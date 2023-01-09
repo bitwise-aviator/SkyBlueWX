@@ -5,6 +5,8 @@
 //  Created by Daniel Sanchez on 11/15/22.
 //
 
+/// API source: Aviation Weather server (NOAA)
+
 import Foundation
 
 // Function queries, gets, interprets, and returns WX reports.

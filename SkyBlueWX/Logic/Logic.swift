@@ -88,7 +88,17 @@ struct Wind {
         }
     }
     var speed : Int
-    var gusts : Int? // Leave as nil if no gusts are recorded.
+    // Gusts: Leave as nil if no gusts are recorded.
+    var gusts : Int? {
+        didSet {
+            if let _ = gusts {
+                // If gusts are reported as below the wind speed, this is likely an error -> Report no gusts.
+                if gusts! < speed {
+                    gusts = nil
+                }
+            }
+        }
+    }
     var hasGusts : Bool {
         get {
             gusts != nil
@@ -97,9 +107,9 @@ struct Wind {
     
     // Initializer for winds.
     init(direction _direction: Int?, speed _speed: Int, gusts _gusts: Int?) {
-        self.direction = _direction
-        self.speed = _speed
-        self.gusts = _gusts
+        self.direction = _direction // API reports in degrees true.
+        self.speed = _speed // API reports in knots.
+        self.gusts = _gusts // API reports in knots.
     }
     
     func toText() -> String {

@@ -116,21 +116,13 @@
 		261F7D02292473EF002D3010 /* SkyBlueWX */ = {
 			isa = PBXGroup;
 			children = (
-				4E83BDC1295AA250005D8DC3 /* Core.swift */,
-				4E83BDB529529AF9005D8DC3 /* MainView.swift */,
-				4E83BDB729529BB0005D8DC3 /* SettingsView.swift */,
-				4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */,
-				4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */,
-				4E83BDBB29529BE0005D8DC3 /* ListView.swift */,
-				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
-				4E1E0B93294E9AF5006F51E7 /* airdata.db */,
+				4E2B02E2296B9DD50003004E /* API */,
+				4E2B02E1296B9D8A0003004E /* Logic */,
+				4E2B02E0296B9D5A0003004E /* IO */,
+				4E2B02DF296B9D230003004E /* SwiftUI_Views */,
 				261F7D03292473EF002D3010 /* SkyBlueWXApp.swift */,
-				261F7D05292473EF002D3010 /* WeatherView.swift */,
-				4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */,
-				261F7D2D292475F3002D3010 /* Logic.swift */,
 				261F7D07292473F3002D3010 /* Assets.xcassets */,
 				261F7D09292473F3002D3010 /* Preview Content */,
-				262952F5292480FE00F2A644 /* AddsGetData.swift */,
 			);
 			path = SkyBlueWX;
 			sourceTree = "<group>";
@@ -158,6 +150,46 @@
 				261F7D20292473F3002D3010 /* SkyBlueWXUITestsLaunchTests.swift */,
 			);
 			path = SkyBlueWXUITests;
+			sourceTree = "<group>";
+		};
+		4E2B02DF296B9D230003004E /* SwiftUI_Views */ = {
+			isa = PBXGroup;
+			children = (
+				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
+				261F7D05292473EF002D3010 /* WeatherView.swift */,
+				4E83BDB529529AF9005D8DC3 /* MainView.swift */,
+				4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */,
+				4E83BDBB29529BE0005D8DC3 /* ListView.swift */,
+				4E83BDB729529BB0005D8DC3 /* SettingsView.swift */,
+			);
+			path = SwiftUI_Views;
+			sourceTree = "<group>";
+		};
+		4E2B02E0296B9D5A0003004E /* IO */ = {
+			isa = PBXGroup;
+			children = (
+				4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */,
+				4E1E0B93294E9AF5006F51E7 /* airdata.db */,
+			);
+			path = IO;
+			sourceTree = "<group>";
+		};
+		4E2B02E1296B9D8A0003004E /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */,
+				4E83BDC1295AA250005D8DC3 /* Core.swift */,
+				261F7D2D292475F3002D3010 /* Logic.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		4E2B02E2296B9DD50003004E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				262952F5292480FE00F2A644 /* AddsGetData.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
