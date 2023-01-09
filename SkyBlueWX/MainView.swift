@@ -5,6 +5,10 @@
 //  Created by DeltaSierra Aeronautical on 12/20/22.
 //
 
+/**
+ Main landing view.
+ */
+
 import SwiftUI
 
 enum Views {

@@ -13,8 +13,9 @@ struct SettingsStruct {
     var visibilityUnit : VisUnit = .mile
 }
 
-// This class is a common interface to store data across the app and handle cross-app integration.
+
 class Cockpit {
+    /// This class is a common interface to store data across the app and handle cross-app integration.
     // Settings variables:
     // Temporary: to be moved to .plist modifier on development.
     var settings : SettingsStruct
@@ -27,8 +28,11 @@ class Cockpit {
     var activeReport: String?
     
     init() {
+        /// Interface with sqlite database.
         self.dbConnection = DataBaseHandler()
+        /// App settings -> to be transferred to env
         self.settings = SettingsStruct()
+        ///
         self.activeReport = nil
     }
     

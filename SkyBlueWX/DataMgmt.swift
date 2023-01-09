@@ -5,11 +5,18 @@
 //  Created by DeltaSierra Aeronautical on 12/17/22.
 //
 
+/// Database "airdata.db" populated from OurAirports.com. Thanks to the contributor community :)
 import Foundation
 import SQLite3
 
+
 enum QueryReturnType {
     case airport
+}
+
+enum DataBaseHandlerError: Error {
+    case missingDataBaseFile
+    case sqlLoadError
 }
 
 typealias Airport = (id: Int, icao: String, name: String, city: String)
@@ -18,17 +25,17 @@ typealias AirportDict = [Int : Airport]
 let airportTable = "airports"
 
 struct DataBaseHandler {
-    func openConnection() -> OpaquePointer? {
+    func openConnection() throws -> OpaquePointer? {
         var db : OpaquePointer?
         // Look for DB path and return if not found.
-        guard let dbPath = Bundle.main.url(forResource: "airdata", withExtension: "db") else {return nil}
+        guard let dbPath = Bundle.main.url(forResource: "airdata", withExtension: "db") else {throw DataBaseHandlerError.missingDataBaseFile}
         // Try to open DB and report result.
         if sqlite3_open(dbPath.path, &db) == SQLITE_OK {
             print("DB loaded OK!")
             return db
         } else {
             print("Whoops... DB did not load.")
-            return nil
+            throw DataBaseHandlerError.sqlLoadError
         }
     }
     
@@ -95,6 +102,14 @@ struct DataBaseHandler {
     
     
     init() {
-        self.pointer = openConnection()
+        do {
+            try self.pointer = openConnection()
+        } catch DataBaseHandlerError.missingDataBaseFile {
+            
+        } catch DataBaseHandlerError.sqlLoadError {
+            
+        } catch {
+            print("Error not handled...")
+        }
     }
 }
