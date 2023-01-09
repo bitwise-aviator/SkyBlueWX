@@ -104,6 +104,7 @@ struct WeatherView: View {
     func changeTempUnit() {
         // Toggles between C and F.
         tempUnit = tempUnit == TemperatureUnit.C ? TemperatureUnit.F : TemperatureUnit.C
+        UserDefaults.standard.set(tempUnit.rawValue, forKey: "temperatureUnit")
         printMet() // Forces a refresh of the weather narrative, but will NOT ask for an updated report.
     }
     
@@ -366,6 +367,9 @@ struct WeatherView: View {
                     }
                 }
             }
+        }.onAppear{
+            // Fix units based on user settings, not allowed at initialization.
+            tempUnit = cockpit.settings.temperatureUnit
         }
     }
 }

@@ -8,7 +8,14 @@
 import Foundation
 
 struct SettingsStruct {
-    var temperatureUnit : TemperatureUnit = .C
+    var temperatureUnit : TemperatureUnit {
+        get {
+            switch UserDefaults.standard.integer(forKey: "temperatureUnit") {
+            case 1: return .F
+            default: return .C
+            }
+        }
+    }
     var speedUnit : SpeedUnit = .knot
     var visibilityUnit : VisUnit = .mile
 }
@@ -20,7 +27,6 @@ class Cockpit {
     // Temporary: to be moved to .plist modifier on development.
     var settings : SettingsStruct
     // END SETTINGS VARIABLES...
-    
     
     let dbConnection : DataBaseHandler
     // var activeView : Views = Views.list // keep track of what the active view is, to be efficient with observers/closures.

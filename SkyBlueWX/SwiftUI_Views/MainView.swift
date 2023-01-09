@@ -17,7 +17,7 @@ enum Views {
 
 struct MainView: View {
     @State private var cockpit : Cockpit
-    @State private var selectedTab : Views = .map
+    @State private var selectedTab : Views = .weather
     init() {
         // Initialize the controller for the app.
         self.cockpit = Cockpit()

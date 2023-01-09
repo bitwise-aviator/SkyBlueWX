@@ -31,10 +31,8 @@ struct DataBaseHandler {
         guard let dbPath = Bundle.main.url(forResource: "airdata", withExtension: "db") else {throw DataBaseHandlerError.missingDataBaseFile}
         // Try to open DB and report result.
         if sqlite3_open(dbPath.path, &db) == SQLITE_OK {
-            print("DB loaded OK!")
             return db
         } else {
-            print("Whoops... DB did not load.")
             throw DataBaseHandlerError.sqlLoadError
         }
     }
@@ -62,7 +60,6 @@ struct DataBaseHandler {
         }
         
         func closeAsPass() {
-            print("Statement ran OK!")
             sqlite3_finalize(statement)
         }
         

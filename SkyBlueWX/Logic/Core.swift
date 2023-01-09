@@ -20,9 +20,9 @@ extension Color {
 
 
 // Enumeration for temperature units.
-enum TemperatureUnit {
-    case C // degrees Celsius
-    case F // degrees Fahrenheit
+enum TemperatureUnit : Int {
+    case C = 0 // degrees Celsius
+    case F = 1// degrees Fahrenheit
 }
 
 // Enum for speed units

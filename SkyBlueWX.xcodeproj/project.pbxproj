@@ -18,6 +18,7 @@
 		262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262952F5292480FE00F2A644 /* AddsGetData.swift */; };
 		4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */; };
 		4E1E0B94294E9AF5006F51E7 /* airdata.db in Resources */ = {isa = PBXBuildFile; fileRef = 4E1E0B93294E9AF5006F51E7 /* airdata.db */; };
+		4E2B02E4296BB60E0003004E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4E2B02E3296BB60E0003004E /* Settings.bundle */; };
 		4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDB529529AF9005D8DC3 /* MainView.swift */; };
 		4E83BDB829529BB0005D8DC3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDB729529BB0005D8DC3 /* SettingsView.swift */; };
 		4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */; };
@@ -59,6 +60,7 @@
 		262952F5292480FE00F2A644 /* AddsGetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddsGetData.swift; sourceTree = "<group>"; };
 		4E1E0B8D294E0319006F51E7 /* DataMgmt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMgmt.swift; sourceTree = "<group>"; };
 		4E1E0B93294E9AF5006F51E7 /* airdata.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = airdata.db; sourceTree = "<group>"; };
+		4E2B02E3296BB60E0003004E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		4E83BDB529529AF9005D8DC3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4E83BDB729529BB0005D8DC3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPlanView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		261F7CF7292473EF002D3010 = {
 			isa = PBXGroup;
 			children = (
+				4E2B02E3296BB60E0003004E /* Settings.bundle */,
 				261F7D02292473EF002D3010 /* SkyBlueWX */,
 				261F7D13292473F3002D3010 /* SkyBlueWXTests */,
 				261F7D1D292473F3002D3010 /* SkyBlueWXUITests */,
@@ -296,6 +299,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E2B02E4296BB60E0003004E /* Settings.bundle in Resources */,
 				261F7D0B292473F3002D3010 /* Preview Assets.xcassets in Resources */,
 				4E1E0B94294E9AF5006F51E7 /* airdata.db in Resources */,
 				261F7D08292473F3002D3010 /* Assets.xcassets in Resources */,
