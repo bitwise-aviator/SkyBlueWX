@@ -16,6 +16,28 @@
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
+			<string>Speed</string>
+			<key>Key</key>
+			<string>speedUnit</string>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+			<key>Titles</key>
+			<array>
+				<string>knots</string>
+				<string>mph</string>
+				<string>km/h</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
 			<string>Temperature</string>
 			<key>Titles</key>
 			<array>
@@ -31,6 +53,26 @@
 			</array>
 			<key>Key</key>
 			<string>temperatureUnit</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Visibility</string>
+			<key>Key</key>
+			<string>visibilityUnit</string>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Titles</key>
+			<array>
+				<string>miles</string>
+				<string>km</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
 		</dict>
 	</array>
 </dict>

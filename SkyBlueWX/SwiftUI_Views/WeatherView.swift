@@ -39,6 +39,8 @@ func getFirstRuntime() -> Date {
 
 // Outline that contains the UI
 struct WeatherView: View {
+    // Monitor status of the app (active/inactive/background)
+    @Environment(\.scenePhase) var scenePhase
     // @Binding variables are state variables for the parent view for R & W access.
     @Binding var cockpit : Cockpit
     @Binding var selectedTab : Views
@@ -101,31 +103,26 @@ struct WeatherView: View {
         }
     }
     
+    func refresh() {
+        tempUnit = cockpit.settings.temperatureUnit
+        speedUnit = cockpit.settings.speedUnit
+        visibilityUnit = cockpit.settings.visibilityUnit
+        printMet()
+    }
+    
     func changeTempUnit() {
-        // Toggles between C and F.
-        tempUnit = tempUnit == TemperatureUnit.C ? TemperatureUnit.F : TemperatureUnit.C
-        UserDefaults.standard.set(tempUnit.rawValue, forKey: "temperatureUnit")
-        printMet() // Forces a refresh of the weather narrative, but will NOT ask for an updated report.
+        tempUnit = cockpit.setTemperatureUnit()
+        printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
     func changeSpeedUnit() {
-        let currentSpeedUnit = speedUnit
-        switch (currentSpeedUnit) {
-        case .knot: speedUnit = .kmh
-        case .kmh: speedUnit = .mph
-        case .mph: speedUnit = .knot
-        }
-        printMet()
-        
+        speedUnit = cockpit.setSpeedUnit()
+        printMet() // Todo: split up printMet() so only spd. is refreshed. Ditto for other units.
     }
     
     func changeVisUnit() {
-        let currentVisUnit = visibilityUnit
-        switch (currentVisUnit) {
-        case .mile: visibilityUnit = .km
-        case .km: visibilityUnit = .mile
-        }
-        printMet()
+        visibilityUnit = cockpit.setVisibilityUnit()
+        printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
     func userRequestedMet() {
@@ -324,7 +321,7 @@ struct WeatherView: View {
                         Spacer().frame(maxWidth: 30)
                         VStack {
                             Text(windSpeedString).fontWeight(.bold).font(.system(size: 32)).foregroundColor(.white)
-                            Text(speedUnit.rawValue).foregroundColor(.white)
+                            Text(cockpit.getSpeedUnitText()).foregroundColor(.white)
                             if windGustString != "--" {
                                 HStack {
                                     if windGustString != "--" {
@@ -358,7 +355,7 @@ struct WeatherView: View {
                                             Image(systemName: (queryCodes.contains(airportResultDict![key]!.icao) ? "minus.square" : "plus.square")).foregroundColor((queryCodes.contains(airportResultDict![key]!.icao) ? Color.darkRed : Color.darkGreen)).frame(width: UIScreen.main.bounds.width * 0.1).onTapGesture {
                                                 editQueryList(airportResultDict![key]!.icao)
                                             }
-                                        }.frame(maxWidth: .infinity).background(Color.white.opacity(0.85))
+                                        }.frame(maxWidth: .infinity).background(Color.bicolorInv.opacity(0.85))
                                     }
                                 }
                             }.frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height * 0.4)
@@ -369,7 +366,12 @@ struct WeatherView: View {
             }
         }.onAppear{
             // Fix units based on user settings, not allowed at initialization.
-            tempUnit = cockpit.settings.temperatureUnit
+            refresh()
+        }.onChange(of: scenePhase) {newPhase in
+            if newPhase == .active || newPhase == .inactive {
+                //Force refresh of view if app becomes active or is shown in the App Switcher again. Allows changes in the iOS settings to apply.
+                refresh()
+            }
         }
     }
 }
