@@ -10,6 +10,24 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Custom</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Home Airport</string>
+			<key>Key</key>
+			<string>homeAirport</string>
+			<key>AutocapitalizationType</key>
+			<string>AllCharacters</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Units</string>
 		</dict>
 		<dict>

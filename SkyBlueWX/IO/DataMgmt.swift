@@ -87,9 +87,14 @@ struct DataBaseHandler {
         return nil
     }
     
-    func getAirports(searchTerm : String) -> AirportDict? {
+    func getAirports(searchTerm : String, onlyByIcao: Bool = false) -> AirportDict? {
         if searchTerm.count < 2 {return nil}
-        let queryString = "SELECT * FROM \(airportTable) WHERE type != 'closed' AND gps_code IS NOT NULL AND (ident LIKE '\(searchTerm)%' OR gps_code LIKE '\(searchTerm)%' OR iata_code LIKE '\(searchTerm)%' OR municipality LIKE '\(searchTerm)%') LIMIT 100"
+        let queryString : String
+        if onlyByIcao {
+            queryString = "SELECT * FROM \(airportTable) WHERE type != 'closed' AND gps_code IS NOT NULL AND ident LIKE '\(searchTerm)%'"
+        } else {
+            queryString = "SELECT * FROM \(airportTable) WHERE type != 'closed' AND gps_code IS NOT NULL AND (ident LIKE '\(searchTerm)%' OR gps_code LIKE '\(searchTerm)%' OR iata_code LIKE '\(searchTerm)%' OR municipality LIKE '\(searchTerm)%') LIMIT 100"
+        }
         let airportOutput : AirportDict? = runQuery(query: queryString, returnType: .airport)
         return airportOutput
     }

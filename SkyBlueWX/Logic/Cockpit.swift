@@ -34,13 +34,17 @@ struct SettingsStruct {
             }
         }
     }
+    var homeAirport : String {
+        get {
+            UserDefaults.standard.string(forKey: "homeAirport") ?? ""
+        }
+    }
 }
 
 
 class Cockpit {
     /// This class is a common interface to store data across the app and handle cross-app integration.
     // Settings variables:
-    // Temporary: to be moved to .plist modifier on development.
     var settings : SettingsStruct
     // END SETTINGS VARIABLES...
     
@@ -116,6 +120,12 @@ class Cockpit {
         return newVisUnit
     }
     
+    func setHomeAirport(_ icao: String) {
+        
+        UserDefaults.standard.set(icao, forKey: "homeAirport")
+        print(settings.homeAirport)
+    }
+    
     func editQueryList(_ icao: String) {
         if queryCodes.contains(icao) {
             queryCodes.remove(icao)
@@ -123,4 +133,5 @@ class Cockpit {
             queryCodes.insert(icao)
         }
     }
+    
 }

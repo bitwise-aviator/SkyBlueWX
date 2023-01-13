@@ -102,7 +102,7 @@ struct ListView: View {
                                                 Spacer().frame(height: 0)
                                                 Text(airportResultDict![key]!.city).lineLimit(1).truncationMode(.tail)
                                             }.frame(width: UIScreen.main.bounds.width * 0.7)
-                                            Image(systemName: (cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? "minus.square" : "plus.square")).foregroundColor((cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? Color.darkRed : Color.darkGreen)).frame(width: UIScreen.main.bounds.width * 0.1).onTapGesture {
+                                            Image(systemName: (cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? "minus.square" : "plus.square")).foregroundColor((cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? Color.darkRed : Color.darkGreen)).frame(width: UIScreen.main.bounds.width * 0.05).onTapGesture {
                                                 editQuery(airportResultDict?[key]?.icao)
                                             }
                                         }.frame(maxWidth: .infinity).background(Color.bicolorInv.opacity(0.85))

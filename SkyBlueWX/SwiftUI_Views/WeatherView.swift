@@ -56,6 +56,15 @@ struct WeatherView: View {
     @State var wxColor = Color.white // Color of the weather icon.
     @State var tempUnit = TemperatureUnit.C // Current temperature unit selected.
     @State var speedUnit = SpeedUnit.knot
+    var speedUnitText : String {
+        get {
+            switch speedUnit {
+            case .knot: return "kt"
+            case .mph: return "mph"
+            case .kmh: return "km/h"
+            }
+        }
+    }
     @State var visibilityUnit = VisUnit.mile
     @State var airportView : String? = nil
     @State var windSpeedString : String = "--"
@@ -321,7 +330,7 @@ struct WeatherView: View {
                         Spacer().frame(maxWidth: 30)
                         VStack {
                             Text(windSpeedString).fontWeight(.bold).font(.system(size: 32)).foregroundColor(.white)
-                            Text(cockpit.getSpeedUnitText()).foregroundColor(.white)
+                            Text(speedUnitText).foregroundColor(.white)
                             if windGustString != "--" {
                                 HStack {
                                     if windGustString != "--" {
