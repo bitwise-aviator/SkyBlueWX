@@ -34,6 +34,7 @@ struct SettingsStruct {
             }
         }
     }
+    // F
     var homeAirport : String {
         get {
             UserDefaults.standard.string(forKey: "homeAirport") ?? ""
@@ -51,6 +52,7 @@ class Cockpit {
     let dbConnection : DataBaseHandler
     // var activeView : Views = Views.list // keep track of what the active view is, to be efficient with observers/closures.
     var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
+    var reports : [String : WeatherReport] = [:]
     var activeReport: String?
     
     init() {
@@ -60,6 +62,10 @@ class Cockpit {
         self.settings = SettingsStruct()
         ///
         self.activeReport = nil
+    }
+    
+    func getWeather() {
+        
     }
     
     func setTemperatureUnit(_ target: TemperatureUnit? = nil) -> TemperatureUnit {
@@ -126,10 +132,13 @@ class Cockpit {
         print(settings.homeAirport)
     }
     
-    func editQueryList(_ icao: String) {
-        if queryCodes.contains(icao) {
+    func editQueryList(_ icao: String, retain: Bool = false, exclude: Bool = false) {
+        // Set retain to true to not remove airport code if already available.
+        // Set exclude to true to not add airport code if not in set.
+        // Do not set retain & exclude to true on the same call: it will do nothing.
+        if queryCodes.contains(icao) && !retain {
             queryCodes.remove(icao)
-        } else {
+        } else if !queryCodes.contains(icao) && !exclude {
             queryCodes.insert(icao)
         }
     }

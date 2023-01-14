@@ -12,9 +12,6 @@ enum Errors : Error {
     case noReportFound, noAirportCodes
 }
 
-// This is the weather report that will be displayed onscreen. Starts as nil.
-var currentReports : [String: WeatherReport] = [:]
-
 
 func getGreeting() -> String {
     let thisHour = Calendar.current.component(.hour, from: Date())
@@ -89,7 +86,7 @@ struct WeatherView: View {
     
     func moveForward() {
         guard let _ = airportView else {return}
-        var reportKeys = Array(currentReports.keys)
+        var reportKeys = Array(cockpit.reports.keys)
         reportKeys.sort()
         guard let currentIndex = reportKeys.firstIndex(of: airportView!) else {return}
         let index : Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
@@ -102,7 +99,7 @@ struct WeatherView: View {
     
     func moveBack() {
         guard let _ = airportView else {return}
-        var reportKeys = Array(currentReports.keys)
+        var reportKeys = Array(cockpit.reports.keys)
         reportKeys.sort()
         guard let currentIndex = reportKeys.firstIndex(of: airportView!) else {return}
         let index : Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
@@ -111,6 +108,17 @@ struct WeatherView: View {
             printMet()
         }
     }
+    
+    func moveTo(icao: String) -> Bool {
+        // return is whether move was successful.
+        if Array(cockpit.reports.keys).contains(icao) {
+            airportView = icao
+            return true
+        } else {
+            return false
+        }
+    }
+
     
     func refresh() {
         tempUnit = cockpit.settings.temperatureUnit
@@ -134,31 +142,49 @@ struct WeatherView: View {
         printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
-    func userRequestedMet() {
-        // Same as getMet, but it turns off the scrollbar.
-        airportSelectorVisible = false
-        searchAirport = ""
-        getMet()
+    func simpleMetLookup() {
+        // Shorthand get-met function, where user can press return with a valid airport code and get the weather report.
+        guard let _ = airportResultDict else {return}
+        var matchingAirport : Airport? = nil
+        let searchTerm : String = searchAirport.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        for item in airportResultDict!.values {
+            if item.icao == searchTerm {
+                matchingAirport = item
+                break
+            }
+        }
+        if let _ = matchingAirport {
+            airportSelectorVisible = false
+            pushToQueryList(matchingAirport!.icao)
+            searchAirport = ""
+            getMet(moveTarget: searchTerm)
+        }
     }
     
-    func getMet() {
+    func getMet(moveTarget: String? = nil) {
         refreshLock.wait()
         // Gets the weather report
         Task { // Opens new thread.
             do {
-                currentReports = await loadMe(icao: queryCodes) // Calls the getter/parser.
-                var reportKeys = Array(currentReports.keys)
+                cockpit.reports = await loadMe(icao: queryCodes) // Calls the getter/parser.
+                var reportKeys = Array(cockpit.reports.keys)
                 reportKeys.sort()
                 if reportKeys.count == 0 {
                     throw Errors.noAirportCodes
                 }
+                var airportViewHasChanged : Bool = false
+                if let _ = moveTarget {
+                    airportViewHasChanged = moveTo(icao: moveTarget!)
+                }
                 // This block keeps the viewframe on the same airport that the user was already on after fetching weather data, if that airport is requested. Behavior is useful if auto-updating later.
-                if let shownAirport = airportView {
-                    if !reportKeys.contains(shownAirport) {
+                if !airportViewHasChanged {
+                    if let shownAirport = airportView {
+                        if !reportKeys.contains(shownAirport) {
+                            airportView = reportKeys[0]
+                        }
+                    } else {
                         airportView = reportKeys[0]
                     }
-                } else {
-                    airportView = reportKeys[0]
                 }
                 printMet()
                 refreshLock.signal()
@@ -201,7 +227,7 @@ struct WeatherView: View {
     func printMet() {
         // Handles UI changes in case of a valid weather report.
         guard let airportView = airportView else {return}
-        guard let shownReport = currentReports[airportView] else{return} // Shorthand for report visible in UI.
+        guard let shownReport = cockpit.reports[airportView] else{return} // Shorthand for report visible in UI.
         if shownReport.hasData /*Checks if report is valid or not.*/ {
             // Updates text narrative, icon, and icon color accoridng to report data.
             hasError = false
@@ -237,12 +263,14 @@ struct WeatherView: View {
         
     }
     
+    func pushToQueryList(_ icao: String) {
+        cockpit.editQueryList(icao, retain: true)
+        queryCodes = cockpit.queryCodes
+    }
+    
     func editQueryList(_ icao: String) {
-        if queryCodes.contains(icao) {
-            queryCodes.remove(icao)
-        } else {
-            queryCodes.insert(icao)
-        }
+        cockpit.editQueryList(icao)
+        queryCodes = cockpit.queryCodes
     }
     
     
@@ -265,9 +293,9 @@ struct WeatherView: View {
                 TextField("Lookup", text: $searchAirport).autocorrectionDisabled(true).onChange(of: searchAirport, perform: {newValue in
                     airportSelectorVisible = true
                     airportResultDict = databaseConnection.getAirports(searchTerm: newValue)}).onSubmit {
-                        userRequestedMet() // Textbox that triggers dropdown menu for airport selection. The textbox's input is no longer used for weather queries.
+                        simpleMetLookup() // Textbox that triggers dropdown menu for airport selection. The textbox's input is no longer used for weather queries.
                     }
-                Button(action: userRequestedMet) {
+                Button(action: simpleMetLookup) {
                     Text("Tell me!") // Button does the same as pressing return on the text input box.
                 }
                 Spacer()
