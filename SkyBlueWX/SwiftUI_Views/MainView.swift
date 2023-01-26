@@ -40,7 +40,7 @@ struct MainView: View {
             SettingsView(cockpit: $cockpit, selectedTab: $selectedTab).tabItem {
                 Label("Settings", systemImage: "gear")
             }.tag(Views.setting)
-        }
+        }.onAppear()
     }
 }
 

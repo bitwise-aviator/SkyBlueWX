@@ -26,6 +26,7 @@
 		4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBD29529E1A005D8DC3 /* MapView.swift */; };
 		4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */; };
 		4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDC1295AA250005D8DC3 /* Core.swift */; };
+		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		4E83BDBD29529E1A005D8DC3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
 		4E83BDC1295AA250005D8DC3 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 				4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */,
 				4E83BDC1295AA250005D8DC3 /* Core.swift */,
 				261F7D2D292475F3002D3010 /* Logic.swift */,
+				DCFECF862982B80A0097DA8C /* Location.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */,
 				4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */,
 				261F7D2E292475F3002D3010 /* Logic.swift in Sources */,
+				DCFECF872982B80A0097DA8C /* Location.swift in Sources */,
 				4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */,
 				4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */,
 				262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */,
@@ -505,6 +509,7 @@
 				DEVELOPMENT_TEAM = YG5N57HMZ9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Uses location to find nearest weather stations";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -536,6 +541,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YG5N57HMZ9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Uses location to find nearest weather stations";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

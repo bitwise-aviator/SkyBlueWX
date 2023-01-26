@@ -54,6 +54,7 @@ class Cockpit {
     var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
     var reports : [String : WeatherReport] = [:]
     var activeReport: String?
+    let locationTracker : LocationManager
     
     init() {
         /// Interface with sqlite database.
@@ -62,6 +63,7 @@ class Cockpit {
         self.settings = SettingsStruct()
         ///
         self.activeReport = nil
+        self.locationTracker = LocationManager()
     }
     
     func getWeather() {
