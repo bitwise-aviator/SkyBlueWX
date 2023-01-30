@@ -55,22 +55,28 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
     // Function that retrieves and parses data.
     func pullData() async {
         
-        // Convenience function prior to return if an error is encountered.
-        // @Sendable declares that the function is multi-threaded safe.
-        @Sendable func closeEmpty() {
+        /// Convenience function prior to return if an error is encountered.
+        func closeEmpty() async {
+            await wxReports.vacate()
             print("No reports")
         }
-        let data : Data?
-        do {
-            print("OK")
-            let (resultingData, _) = try await URLSession.shared.data(for: URLRequest(url: url))
-            data = resultingData
-        } catch {
-            print("Connection failed: error message below...")
-            print("\(error)")
-            data = nil
+        
+        /// Perform the URL get request
+        func getData(url : URL) async -> Data? {
+            do {
+                let (resultingData, _) = try await URLSession.shared.data(for: URLRequest(url: url))
+                print("OK!")
+                return resultingData
+            } catch {
+                print("Connection failed: error message below...")
+                print("\(error)")
+                return nil
+            }
+            
         }
-        if let _ = data {
+        
+        /// Takes the CSV lines and matches them to airports
+        func matchReports() -> [String:String] {
             let res = String(data: data!, encoding: .utf8)! // Convert data to UTF-8 string. Force unwrapping (!) is safe here because the function will have already returned if data was null.
             let resRows = res.components(separatedBy: "\n") // Split data into rows. 1 row = 1 report.
             // Initialize dictionary storing the weather row per airport.
@@ -90,7 +96,12 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
                     if matchedRows == query.count {break} // Exits if all matches have been found.
                 }
             }
-
+            return weatherRows
+        }
+        
+        /// Extracts matched rows into WeatherReport structs
+        // TODO: Change to XML?
+        func parseReport() async {
             for icao in query.sorted() {
                 if !weatherRows.keys.contains(icao) {continue}
                 let currentReport : String = weatherRows[icao]!
@@ -144,11 +155,21 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
                 let stationElevation = Double(csvItems[43]) ?? 0.0
                 await wxReports.update(key: location, coordinates: stationCoordinates, clouds: reportedClouds, visibility: visibility, temperature: temp, dewPoint: dewPt, wind: wind, details: weatherDetail, altimeter: altimeter, elevation: stationElevation) // Pass the parsed/extracted data to the existing WeatherReport instance.
             }
-        } else {
-            await wxReports.vacate()
-            closeEmpty()
+        }
+        
+        
+        
+        let data = await getData(url: url)
+        
+        // Exits if no data was received
+        guard let _ = data else {
+            await closeEmpty()
             return
         }
+        
+        let weatherRows = matchReports()
+        await parseReport()
+        return
     }
     
     // Call data get/parse function

@@ -25,7 +25,7 @@ func getGreeting() -> String {
 
 func getFirstRuntime() -> Date {
     // This determines when the first refresh query is going to run. Ideally, it should refresh in the background every 1-2 min or so.
-    let interval = 120 // Cycles are 2 min (120s) long
+    //let interval = 120 // Cycles are 2 min (120s) long
     let nowPlusBuffer = Date() + 1 // 1s buffer
     print(nowPlusBuffer)
     let firstRuntime = (1 + (Int(nowPlusBuffer.timeIntervalSinceReferenceDate) / 120)) * 120 // Calculates the seconds since reference date for the next time when the clock will be at XX:YY:00, where YY is a multiple of 2.
