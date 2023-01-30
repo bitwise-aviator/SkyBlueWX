@@ -55,18 +55,30 @@ class Cockpit {
     var reports : [String : WeatherReport] = [:]
     var activeReport: String?
     let locationTracker : LocationManager
+    let refreshLock = DispatchSemaphore(value: 1)
     
     init() {
         /// Interface with sqlite database.
         self.dbConnection = DataBaseHandler()
         /// App settings -> to be transferred to env
         self.settings = SettingsStruct()
+        if settings.homeAirport.count == 4 {
+            self.queryCodes.insert(settings.homeAirport)
+        }
         ///
         self.activeReport = nil
         self.locationTracker = LocationManager()
     }
     
-    func getWeather() {
+    func getWeather() throws {
+        // Only handle the backend weather-fetching here. Renders are kept in their respective views.
+        refreshLock.wait() // Locks/queues further executions
+        Task {
+            do {
+                reports = await loadMe(icao: queryCodes, cockpit: self) // Call getter & parser
+                
+            }
+        }
         
     }
     

@@ -27,6 +27,7 @@
 		4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */; };
 		4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDC1295AA250005D8DC3 /* Core.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
+		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
 		4E83BDC1295AA250005D8DC3 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 				4E83BDC1295AA250005D8DC3 /* Core.swift */,
 				261F7D2D292475F3002D3010 /* Logic.swift */,
 				DCFECF862982B80A0097DA8C /* Location.swift */,
+				DCFECF882987703F0097DA8C /* Geodesy.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */,
 				4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */,
 				262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */,
+				DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */,
 				4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */,
 				261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */,
 				4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */,

@@ -8,47 +8,70 @@
 /// API source: Aviation Weather server (NOAA)
 
 import Foundation
+import CoreLocation
+
+actor WXReports {
+    var data : [String : WeatherReport] = [:]
+    
+    func vacate() {
+        // empty out data safelyl.
+        data = [:]
+    }
+    
+    func assign(key: String, value: WeatherReport?) {
+        data[key] = value
+    }
+    
+    func extract(key: String) -> WeatherReport? {
+        return data[key]
+    }
+    
+    func update(key: String, coordinates: CLLocation, clouds: [CloudLayer], visibility: Double, temperature: Double, dewPoint: Double, wind: Wind, details: String, altimeter: Double, elevation: Double) {
+        if let _ = data[key] {
+            data[key]!.update(location: key, coordinates: coordinates, clouds: clouds, visibility: visibility, temperature: temperature, dewPoint: dewPoint, wind: wind, details: details, altimeter: altimeter, elevation: elevation)
+        }
+    }
+}
 
 // Function queries, gets, interprets, and returns WX reports.
-func loadMe(icao query: Set<String>) async -> [String : WeatherReport] {
+func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : WeatherReport] {
     // Shorthand if we are returning data where all airports are bad (such as connection error)
     print(query)
+    let wxReports = WXReports()
     let allBadData : [String : WeatherReport] = [:]
     if query.count == 0 { return allBadData }
     let formattedQuery = query.joined(separator: "+")
-    
-    /* Using this semaphore to force waiting if the weather parsing has not been concluded yet.
-     The value 1 leaves it free at the start.
-     */
-    let lock = DispatchSemaphore(value: 1) // Used to control execution
     // Query URL casted from a string.
     let url = URL(string: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&stationString=\(formattedQuery)&hoursBeforeNow=2")!; // URLs don't accept spaces, use + instead.
     
     // Need to initialize the result here, as to keep the reference. Not sure if this is really necessary. Can experiment later.
     
-    var wxReports : [String : WeatherReport] = [:]
     for code in query.sorted() {
-        wxReports[code] = WeatherReport(location: code) // This is a basic initialization. The instance will have a bool property to track if it's good or not, it will start as bad. Calling the update method will make it good.
+        await wxReports.assign(key: code, value: WeatherReport(location: code)) // This is a basic initialization. The instance will have a bool property to track if it's good or not, it will start as bad. Calling the update method will make it good.
     }
     
     
     
     // Function that retrieves and parses data.
-    func pullData() {
+    func pullData() async {
         
         // Convenience function prior to return if an error is encountered.
         // @Sendable declares that the function is multi-threaded safe.
         @Sendable func closeEmpty() {
             print("No reports")
-            lock.signal() // Semaphore count increases by +1 to 0. This unpauses the remainder of the loadMe function.
         }
-        
-        lock.wait() // Decrease semaphore count to 0. This will contribute to the loadMe function not waiting for pullData to complete its async components.
-        
-        // Worker that requests and pulls HTTP data.
-        let task = URLSession.shared.dataTask(with: url) /* Closure function starts here -> */ {(data, response, error) in
-            guard let data = data else {wxReports = allBadData; closeEmpty(); return} // If no data is returned, signal semaphore and exit.
-            let res = String(data: data, encoding: .utf8)! // Convert data to UTF-8 string. Force unwrapping (!) is safe here because the function will have already returned if data was null.
+        let data : Data?
+        do {
+            print("OK")
+            let (resultingData, _) = try await URLSession.shared.data(for: URLRequest(url: url))
+            data = resultingData
+        } catch {
+            print("Connection failed: error message below...")
+            print("\(error)")
+            data = nil
+        }
+        if let _ = data {
+            let res = String(data: data!, encoding: .utf8)! // Convert data to UTF-8 string. Force unwrapping (!) is safe here because the function will have already returned if data was null.
             let resRows = res.components(separatedBy: "\n") // Split data into rows. 1 row = 1 report.
             // Initialize dictionary storing the weather row per airport.
             var weatherRows : [String:String] = [:]
@@ -71,7 +94,6 @@ func loadMe(icao query: Set<String>) async -> [String : WeatherReport] {
             for icao in query.sorted() {
                 if !weatherRows.keys.contains(icao) {continue}
                 let currentReport : String = weatherRows[icao]!
-                let currentWxReport = wxReports[icao]
                 let csvItems = currentReport.components(separatedBy: ",") // Pass the comma-separated report into an array.
                 
                 // This for loop is a debugging test and also provides indices for reference.
@@ -83,7 +105,8 @@ func loadMe(icao query: Set<String>) async -> [String : WeatherReport] {
                 let location : String = csvItems[1] // ICAO code
                 let stationLatitude = Double(csvItems[3]) ?? 0.0
                 let stationLongitude = Double(csvItems[4]) ?? 0.0
-                let stationCoordinates : GeoPoint = (latitude: stationLatitude, longitude: stationLongitude)
+                let stationCoordinates = CLLocation(latitude: stationLatitude, longitude: stationLongitude)
+                // TODO:  let relativePosition = cockpit.locationTracker.location
                 // Cloud layers
                 var reportedClouds : [CloudLayer] = [] // Initialize an empty array to store cloud layers.
                 // Each cloud layer uses two positions (first one has the cloud type & the second, the height).
@@ -119,19 +142,17 @@ func loadMe(icao query: Set<String>) async -> [String : WeatherReport] {
                 let wind = Wind(direction: windDirection, speed: windSpeed, gusts: windGusts) // Create a Wind struct to store this.
                 let weatherDetail = csvItems[21] // This field will store data regarding non-numeric weather info (rain, snow, hail, fog, etc.)
                 let stationElevation = Double(csvItems[43]) ?? 0.0
-                wxReports[icao]!.update(location: location, coordinates: stationCoordinates, clouds: reportedClouds, visibility: visibility, temperature: temp, dewPoint: dewPt, wind: wind, details: weatherDetail, altimeter: altimeter, elevation: stationElevation) // Pass the parsed/extracted data to the existing WeatherReport instance.
+                await wxReports.update(key: location, coordinates: stationCoordinates, clouds: reportedClouds, visibility: visibility, temperature: temp, dewPoint: dewPt, wind: wind, details: weatherDetail, altimeter: altimeter, elevation: stationElevation) // Pass the parsed/extracted data to the existing WeatherReport instance.
             }
-            lock.signal() // Function is complete, and semaphore count increases to 0. loadMe function can now complete and exit.
+        } else {
+            await wxReports.vacate()
+            closeEmpty()
+            return
         }
-        task.resume() // Tell the task object to start working.
-        
     }
     
     // Call data get/parse function
-    pullData()
-    /* This will run after the .wait() inside the function, decreasing the semaphore count to -1. Execution will be paused here until the count is at least 0, which will happen AFTER the parse is complete OR if an error is encountered.*/
-    lock.wait()
-    lock.signal() // Semaphores have to return to their original value (i.e. 1 here). Using this call to do so.
-    return wxReports
+    await pullData()
+    return await wxReports.data
 }
 

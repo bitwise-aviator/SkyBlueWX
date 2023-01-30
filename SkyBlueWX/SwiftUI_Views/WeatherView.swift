@@ -166,7 +166,7 @@ struct WeatherView: View {
         // Gets the weather report
         Task { // Opens new thread.
             do {
-                cockpit.reports = await loadMe(icao: queryCodes) // Calls the getter/parser.
+                cockpit.reports = await loadMe(icao: queryCodes, cockpit: cockpit) // Calls the getter/parser.
                 var reportKeys = Array(cockpit.reports.keys)
                 reportKeys.sort()
                 if reportKeys.count == 0 {
@@ -402,6 +402,9 @@ struct WeatherView: View {
                 }
             }
         }.onAppear{
+            if cockpit.queryCodes.count != 0 {
+                getMet()
+            }
             // Fix units based on user settings, not allowed at initialization.
             refresh()
         }.onChange(of: scenePhase) {newPhase in

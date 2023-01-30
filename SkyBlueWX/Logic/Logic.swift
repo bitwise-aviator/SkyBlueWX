@@ -7,11 +7,11 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 let thousandsNumber = NumberFormatter()
 
 typealias CloudLayer = (cover: CloudCover, height: Int, specialCloud: SpecialClouds?)
-typealias GeoPoint = (latitude: Double, longitude: Double)
 
 enum CloudCover : String {
     case few = "FEW"
@@ -138,7 +138,7 @@ struct Wind {
 struct WeatherReport {
     var hasData : Bool
     var icao : String
-    var coords : GeoPoint
+    var coords : CLLocation
     
     var clouds : [CloudLayer]
     
@@ -385,7 +385,7 @@ struct WeatherReport {
         // Outline initializer. It is not considered a working struct until updated.
         self.icao = _icao
         self.hasData = false
-        self.coords = (0, 0)
+        self.coords = CLLocation(latitude: 0.0, longitude: 0.0)
         self.clouds = []
         self.visibility = 0.0
         self.temperature = 0.0
@@ -396,7 +396,7 @@ struct WeatherReport {
         self.elevation = 0.0
     }
         
-    init(location _icao : String, coordinates _coords : GeoPoint, clouds _clouds: [CloudLayer], visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double) {
+    init(location _icao : String, coordinates _coords : CLLocation, clouds _clouds: [CloudLayer], visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double) {
         self.icao = _icao
         self.hasData = true
         self.coords = _coords
@@ -410,7 +410,7 @@ struct WeatherReport {
         self.elevation = _elevation
     }
     
-    mutating func update(location _icao : String, coordinates _coords : GeoPoint, clouds _clouds: [CloudLayer],  visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double) {
+    mutating func update(location _icao : String, coordinates _coords : CLLocation, clouds _clouds: [CloudLayer],  visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double) {
         icao = _icao
         hasData = true
         coords = _coords

@@ -32,5 +32,23 @@ final class SkyBlueWXTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testInverseOutOfRange() throws {
+        var result = karneyInverse(lat1: 91, lon1: 0, lat2: 0, lon2: 0)
+        XCTAssertNil(result)
+        result = karneyInverse(lat1: 0, lon1: 190, lat2: 0, lon2: 0)
+        XCTAssertNil(result)
+    }
+    
+    func testErrorFreeSum() throws {
+        let result = GeoMath.errorFreeSum(1.0, 2.0)
+        XCTAssertFalse(2.0 == result.0)
+        XCTAssertTrue(3.0 == result.0)
+    }
+    
+    func testAngularDifference() throws {
+        let result = GeoMath.angularDifference(75, 270)
+        XCTAssertEqual(result.0, -165.0)
+    }
 
 }
