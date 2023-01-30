@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct SettingsStruct {
     // default cases should have settings value of zero.
@@ -42,6 +43,11 @@ struct SettingsStruct {
     }
 }
 
+enum Device : String {
+    case pad = "iPad"
+    case phone = "iPhone"
+    case other = "other"
+}
 
 class Cockpit {
     /// This class is a common interface to store data across the app and handle cross-app integration.
@@ -56,6 +62,8 @@ class Cockpit {
     var activeReport: String?
     let locationTracker : LocationManager
     let refreshLock = DispatchSemaphore(value: 1)
+    let deviceType : Device
+    
     
     init() {
         /// Interface with sqlite database.
@@ -68,6 +76,15 @@ class Cockpit {
         ///
         self.activeReport = nil
         self.locationTracker = LocationManager()
+        switch(UIDevice.current.userInterfaceIdiom) {
+        case .phone:
+            self.deviceType = .phone
+        case .pad:
+            self.deviceType = .pad
+        default:
+            self.deviceType = .other
+        }
+        print("Running app on \(self.deviceType.rawValue)")
     }
     
     func getWeather() throws {

@@ -34,6 +34,18 @@ func getFirstRuntime() -> Date {
     return Date(timeIntervalSinceReferenceDate: TimeInterval(firstRuntime))
 }
 
+struct WeatherStateTracker {
+    struct Temperature {
+        var unit = TemperatureUnit.C
+        var temp = "---"
+        var dewPt = "---"
+        var humid = 0.0
+        var humidColor = Color.white
+    }
+    
+    var temperature = Temperature()
+}
+
 // Outline that contains the UI
 struct WeatherView: View {
     // Monitor status of the app (active/inactive/background)
@@ -47,11 +59,11 @@ struct WeatherView: View {
     @State var searchAirport = "" // Airport code that appears in the search box.
     @State var airportSelectorVisible = false;
     @State var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
+    @State var tracker = WeatherStateTracker() // Condense all state variables into a single struct.
     @State var hasError = false // Self-explanatory
     @State var errorStatement = "" // If an error is encountered, this is what will be shown to the user.
     @State var wxIcon = "questionmark.square.dashed" // This is the path for the weather icon that will be shown to the user.
     @State var wxColor = Color.white // Color of the weather icon.
-    @State var tempUnit = TemperatureUnit.C // Current temperature unit selected.
     @State var speedUnit = SpeedUnit.knot
     var speedUnitText : String {
         get {
@@ -73,10 +85,6 @@ struct WeatherView: View {
     @State var visibilityIcon : String = "eye.fill"
     @State var visibilityColor = Color.white
     @State var densityAltitudeString = "-----"
-    @State var temperatureString = "---"
-    @State var dewpointString = "---"
-    @State var humidity = 0.0
-    @State var humidityColor = Color.white
     @State var flightRulesColor = Color.darkGreen
     @State var airportResultDict : AirportDict? = [:]
     let databaseConnection = DataBaseHandler()
@@ -121,14 +129,14 @@ struct WeatherView: View {
 
     
     func refresh() {
-        tempUnit = cockpit.settings.temperatureUnit
+        tracker.temperature.unit = cockpit.settings.temperatureUnit
         speedUnit = cockpit.settings.speedUnit
         visibilityUnit = cockpit.settings.visibilityUnit
         printMet()
     }
     
     func changeTempUnit() {
-        tempUnit = cockpit.setTemperatureUnit()
+        tracker.temperature.unit = cockpit.setTemperatureUnit()
         printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
@@ -215,11 +223,11 @@ struct WeatherView: View {
         visibilityString = "----"
         visibilityIcon = "eye.fill"
         visibilityColor = .white
-        temperatureString = "---"
-        dewpointString = "---"
+        tracker.temperature.temp = "---"
+        tracker.temperature.dewPt = "---"
         densityAltitudeString = "-----"
-        humidity = 0.0
-        humidityColor = .white
+        tracker.temperature.humid = 0.0
+        tracker.temperature.humidColor = .white
         flightRulesColor = Color.darkGreen
         print(errorStatement)
     }
@@ -249,11 +257,11 @@ struct WeatherView: View {
             visibilityString = shownReport.visibilityToString(unit: visibilityUnit)
             visibilityIcon = shownReport.visibility >= 3.0 ? "eye.fill" : "eye.slash.fill"
             visibilityColor = shownReport.visibility >= 3.0 ? .white : .yellow
-            temperatureString = shownReport.temperatureToString(unit: tempUnit)
-            dewpointString = shownReport.dewpointToString(unit: tempUnit)
+            tracker.temperature.temp = shownReport.temperatureToString(unit: tracker.temperature.unit)
+            tracker.temperature.dewPt = shownReport.dewpointToString(unit: tracker.temperature.unit)
             densityAltitudeString = shownReport.densityAltitudeToString()
-            humidity = shownReport.relativeHumidity
-            humidityColor = humidity >= 80 ? .yellow : .white
+            tracker.temperature.humid = shownReport.relativeHumidity
+            tracker.temperature.humidColor = tracker.temperature.humid >= 80 ? .yellow : .white
             flightRulesColor = shownReport.flightConditionColor
         } else {
             printBadScreen()
@@ -322,9 +330,9 @@ struct WeatherView: View {
                             HStack {
                                 Spacer().frame(maxWidth: .infinity)
                                 Image(systemName: "thermometer.medium").foregroundColor(.white)
-                                Text(temperatureString).foregroundColor(.white)
-                                Image(systemName: "thermometer.and.liquid.waves").foregroundColor(humidityColor)
-                                Text(dewpointString).foregroundColor(humidityColor)
+                                Text(tracker.temperature.temp).foregroundColor(.white)
+                                Image(systemName: "thermometer.and.liquid.waves").foregroundColor(tracker.temperature.humidColor)
+                                Text(tracker.temperature.dewPt).foregroundColor(tracker.temperature.humidColor)
                             }.onTapGesture {
                                 changeTempUnit()
                             }
