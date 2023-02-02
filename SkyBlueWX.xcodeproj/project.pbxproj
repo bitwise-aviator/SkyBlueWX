@@ -26,6 +26,7 @@
 		4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBD29529E1A005D8DC3 /* MapView.swift */; };
 		4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */; };
 		4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDC1295AA250005D8DC3 /* Core.swift */; };
+		DC71755B298BF57000674D94 /* WindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755A298BF57000674D94 /* WindView.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -70,6 +71,7 @@
 		4E83BDBD29529E1A005D8DC3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
 		4E83BDC1295AA250005D8DC3 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		DC71755A298BF57000674D94 /* WindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindView.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +164,7 @@
 		4E2B02DF296B9D230003004E /* SwiftUI_Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC717559298BF55100674D94 /* WeatherView_Components */,
 				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
 				261F7D05292473EF002D3010 /* WeatherView.swift */,
 				4E83BDB529529AF9005D8DC3 /* MainView.swift */,
@@ -199,6 +202,14 @@
 				262952F5292480FE00F2A644 /* AddsGetData.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		DC717559298BF55100674D94 /* WeatherView_Components */ = {
+			isa = PBXGroup;
+			children = (
+				DC71755A298BF57000674D94 /* WindView.swift */,
+			);
+			path = WeatherView_Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,6 +348,7 @@
 				261F7D06292473EF002D3010 /* WeatherView.swift in Sources */,
 				4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */,
 				4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */,
+				DC71755B298BF57000674D94 /* WindView.swift in Sources */,
 				4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */,
 				261F7D2E292475F3002D3010 /* Logic.swift in Sources */,
 				DCFECF872982B80A0097DA8C /* Location.swift in Sources */,

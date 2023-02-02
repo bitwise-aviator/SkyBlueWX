@@ -51,7 +51,7 @@ struct WeatherView: View {
     // Monitor status of the app (active/inactive/background)
     @Environment(\.scenePhase) var scenePhase
     // @Binding variables are state variables for the parent view for R & W access.
-    @Binding var cockpit : Cockpit
+    @EnvironmentObject var cockpit : Cockpit
     @Binding var selectedTab : Views
     // @State variables control the app's render. If one is modified, it causes the screen to refresh.
     @State var wxIndex = 0 // Which report are we looking at?
@@ -64,17 +64,15 @@ struct WeatherView: View {
     @State var errorStatement = "" // If an error is encountered, this is what will be shown to the user.
     @State var wxIcon = "questionmark.square.dashed" // This is the path for the weather icon that will be shown to the user.
     @State var wxColor = Color.white // Color of the weather icon.
-    @State var speedUnit = SpeedUnit.knot
     var speedUnitText : String {
         get {
-            switch speedUnit {
+            switch cockpit.settings.speedUnit {
             case .knot: return "kt"
             case .mph: return "mph"
             case .kmh: return "km/h"
             }
         }
     }
-    @State var visibilityUnit = VisUnit.mile
     @State var airportView : String? = nil
     @State var windSpeedString : String = "--"
     @State var windGustString : String = "--"
@@ -129,24 +127,21 @@ struct WeatherView: View {
 
     
     func refresh() {
-        tracker.temperature.unit = cockpit.settings.temperatureUnit
-        speedUnit = cockpit.settings.speedUnit
-        visibilityUnit = cockpit.settings.visibilityUnit
         printMet()
     }
     
     func changeTempUnit() {
-        tracker.temperature.unit = cockpit.setTemperatureUnit()
+        cockpit.setTemperatureUnit()
         printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
     func changeSpeedUnit() {
-        speedUnit = cockpit.setSpeedUnit()
+        cockpit.setSpeedUnit()
         printMet() // Todo: split up printMet() so only spd. is refreshed. Ditto for other units.
     }
     
     func changeVisUnit() {
-        visibilityUnit = cockpit.setVisibilityUnit()
+        cockpit.setVisibilityUnit()
         printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
@@ -242,8 +237,8 @@ struct WeatherView: View {
             wxText = shownReport.reportClouds()
             wxIcon = shownReport.wxIcon
             wxColor = shownReport.wxColor
-            windSpeedString = shownReport.windSpeedToString(unit: speedUnit)
-            windGustString = shownReport.windGustsToString(unit: speedUnit)
+            windSpeedString = shownReport.windSpeedToString(unit: cockpit.settings.speedUnit)
+            windGustString = shownReport.windGustsToString(unit: cockpit.settings.speedUnit)
             switch (shownReport.wind.speed) {
             case 15...: windsockIcon = "WindSock15kt"
             case 12..<15: windsockIcon = "WindSock12kt"
@@ -254,11 +249,11 @@ struct WeatherView: View {
             }
             windDirString = shownReport.windDirToString
             windDirRotate = shownReport.wind.direction ?? 0
-            visibilityString = shownReport.visibilityToString(unit: visibilityUnit)
+            visibilityString = shownReport.visibilityToString(unit: cockpit.settings.visibilityUnit)
             visibilityIcon = shownReport.visibility >= 3.0 ? "eye.fill" : "eye.slash.fill"
             visibilityColor = shownReport.visibility >= 3.0 ? .white : .yellow
-            tracker.temperature.temp = shownReport.temperatureToString(unit: tracker.temperature.unit)
-            tracker.temperature.dewPt = shownReport.dewpointToString(unit: tracker.temperature.unit)
+            tracker.temperature.temp = shownReport.temperatureToString(unit: cockpit.settings.temperatureUnit)
+            tracker.temperature.dewPt = shownReport.dewpointToString(unit: cockpit.settings.temperatureUnit)
             densityAltitudeString = shownReport.densityAltitudeToString()
             tracker.temperature.humid = shownReport.relativeHumidity
             tracker.temperature.humidColor = tracker.temperature.humid >= 80 ? .yellow : .white
@@ -366,7 +361,7 @@ struct WeatherView: View {
                         Spacer().frame(maxWidth: 30)
                         VStack {
                             Text(windSpeedString).fontWeight(.bold).font(.system(size: 32)).foregroundColor(.white)
-                            Text(speedUnitText).foregroundColor(.white)
+                            Text(cockpit.settings.speedUnitString).foregroundColor(.white)
                             if windGustString != "--" {
                                 HStack {
                                     if windGustString != "--" {
@@ -425,7 +420,8 @@ struct WeatherView: View {
 }
 
 struct WeatherView_Previews: PreviewProvider {
+    static let cockpit = Cockpit()
     static var previews: some View {
-        WeatherView(cockpit: .constant(Cockpit()), selectedTab: .constant(.weather))
+        WeatherView(selectedTab: .constant(.weather)).environmentObject(cockpit)
     }
 }

@@ -10,35 +10,46 @@ import SwiftUI
 
 struct SettingsStruct {
     // default cases should have settings value of zero.
-    var temperatureUnit : TemperatureUnit {
-        get {
-            switch UserDefaults.standard.integer(forKey: "temperatureUnit") {
-            case 1: return .F
-            default: return .C
-            }
+    var temperatureUnit : TemperatureUnit
+    var speedUnit : SpeedUnit
+    var visibilityUnit : VisUnit
+    var homeAirport : String
+    
+    mutating func update() {
+        let temperatureUnitKey = UserDefaults.standard.integer(forKey: "temperatureUnit")
+        switch temperatureUnitKey {
+        case 1: temperatureUnit = .F
+        default: temperatureUnit = .C
         }
-    }
-    var speedUnit : SpeedUnit  {
-        get {
-            switch UserDefaults.standard.integer(forKey: "speedUnit") {
-            case 1: return .mph
-            case 2: return .kmh
-            default: return .knot
-            }
+        let speedUnitKey = UserDefaults.standard.integer(forKey: "speedUnit")
+        switch speedUnitKey {
+        case 1: speedUnit = .mph
+        case 2: speedUnit = .kmh
+        default: speedUnit = .knot
         }
-    }
-    var visibilityUnit : VisUnit  {
-        get {
-            switch UserDefaults.standard.integer(forKey: "visibilityUnit") {
-            case 1: return .km
-            default: return .mile
-            }
+        let visibilityUnitKey = UserDefaults.standard.integer(forKey: "visibilityUnit")
+        switch visibilityUnitKey {
+        case 1: visibilityUnit = .km
+        default: visibilityUnit = .mile
         }
+        homeAirport = UserDefaults.standard.string(forKey: "homeAirport") ?? ""
     }
-    // F
-    var homeAirport : String {
+    
+    init() {
+        self.temperatureUnit = .C
+        self.speedUnit = .knot
+        self.visibilityUnit = .mile
+        self.homeAirport = ""
+        update()
+    }
+    
+    var speedUnitString : String {
         get {
-            UserDefaults.standard.string(forKey: "homeAirport") ?? ""
+            switch (speedUnit) {
+            case .knot: return "kt"
+            case .mph: return "mph"
+            case .kmh: return "km/h"
+            }
         }
     }
 }
@@ -49,17 +60,21 @@ enum Device : String {
     case other = "other"
 }
 
-class Cockpit {
+final class Cockpit : ObservableObject {
     /// This class is a common interface to store data across the app and handle cross-app integration.
+    ///
+    /// The @Published wrapper for ObservableObjects denotes properties that will trigger re-renders for all views that are observing it.
     // Settings variables:
-    var settings : SettingsStruct
+    @Published var settings : SettingsStruct
     // END SETTINGS VARIABLES...
     
     let dbConnection : DataBaseHandler
     // var activeView : Views = Views.list // keep track of what the active view is, to be efficient with observers/closures.
-    var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
-    var reports : [String : WeatherReport] = [:]
-    var activeReport: String?
+    @Published var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
+    @Published var reports : [String : WeatherReport] = [:]
+    @Published var activeReport: String?
+    
+
     let locationTracker : LocationManager
     let refreshLock = DispatchSemaphore(value: 1)
     let deviceType : Device
@@ -70,10 +85,6 @@ class Cockpit {
         self.dbConnection = DataBaseHandler()
         /// App settings -> to be transferred to env
         self.settings = SettingsStruct()
-        if settings.homeAirport.count == 4 {
-            self.queryCodes.insert(settings.homeAirport)
-        }
-        ///
         self.activeReport = nil
         self.locationTracker = LocationManager()
         switch(UIDevice.current.userInterfaceIdiom) {
@@ -85,6 +96,13 @@ class Cockpit {
             self.deviceType = .other
         }
         print("Running app on \(self.deviceType.rawValue)")
+        if settings.homeAirport.count == 4 {
+            self.queryCodes.insert(settings.homeAirport)
+        }
+    }
+    
+    func refreshSettings() {
+        settings.update()
     }
     
     func getWeather() throws {
@@ -99,7 +117,7 @@ class Cockpit {
         
     }
     
-    func setTemperatureUnit(_ target: TemperatureUnit? = nil) -> TemperatureUnit {
+    func setTemperatureUnit(_ target: TemperatureUnit? = nil) {
         let newTempUnit : TemperatureUnit
         if let _ = target {
             // Use if a specific unit has been selected - i.e. not toggler.
@@ -110,11 +128,10 @@ class Cockpit {
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newTempUnit.rawValue, forKey: "temperatureUnit")
-        // Return the new unit as a state var, if called by a view.
-        return newTempUnit
+        settings.update()
     }
     
-    func setSpeedUnit(_ target: SpeedUnit? = nil) -> SpeedUnit {
+    func setSpeedUnit(_ target: SpeedUnit? = nil) {
         let newSpeedUnit : SpeedUnit
         if let _ = target {
             // Use if a specific unit has been selected - i.e. not toggler.
@@ -129,8 +146,7 @@ class Cockpit {
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newSpeedUnit.rawValue, forKey: "speedUnit")
-        // Return the new unit as a state var, if called by a view.
-        return newSpeedUnit
+        settings.update()
     }
     
     func getSpeedUnitText(_ unit: SpeedUnit? = nil) -> String {
@@ -142,7 +158,7 @@ class Cockpit {
         }
     }
     
-    func setVisibilityUnit(_ target: VisUnit? = nil) -> VisUnit {
+    func setVisibilityUnit(_ target: VisUnit? = nil) {
         let newVisUnit : VisUnit
         if let _ = target {
             // Use if a specific unit has been selected - i.e. not toggler.
@@ -153,14 +169,13 @@ class Cockpit {
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newVisUnit.rawValue, forKey: "visibilityUnit")
-        // Return the new unit as a state var, if called by a view.
-        return newVisUnit
+        settings.update()
     }
     
     func setHomeAirport(_ icao: String) {
         
         UserDefaults.standard.set(icao, forKey: "homeAirport")
-        print(settings.homeAirport)
+        settings.update()
     }
     
     func editQueryList(_ icao: String, retain: Bool = false, exclude: Bool = false) {

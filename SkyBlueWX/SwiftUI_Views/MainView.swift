@@ -16,31 +16,37 @@ enum Views {
 }
 
 struct MainView: View {
-    @State private var cockpit : Cockpit
+    @EnvironmentObject var cockpit : Cockpit
+    // Monitor status of the app (active/inactive/background)
+    @Environment(\.scenePhase) var scenePhase
     @State private var selectedTab : Views = .weather
-    init() {
-        // Initialize the controller for the app.
-        self.cockpit = Cockpit()
-    }
+    
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavigationStack{ListView(cockpit: $cockpit, selectedTab: $selectedTab)}.tabItem {
+            NavigationStack{ListView(selectedTab: $selectedTab)}.tabItem {
                 Label("Airports", systemImage: "airplane.departure")
             }.tag(Views.list)
-            NavigationStack{MapView(cockpit: $cockpit, selectedTab: $selectedTab)}.tabItem {
+            NavigationStack{MapView(selectedTab: $selectedTab)}.tabItem {
                 Label("Map", systemImage: "map.fill")
             }.tag(Views.map)
-            WeatherView(cockpit: $cockpit, selectedTab: $selectedTab).tabItem {
+            WeatherView(selectedTab: $selectedTab).tabItem {
                 Label("Weather", systemImage: "sun.max.fill")
             }.tag(Views.weather)
-            FlightPlanView(cockpit: $cockpit, selectedTab: $selectedTab).tabItem {
+            FlightPlanView(selectedTab: $selectedTab).tabItem {
                 Label("Flight Plan", systemImage: "airplane")
             }.tag(Views.flightPlan)
-            SettingsView(cockpit: $cockpit, selectedTab: $selectedTab).tabItem {
+            SettingsView(selectedTab: $selectedTab).tabItem {
                 Label("Settings", systemImage: "gear")
             }.tag(Views.setting)
         }.onAppear()
+            .onChange(of: scenePhase) {newPhase in
+                switch newPhase {
+                case .active, .inactive: cockpit.refreshSettings()
+                default: ()
+                }
+                
+            }
     }
 }
 

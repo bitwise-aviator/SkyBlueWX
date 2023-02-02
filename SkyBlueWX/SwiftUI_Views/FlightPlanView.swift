@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FlightPlanView: View {
-    @Binding var cockpit : Cockpit
+    @EnvironmentObject var cockpit : Cockpit
     @Binding var selectedTab : Views
     
     var body: some View {
@@ -17,7 +17,8 @@ struct FlightPlanView: View {
 }
 
 struct FlightPlanView_Previews: PreviewProvider {
+    static let cockpit = Cockpit()
     static var previews: some View {
-        FlightPlanView(cockpit: .constant(Cockpit()), selectedTab: .constant(.flightPlan))
+        FlightPlanView(selectedTab: .constant(.flightPlan)).environmentObject(cockpit)
     }
 }

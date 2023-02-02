@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var cockpit : Cockpit
+    @EnvironmentObject var cockpit : Cockpit
     @Binding var selectedTab : Views
     
     var body: some View {
@@ -17,7 +17,8 @@ struct SettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
+    static let cockpit = Cockpit()
     static var previews: some View {
-        SettingsView(cockpit: .constant(Cockpit()), selectedTab: .constant(.setting))
+        SettingsView(selectedTab: .constant(.setting)).environmentObject(cockpit)
     }
 }

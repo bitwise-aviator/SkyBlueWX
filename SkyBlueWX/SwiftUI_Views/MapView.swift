@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapView: View {
-    @Binding var cockpit : Cockpit
+    @EnvironmentObject var cockpit : Cockpit
     @Binding var selectedTab : Views
     
     var body: some View {
@@ -17,7 +17,8 @@ struct MapView: View {
 }
 
 struct MapView_Previews: PreviewProvider {
+    static let cockpit = Cockpit()
     static var previews: some View {
-        MapView(cockpit: .constant(Cockpit()), selectedTab: .constant(.map))
+        MapView(selectedTab: .constant(.map)).environmentObject(cockpit)
     }
 }

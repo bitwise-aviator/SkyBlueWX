@@ -43,24 +43,17 @@ class ListViewBoxHolder {
 
 
 struct ListView: View {
-    @Binding var cockpit : Cockpit
+    @EnvironmentObject var cockpit : Cockpit
     @Binding var selectedTab : Views
     @State var searchAirport : String = ""
     @State var airportResultDict : AirportDict? = [:]
     @State var airportSelectorVisible : Bool = false
-    @State var airportCodes = Set<String>()
     @State var boxContents : ListViewBoxDict = [:]
-    @State var result : Int = 0
     
     func editQuery(_ parameter: String?) {
         if let _ = parameter {
             cockpit.editQueryList(parameter!)
-            updateAirportCodes()
         }
-    }
-    
-    func updateAirportCodes() {
-        airportCodes = cockpit.queryCodes
     }
     
     func postWeather() {
@@ -114,7 +107,7 @@ struct ListView: View {
                     }
                 }
                 VStack {
-                    ForEach(airportCodes.sorted(by: <), id: \.self) {
+                    ForEach(cockpit.queryCodes.sorted(by: <), id: \.self) {
                         airport in
                             HStack {
                                 Text(airport)
@@ -130,7 +123,8 @@ struct ListView: View {
 }
 
 struct ListView_Previews: PreviewProvider {
+    static let cockpit = Cockpit()
     static var previews: some View {
-        ListView(cockpit: .constant(Cockpit()), selectedTab: .constant(.list))
+        ListView(selectedTab: .constant(.list)).environmentObject(cockpit)
     }
 }
