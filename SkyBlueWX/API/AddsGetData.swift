@@ -144,7 +144,7 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
                  Else, use y - a default value - as the value of a.
                  */
                 let altimeter = Double(csvItems[11]) ?? 29.92
-                let visibility = Double(csvItems[10]) ?? 0.0
+                let visibility = Double(csvItems[10]) ?? 0.25
                 let temp = Double(csvItems[5]) ?? 0.0 // Temperature (C). Using double to increase precision when converting to/from F.
                 let dewPt = Double(csvItems[6]) ?? 0.0 // Dewpoint
                 let windDirection = Int(csvItems[7]) ?? 0 // Wind direction (degrees)

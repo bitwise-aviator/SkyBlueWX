@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct WindView: View {
+    @EnvironmentObject var cockpit : Cockpit
+    var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+            WindDirectionView()
+            WindSpeedView()
+            WindSockView()
+        }
     }
 }
 

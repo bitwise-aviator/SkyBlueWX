@@ -73,7 +73,6 @@ struct WeatherView: View {
             }
         }
     }
-    @State var airportView : String? = nil
     @State var windSpeedString : String = "--"
     @State var windGustString : String = "--"
     @State var windsockIcon : String = "WindSock00kt"
@@ -91,40 +90,13 @@ struct WeatherView: View {
     var weatherRefresher : Timer?
     
     func moveForward() {
-        guard let _ = airportView else {return}
-        var reportKeys = Array(cockpit.reports.keys)
-        reportKeys.sort()
-        guard let currentIndex = reportKeys.firstIndex(of: airportView!) else {return}
-        let index : Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
-        if  index < reportKeys.count - 1 {
-            airportView = reportKeys[index + 1]
-            printMet()
-        }
+        if cockpit.moveToNextReport() {printMet()}
         
     }
     
     func moveBack() {
-        guard let _ = airportView else {return}
-        var reportKeys = Array(cockpit.reports.keys)
-        reportKeys.sort()
-        guard let currentIndex = reportKeys.firstIndex(of: airportView!) else {return}
-        let index : Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
-        if  index > 0 {
-            airportView = reportKeys[index - 1]
-            printMet()
-        }
+        if cockpit.moveToNextReport(reverse: true) {printMet()}
     }
-    
-    func moveTo(icao: String) -> Bool {
-        // return is whether move was successful.
-        if Array(cockpit.reports.keys).contains(icao) {
-            airportView = icao
-            return true
-        } else {
-            return false
-        }
-    }
-
     
     func refresh() {
         printMet()
@@ -169,31 +141,29 @@ struct WeatherView: View {
         // Gets the weather report
         Task { // Opens new thread.
             do {
-                cockpit.reports = await loadMe(icao: queryCodes, cockpit: cockpit) // Calls the getter/parser.
-                var reportKeys = Array(cockpit.reports.keys)
-                reportKeys.sort()
-                if reportKeys.count == 0 {
+                try await cockpit.getWeather() // Calls the getter/parser.
+                if cockpit.reportKeys.count == 0 {
                     throw Errors.noAirportCodes
                 }
                 var airportViewHasChanged : Bool = false
                 if let _ = moveTarget {
-                    airportViewHasChanged = moveTo(icao: moveTarget!)
+                    airportViewHasChanged = cockpit.moveToReport(icao: moveTarget!)
                 }
                 // This block keeps the viewframe on the same airport that the user was already on after fetching weather data, if that airport is requested. Behavior is useful if auto-updating later.
                 if !airportViewHasChanged {
-                    if let shownAirport = airportView {
-                        if !reportKeys.contains(shownAirport) {
-                            airportView = reportKeys[0]
+                    if let shownAirport = cockpit.activeReport {
+                        if !cockpit.reportKeys.contains(shownAirport) {
+                            cockpit.activeReport = cockpit.reportKeys[0]
                         }
                     } else {
-                        airportView = reportKeys[0]
+                        cockpit.activeReport = cockpit.reportKeys[0]
                     }
                 }
                 printMet()
                 refreshLock.signal()
             } catch Errors.noAirportCodes {
                 // Changes the UI view to reflect that no weather report was found.
-                airportView = nil
+                cockpit.activeReport = nil
                 printBadScreen()
                 refreshLock.signal()
             }
@@ -203,8 +173,8 @@ struct WeatherView: View {
     
     func printBadScreen() {
         hasError = true
-        if let _ = airportView {
-            errorStatement = "Airport \(airportView!) did not return a METAR..."
+        if let _ = cockpit.activeReport {
+            errorStatement = "Airport \(cockpit.activeReport!) did not return a METAR..."
         } else {
             errorStatement = "No airports requested"
         }
@@ -229,8 +199,8 @@ struct WeatherView: View {
     
     func printMet() {
         // Handles UI changes in case of a valid weather report.
-        guard let airportView = airportView else {return}
-        guard let shownReport = cockpit.reports[airportView] else{return} // Shorthand for report visible in UI.
+        guard let _ = cockpit.activeReport else {return}
+        guard let shownReport = cockpit.reports[cockpit.activeReport!] else{return} // Shorthand for report visible in UI.
         if shownReport.hasData /*Checks if report is valid or not.*/ {
             // Updates text narrative, icon, and icon color accoridng to report data.
             hasError = false
@@ -303,14 +273,7 @@ struct WeatherView: View {
                 }
                 Spacer()
             }
-            HStack {
-                Button(action: moveBack) {
-                    Text("←")
-                }
-                Button(action: moveForward) {
-                    Text("→")
-                }
-            }
+            WeatherViewTabScroller()
             Spacer().frame(height: 20)
             ZStack {
                 VStack {
@@ -318,19 +281,11 @@ struct WeatherView: View {
                         Spacer()
                         Image(systemName: wxIcon).foregroundColor(wxColor)
                         Image(systemName: "circle.fill").foregroundColor(flightRulesColor)
-                        Text(airportView ?? "----").foregroundColor(.white).font(.system(size: 16)).fontWeight(.bold)
+                        Text(cockpit.activeReport ?? "----").foregroundColor(.white).font(.system(size: 16)).fontWeight(.bold)
                         Spacer()
                         VStack {
                             Text("Density altitude: \(densityAltitudeString)").foregroundColor(.white).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .trailing)
-                            HStack {
-                                Spacer().frame(maxWidth: .infinity)
-                                Image(systemName: "thermometer.medium").foregroundColor(.white)
-                                Text(tracker.temperature.temp).foregroundColor(.white)
-                                Image(systemName: "thermometer.and.liquid.waves").foregroundColor(tracker.temperature.humidColor)
-                                Text(tracker.temperature.dewPt).foregroundColor(tracker.temperature.humidColor)
-                            }.onTapGesture {
-                                changeTempUnit()
-                            }
+                            TempAndDewpointSmallView()
                         }
                         Spacer()
                     }.padding(.vertical, 10).background(Color.black).frame(maxWidth: .infinity, maxHeight: 0.03 * maxDimension)
@@ -347,36 +302,9 @@ struct WeatherView: View {
                     }.padding(.vertical, 10).frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.blue)
                     Spacer().frame(height: 0)
                     HStack {
-                        VStack {
-                            Image(systemName: visibilityIcon).resizable().frame(width: maxDimension * 0.03, height: maxDimension * 0.03).foregroundColor(visibilityColor)
-                            Text(visibilityString).foregroundColor(visibilityColor).fontWeight(.bold)
-                        }.onTapGesture {
-                            changeVisUnit()
-                        }
+                        VisibilityView()
                         Spacer().frame(maxWidth: 30)
-                        VStack {
-                            Image(systemName: "location.north.fill").resizable().frame(width: maxDimension * 0.03, height: maxDimension * 0.03).rotationEffect(Angle(degrees: Double(windDirRotate + 180))).foregroundColor(.white)
-                            Text(windDirString).foregroundColor(.white).fontWeight(.bold)
-                        }
-                        Spacer().frame(maxWidth: 30)
-                        VStack {
-                            Text(windSpeedString).fontWeight(.bold).font(.system(size: 32)).foregroundColor(.white)
-                            Text(cockpit.settings.speedUnitString).foregroundColor(.white)
-                            if windGustString != "--" {
-                                HStack {
-                                    if windGustString != "--" {
-                                        Image(systemName: "wind").foregroundColor(.yellow)
-                                        Text(windGustString).foregroundColor(.yellow).fontWeight(.bold)} else {
-                                            Text("")
-                                        }
-                                }.frame(height: 25)
-                            }
-                            
-                        }.onTapGesture {
-                            changeSpeedUnit()
-                        }
-                        Image(windsockIcon).resizable().frame(
-                            width: maxDimension * 0.1, height: maxDimension * 0.1)
+                        WindView()
                     }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background(Color.green)
                 }
                 if airportSelectorVisible {
