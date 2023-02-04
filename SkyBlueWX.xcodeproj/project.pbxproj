@@ -27,6 +27,15 @@
 		4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */; };
 		4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E83BDC1295AA250005D8DC3 /* Core.swift */; };
 		DC71755B298BF57000674D94 /* WindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755A298BF57000674D94 /* WindView.swift */; };
+		DC71755D298C291400674D94 /* WindSockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755C298C291400674D94 /* WindSockView.swift */; };
+		DC71755F298C2CAC00674D94 /* WindSpeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755E298C2CAC00674D94 /* WindSpeedView.swift */; };
+		DC717561298C2E2C00674D94 /* WindDirectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717560298C2E2C00674D94 /* WindDirectionView.swift */; };
+		DC717563298DD1EB00674D94 /* VisibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717562298DD1EB00674D94 /* VisibilityView.swift */; };
+		DC717565298DDA4200674D94 /* TemperatureSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717564298DDA4200674D94 /* TemperatureSmallView.swift */; };
+		DC717567298DDB6600674D94 /* DewpointSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717566298DDB6600674D94 /* DewpointSmallView.swift */; };
+		DC717569298DDC9000674D94 /* TempAndDewpointSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */; };
+		DC71756B298DDEBC00674D94 /* WeatherViewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */; };
+		DC71756D298DE60700674D94 /* WeatherViewTabScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +81,15 @@
 		4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cockpit.swift; sourceTree = "<group>"; };
 		4E83BDC1295AA250005D8DC3 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		DC71755A298BF57000674D94 /* WindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindView.swift; sourceTree = "<group>"; };
+		DC71755C298C291400674D94 /* WindSockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindSockView.swift; sourceTree = "<group>"; };
+		DC71755E298C2CAC00674D94 /* WindSpeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindSpeedView.swift; sourceTree = "<group>"; };
+		DC717560298C2E2C00674D94 /* WindDirectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindDirectionView.swift; sourceTree = "<group>"; };
+		DC717562298DD1EB00674D94 /* VisibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityView.swift; sourceTree = "<group>"; };
+		DC717564298DDA4200674D94 /* TemperatureSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureSmallView.swift; sourceTree = "<group>"; };
+		DC717566298DDB6600674D94 /* DewpointSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DewpointSmallView.swift; sourceTree = "<group>"; };
+		DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempAndDewpointSmallView.swift; sourceTree = "<group>"; };
+		DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewTab.swift; sourceTree = "<group>"; };
+		DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewTabScroller.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +185,7 @@
 				DC717559298BF55100674D94 /* WeatherView_Components */,
 				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
 				261F7D05292473EF002D3010 /* WeatherView.swift */,
+				DC717562298DD1EB00674D94 /* VisibilityView.swift */,
 				4E83BDB529529AF9005D8DC3 /* MainView.swift */,
 				4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */,
 				4E83BDBB29529BE0005D8DC3 /* ListView.swift */,
@@ -208,6 +227,14 @@
 			isa = PBXGroup;
 			children = (
 				DC71755A298BF57000674D94 /* WindView.swift */,
+				DC71755C298C291400674D94 /* WindSockView.swift */,
+				DC71755E298C2CAC00674D94 /* WindSpeedView.swift */,
+				DC717560298C2E2C00674D94 /* WindDirectionView.swift */,
+				DC717564298DDA4200674D94 /* TemperatureSmallView.swift */,
+				DC717566298DDB6600674D94 /* DewpointSmallView.swift */,
+				DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */,
+				DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */,
+				DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */,
 			);
 			path = WeatherView_Components;
 			sourceTree = "<group>";
@@ -346,7 +373,9 @@
 			files = (
 				4E83BDB829529BB0005D8DC3 /* SettingsView.swift in Sources */,
 				261F7D06292473EF002D3010 /* WeatherView.swift in Sources */,
+				DC717561298C2E2C00674D94 /* WindDirectionView.swift in Sources */,
 				4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */,
+				DC717567298DDB6600674D94 /* DewpointSmallView.swift in Sources */,
 				4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */,
 				DC71755B298BF57000674D94 /* WindView.swift in Sources */,
 				4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */,
@@ -354,11 +383,18 @@
 				DCFECF872982B80A0097DA8C /* Location.swift in Sources */,
 				4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */,
 				4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */,
+				DC71755D298C291400674D94 /* WindSockView.swift in Sources */,
+				DC717563298DD1EB00674D94 /* VisibilityView.swift in Sources */,
 				262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */,
+				DC71756D298DE60700674D94 /* WeatherViewTabScroller.swift in Sources */,
 				DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */,
+				DC717569298DDC9000674D94 /* TempAndDewpointSmallView.swift in Sources */,
+				DC71755F298C2CAC00674D94 /* WindSpeedView.swift in Sources */,
 				4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */,
 				261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */,
 				4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */,
+				DC71756B298DDEBC00674D94 /* WeatherViewTab.swift in Sources */,
+				DC717565298DDA4200674D94 /* TemperatureSmallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

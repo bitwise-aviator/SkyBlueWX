@@ -72,8 +72,13 @@ final class Cockpit : ObservableObject {
     // var activeView : Views = Views.list // keep track of what the active view is, to be efficient with observers/closures.
     @Published var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
     @Published var reports : [String : WeatherReport] = [:]
+    var reportKeys : [String] {
+        get {
+            Array(reports.keys).sorted()
+        }
+    }
     @Published var activeReport: String?
-    
+    @Published var activeReportStruct : WeatherReport?
 
     let locationTracker : LocationManager
     let refreshLock = DispatchSemaphore(value: 1)
@@ -86,6 +91,7 @@ final class Cockpit : ObservableObject {
         /// App settings -> to be transferred to env
         self.settings = SettingsStruct()
         self.activeReport = nil
+        self.activeReportStruct = nil
         self.locationTracker = LocationManager()
         switch(UIDevice.current.userInterfaceIdiom) {
         case .phone:
@@ -105,15 +111,73 @@ final class Cockpit : ObservableObject {
         settings.update()
     }
     
-    func getWeather() throws {
+    func moveToNextReport(reverse: Bool = false) -> Bool {
+        guard let _ = activeReport else {return false}
+        guard let currentIndex = reportKeys.firstIndex(of: activeReport!) else {return false}
+        let index : Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
+        if index < reportKeys.count - 1 && !reverse {
+            activeReport = reportKeys[index + 1]
+            activeReportStruct = reports[activeReport!]
+            return true
+        } else if index > 0 && reverse {
+            activeReport = reportKeys[index - 1]
+            activeReportStruct = reports[activeReport!]
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func moveToReport(icao: String) -> Bool {
+        guard let _ = reports[icao] else { return false }
+        activeReport = icao
+        activeReportStruct = reports[icao]
+        return true
+    }
+    
+    func removeReport(icao: String) {
+        guard let _ = reports[icao] else {return}
+        if icao == activeReport {
+            // This makes the app move to the previous tab. If it was the
+            if icao == reportKeys[0] && reportKeys.count > 1 { _ = moveToNextReport()
+            } else {
+                _ = moveToNextReport(reverse: true)
+            }
+            reports[icao] = nil
+            queryCodes.remove(icao)
+            if reportKeys.count == 0 {
+                activeReport = nil
+                activeReportStruct = nil
+            }
+            
+        } else {
+            reports[icao] = nil
+            queryCodes.remove(icao)
+        }
+        
+        
+    }
+    
+    
+    func getWeather() async throws {
         // Only handle the backend weather-fetching here. Renders are kept in their respective views.
-        refreshLock.wait() // Locks/queues further executions
-        Task {
+        let lookup = Task {
             do {
-                reports = await loadMe(icao: queryCodes, cockpit: self) // Call getter & parser
-                
+                return await loadMe(icao: queryCodes, cockpit: self)
             }
         }
+        let results : [String : WeatherReport] = await lookup.value
+        DispatchQueue.main.async {
+            self.reports = results
+            if self.reportKeys.count > 0 {
+                self.activeReportStruct = self.reports[self.reportKeys[0]]
+                self.activeReport = self.reportKeys[0]
+            } else {
+                self.activeReportStruct = nil
+                self.activeReport = nil
+            }
+        }
+        
         
     }
     

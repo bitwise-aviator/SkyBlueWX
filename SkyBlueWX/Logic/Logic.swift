@@ -168,7 +168,12 @@ struct WeatherReport {
                 return "\(String(format: "%.2f", visibility)) mi"
             }
         } else {
-            return "\(String(format: "%.2f", 1.609 * visibility)) km"
+            if 1.609 * visibility >= 1.0 {
+                return "\(String(format: "%.2f", 1.609 * visibility)) km"
+            } else {
+                print(1609 * visibility)
+                return "\(String(Int(1609 * visibility))) m"
+            }
         }
     }
     
