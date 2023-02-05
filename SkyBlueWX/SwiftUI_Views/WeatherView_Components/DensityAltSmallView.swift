@@ -16,7 +16,7 @@ struct DensityAltSmallView: View {
     }
     
     var body: some View {
-        Text("Density altitude: \(densityAltitudeString)").foregroundColor(.white).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .trailing)
+        Text("Density altitude: \(densityAltitudeString)").foregroundColor(.bicolor).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .trailing)
     }
 }
 

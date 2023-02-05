@@ -13,6 +13,7 @@ import SwiftUI
 extension Color {
     static let bicolor = Color("Bicolor")
     static let bicolorInv = Color("BicolorInv")
+    static let bicolorCaution = Color("BicolorCaution")
     static let darkGreen = Color("DarkGreen")
     static let darkBlue = Color("DarkBlue")
     static let darkRed = Color("DarkRed")

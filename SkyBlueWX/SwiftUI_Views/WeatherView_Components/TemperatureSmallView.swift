@@ -16,8 +16,8 @@ struct TemperatureSmallView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "thermometer.medium").foregroundColor(.white)
-            Text(temperatureString).foregroundColor(.white)
+            Image(systemName: "thermometer.medium").foregroundColor(.bicolor)
+            Text(temperatureString).foregroundColor(.bicolor)
         }
     }
 }

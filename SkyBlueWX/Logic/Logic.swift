@@ -329,7 +329,7 @@ struct WeatherReport {
     var wxColor : Color {
         get {
             if details.thunderStormsReported {
-                return Color.orange // Use this color for critical weather, such as thunderstorms.
+                return Color.bicolorCaution // Use this color for critical weather, such as thunderstorms.
             }
             if details.isRaining {
                 return Color.blue

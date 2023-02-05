@@ -169,7 +169,7 @@ struct WeatherView: View {
                             TempAndDewpointSmallView()
                         }
                         Spacer()
-                    }.padding(.vertical, 10).background(Color.black).frame(maxWidth: .infinity, maxHeight: 0.03 * maxDimension)
+                    }.padding(.vertical, 10).background(Color.bicolorInv).frame(maxWidth: .infinity, maxHeight: 0.03 * maxDimension)
                     Spacer().frame(height: 20)
                     HStack {
                         if hasError {

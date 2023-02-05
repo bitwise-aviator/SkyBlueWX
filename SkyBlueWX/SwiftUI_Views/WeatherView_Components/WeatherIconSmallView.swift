@@ -15,7 +15,7 @@ struct WeatherIconSmallView: View {
     }
     
     var weatherIconColor : Color {
-        return cockpit.activeReportStruct?.wxColor ?? .white
+        return cockpit.activeReportStruct?.wxColor ?? .bicolor
     }
     
     var body: some View {

@@ -24,7 +24,7 @@ struct FlightRulesIconSmallView: View {
     
     var flightRulesColor : Color {
         get {
-            guard let _ = cockpit.activeReportStruct else { return .white }
+            guard let _ = cockpit.activeReportStruct else { return .bicolor }
             return cockpit.activeReportStruct!.flightConditionColor
         }
     }

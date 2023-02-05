@@ -15,8 +15,8 @@ struct DewpointSmallView: View {
     }
     
     var humidColor : Color {
-        guard let _ = cockpit.activeReportStruct else { return .white }
-        return cockpit.activeReportStruct!.relativeHumidity >= 80 ? .yellow : .white
+        guard let _ = cockpit.activeReportStruct else { return .bicolor }
+        return cockpit.activeReportStruct!.relativeHumidity >= 80 ? .bicolorCaution : .bicolor
     }
     
     var body: some View {

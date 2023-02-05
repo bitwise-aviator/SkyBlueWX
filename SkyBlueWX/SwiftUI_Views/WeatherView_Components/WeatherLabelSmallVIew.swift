@@ -21,9 +21,9 @@ struct WeatherLabelSmallVIew: View {
     @ViewBuilder
     var body: some View {
         VStack(alignment: .leading) {
-            Text(text).foregroundColor(.white).font(.system(size: 16)).fontWeight(.bold)
+            Text(text).foregroundColor(.bicolor).font(.system(size: 16)).fontWeight(.bold)
             if cockpit.deviceInfo.deviceType == .pad {
-                Text(subText).foregroundColor(.white)
+                Text(subText).foregroundColor(.bicolor)
             }
         }
     }
