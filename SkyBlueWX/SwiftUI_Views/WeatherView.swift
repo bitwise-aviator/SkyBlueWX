@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-// Enumeration for errors. To be expanded.
-enum Errors : Error {
-    case noReportFound, noAirportCodes
-}
-
 func getFirstRuntime() -> Date {
     // This determines when the first refresh query is going to run. Ideally, it should refresh in the background every 1-2 min or so.
     //let interval = 120 // Cycles are 2 min (120s) long
@@ -41,7 +36,6 @@ struct WeatherView: View {
     var weatherRefresher : Timer?
     
     func refresh() {
-        printMet()
     }
     
     func simpleMetLookup() {
@@ -68,58 +62,13 @@ struct WeatherView: View {
         // Gets the weather report
         Task { // Opens new thread.
             do {
-                try await cockpit.getWeather() // Calls the getter/parser.
-                if cockpit.reportKeys.count == 0 {
-                    throw Errors.noAirportCodes
-                }
-                var airportViewHasChanged : Bool = false
-                if let _ = moveTarget {
-                    airportViewHasChanged = cockpit.moveToReport(icao: moveTarget!)
-                }
-                // This block keeps the viewframe on the same airport that the user was already on after fetching weather data, if that airport is requested. Behavior is useful if auto-updating later.
-                if !airportViewHasChanged {
-                    if let shownAirport = cockpit.activeReport {
-                        if !cockpit.reportKeys.contains(shownAirport) {
-                            cockpit.activeReport = cockpit.reportKeys[0]
-                        }
-                    } else {
-                        cockpit.activeReport = cockpit.reportKeys[0]
-                    }
-                }
-                printMet()
+                try await cockpit.getWeather(moveTo: moveTarget) // Calls the getter/parser.
                 refreshLock.signal()
             } catch Errors.noAirportCodes {
                 // Changes the UI view to reflect that no weather report was found.
-                cockpit.activeReport = nil
-                printBadScreen()
                 refreshLock.signal()
             }
         }
-        
-    }
-    
-    func printBadScreen() {
-        hasError = true
-        if let _ = cockpit.activeReport {
-            errorStatement = "Airport \(cockpit.activeReport!) did not return a METAR..."
-        } else {
-            errorStatement = "No airports requested"
-        }
-        print(errorStatement)
-    }
-    
-    func printMet() {
-        // Handles UI changes in case of a valid weather report.
-        guard let _ = cockpit.activeReport else {return}
-        guard let shownReport = cockpit.reports[cockpit.activeReport!] else{return} // Shorthand for report visible in UI.
-        if shownReport.hasData /*Checks if report is valid or not.*/ {
-            // Updates text narrative, icon, and icon color accoridng to report data.
-            hasError = false
-        } else {
-            printBadScreen()
-        }
-        //
-        
         
     }
     
@@ -172,14 +121,7 @@ struct WeatherView: View {
                     }.padding(.vertical, 10).background(Color.bicolorInv).frame(maxWidth: .infinity, maxHeight: 0.03 * maxDimension)
                     Spacer().frame(height: 20)
                     HStack {
-                        if hasError {
-                            VStack {
-                                Text(errorStatement).foregroundColor(.red)
-                            }.padding().border(.red, width: 5).background(Color.white)
-                            
-                        } else {
-                            Text("")
-                        }
+                        ErrorMessageView()
                     }.padding(.vertical, 10).frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.blue)
                     Spacer().frame(height: 0)
                     HStack {

@@ -11,11 +11,13 @@ struct VisibilityView: View {
     @EnvironmentObject var cockpit : Cockpit
     var visibilityIcon : Image {
         guard let _ = cockpit.activeReportStruct else { return Image(systemName: "eye.fill") }
+        guard cockpit.activeReportStruct!.hasData else {return Image(systemName: "eye.fill") }
         return Image(systemName: cockpit.activeReportStruct!.visibility >= 3.0 ? "eye.fill": "eye.slash.fill")
     }
     
     var visibilityColor : Color {
         guard let _ = cockpit.activeReportStruct else { return .white }
+        guard cockpit.activeReportStruct!.hasData else {return .white }
         return cockpit.activeReportStruct!.visibility >= 3.0 ? .white : .yellow
     }
     

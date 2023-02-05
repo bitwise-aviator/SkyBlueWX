@@ -42,6 +42,7 @@
 		DC717575298F12FD00674D94 /* FlightRulesIconSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717574298F12FD00674D94 /* FlightRulesIconSmallView.swift */; };
 		DC717577298F1FB400674D94 /* UIDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717576298F1FB400674D94 /* UIDeviceInfo.swift */; };
 		DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */; };
+		DC71757C298F54ED00674D94 /* ErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757B298F54ED00674D94 /* ErrorMessageView.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -103,6 +104,7 @@
 		DC717576298F1FB400674D94 /* UIDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceInfo.swift; sourceTree = "<group>"; };
 		DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabelSmallVIew.swift; sourceTree = "<group>"; };
 		DC71757A298F29B400674D94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DC71757B298F54ED00674D94 /* ErrorMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageView.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,7 +201,6 @@
 				DC717559298BF55100674D94 /* WeatherView_Components */,
 				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
 				261F7D05292473EF002D3010 /* WeatherView.swift */,
-				DC717562298DD1EB00674D94 /* VisibilityView.swift */,
 				4E83BDB529529AF9005D8DC3 /* MainView.swift */,
 				4E83BDB929529BC3005D8DC3 /* FlightPlanView.swift */,
 				4E83BDBB29529BE0005D8DC3 /* ListView.swift */,
@@ -242,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				DC71755A298BF57000674D94 /* WindView.swift */,
+				DC71757B298F54ED00674D94 /* ErrorMessageView.swift */,
 				DC71755C298C291400674D94 /* WindSockView.swift */,
 				DC71755E298C2CAC00674D94 /* WindSpeedView.swift */,
 				DC717560298C2E2C00674D94 /* WindDirectionView.swift */,
@@ -255,6 +257,7 @@
 				DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */,
 				DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */,
 				DC71756E298F0BD300674D94 /* DensityAltSmallView.swift */,
+				DC717562298DD1EB00674D94 /* VisibilityView.swift */,
 			);
 			path = WeatherView_Components;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */,
 				261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */,
 				4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */,
+				DC71757C298F54ED00674D94 /* ErrorMessageView.swift in Sources */,
 				DC71756B298DDEBC00674D94 /* WeatherViewTab.swift in Sources */,
 				DC717571298F0F0F00674D94 /* WeatherOverviewSmallView.swift in Sources */,
 				DC717565298DDA4200674D94 /* TemperatureSmallView.swift in Sources */,

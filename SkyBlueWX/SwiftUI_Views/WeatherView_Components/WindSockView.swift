@@ -33,19 +33,6 @@ struct WindSockView: View {
             }
         }
     }
-    /*@State var windSockIcon : WindSockIcon = .kt00
-    
-    func updateWindSock() {
-        guard let _ = cockpit.activeReportStruct else {windSockIcon = .kt00; return}
-        switch (cockpit.activeReportStruct!.wind.speed) {
-        case 15...: windSockIcon = .kt15
-        case 12..<15: windSockIcon = .kt12
-        case 9..<12: windSockIcon = .kt09
-        case 6..<9: windSockIcon = .kt06
-        case 3..<6: windSockIcon = .kt03
-        default: windSockIcon = .kt00
-        }
-    }*/
     
     var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
     

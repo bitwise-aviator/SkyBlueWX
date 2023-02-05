@@ -150,7 +150,7 @@ final class Cockpit : ObservableObject {
     }
     
     
-    func getWeather() async throws {
+    func getWeather(moveTo: String? = nil) async throws {
         // Only handle the backend weather-fetching here. Renders are kept in their respective views.
         let lookup = Task {
             do {
@@ -161,8 +161,14 @@ final class Cockpit : ObservableObject {
         DispatchQueue.main.async {
             self.reports = results
             if self.reportKeys.count > 0 {
-                self.activeReportStruct = self.reports[self.reportKeys[0]]
-                self.activeReport = self.reportKeys[0]
+                var hasMoved = false
+                if let _ = moveTo {
+                    hasMoved = self.moveToReport(icao: moveTo!)
+                }
+                if !hasMoved {
+                    self.activeReportStruct = self.reports[self.reportKeys[0]]
+                    self.activeReport = self.reportKeys[0]
+                }
             } else {
                 self.activeReportStruct = nil
                 self.activeReport = nil

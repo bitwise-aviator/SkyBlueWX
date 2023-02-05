@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 
+// Enumeration for errors. To be expanded.
+enum Errors : Error {
+    case noReportFound, noAirportCodes
+}
+
 // Loads custom colors from assets folder and assigns them as properties to the Color struct.
 extension Color {
     static let bicolor = Color("Bicolor")
@@ -50,4 +55,6 @@ enum FlightConditions : String {
     case ifr = "IFR"
     // Low IFR (LIFR): ceiling < 500ft OR visibility < 1mi.
     case lifr = "LIFR"
+    // Unknown, for when there is no data.
+    case unknown = "Unknown"
 }

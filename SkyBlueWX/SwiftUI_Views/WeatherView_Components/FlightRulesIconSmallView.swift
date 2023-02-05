@@ -14,10 +14,11 @@ struct FlightRulesIconSmallView: View {
         get {
             guard let _ = cockpit.activeReportStruct else { return "x.circle.fill" }
             switch cockpit.activeReportStruct!.flightCondition {
-                case .vfr: return "v.circle.fill"
-                case .mvfr: return "m.circle.fill"
-                case .ifr: return "i.circle.fill"
-                case .lifr: return "l.circle.fill"
+            case .vfr: return "v.circle.fill"
+            case .mvfr: return "m.circle.fill"
+            case .ifr: return "i.circle.fill"
+            case .lifr: return "l.circle.fill"
+            case .unknown: return "x.circle.fill"
             }
         }
     }

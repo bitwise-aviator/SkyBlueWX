@@ -161,6 +161,7 @@ struct WeatherReport {
     
     var visibility : Double
     func visibilityToString(unit: VisUnit) -> String {
+        guard hasData else {return "----"}
         if unit == .mile {
             if visibility.truncatingRemainder(dividingBy: 1) == 0 {
                 return "\(String(Int(visibility))) mi"
@@ -179,20 +180,22 @@ struct WeatherReport {
     
     var flightCondition : FlightConditions {
         get {
+            guard hasData else {return .unknown}
             let ceiling = ceilingHeight ?? Int.max
-            if ceiling < 500 || visibility < 1 {return FlightConditions.lifr}
-            else if ceiling < 1000 || visibility < 3 {return FlightConditions.ifr}
-            else if ceiling <= 3000 || visibility <= 5 {return FlightConditions.mvfr}
-            else {return FlightConditions.vfr}
+            if ceiling < 500 || visibility < 1 {return .lifr}
+            else if ceiling < 1000 || visibility < 3 {return .ifr}
+            else if ceiling <= 3000 || visibility <= 5 {return .mvfr}
+            else {return .vfr}
         }
     }
     
     var flightConditionColor : Color {
         switch flightCondition {
-        case .vfr: return Color.darkGreen
-        case .mvfr: return Color.blue
-        case .ifr: return Color.darkRed
-        case .lifr: return Color.magenta
+        case .vfr: return .darkGreen
+        case .mvfr: return .blue
+        case .ifr: return .darkRed
+        case .lifr: return .magenta
+        case .unknown: return .bicolor
         }
         
     }
@@ -200,6 +203,7 @@ struct WeatherReport {
     var temperature : Double
     
     func temperatureToString(unit: TemperatureUnit) -> String {
+        guard hasData else {return "----"}
         switch unit {
         case .C : return "\(Int(round(temperature)))°C"
         case .F : return "\(Int(round((1.8 * temperature) + 32)))°F"
@@ -209,6 +213,7 @@ struct WeatherReport {
     var dewPoint : Double
     
     func dewpointToString(unit: TemperatureUnit) -> String {
+        guard hasData else {return "----"}
         switch unit {
         case .C : return "\(Int(round(dewPoint)))°C"
         case .F : return "\(Int(round((1.8 * dewPoint) + 32)))°F"
@@ -216,7 +221,8 @@ struct WeatherReport {
     }
     var relativeHumidity : Double {
         get {
-            relHumidity(temperature: temperature, dewpoint: dewPoint)
+            guard hasData else {return 0.0}
+            return relHumidity(temperature: temperature, dewpoint: dewPoint)
         }
     }
     var wind : Wind
@@ -241,6 +247,7 @@ struct WeatherReport {
     
     var windDirToString : String {
         get {
+            guard hasData else {return "---° --"}
             if wind.isVariable && wind.speed == 0 {return "CALM"}
             else if wind.isVariable {return "VRB"}
             let windDir : String
@@ -294,11 +301,13 @@ struct WeatherReport {
     }
     
     func densityAltitudeToString() -> String {
+        guard hasData else {return "-----"}
         return "\(String(format: "%.0f", densityAltitude)) ft"
     }
     
     var wxIcon : String {
         get {
+            guard hasData else {return "questionmark.square.dashed"}
             if details.thunderStormsReported {
                 if details.isRaining || details.isSnowing {
                     return "cloud.bolt.rain.fill"
@@ -328,6 +337,7 @@ struct WeatherReport {
     
     var wxColor : Color {
         get {
+            guard hasData else {return .bicolor}
             if details.thunderStormsReported {
                 return Color.bicolorCaution // Use this color for critical weather, such as thunderstorms.
             }
@@ -344,45 +354,6 @@ struct WeatherReport {
                 return Color.yellow
             }
             
-        }
-    }
-    
-    func reportTemp(unit: TemperatureUnit) -> String {
-        func toF(celsius: Double) -> Double {
-            return (celsius * 1.8) + 32
-        }
-        
-        switch unit {
-        case TemperatureUnit.C: return "The temperature is \(Int(temperature))°C and the dewpoint is \(Int(dewPoint))°C. The relative humidity is \(Int(relativeHumidity))%."
-        case TemperatureUnit.F: return "The temperature is \(Int(toF(celsius: temperature)))°F and the dewpoint is \(Int(toF(celsius: dewPoint)))°F. The relative humidity is \(Int(relativeHumidity))%."
-        }
-        
-    }
-    
-    func reportClouds() -> String {
-        thousandsNumber.groupingSize = 3
-        thousandsNumber.groupingSeparator = ","
-        if (clouds.count == 0) {
-            return "No significant clouds reported."
-        }
-        else {
-            var desc : String = ""
-            for i in 0..<clouds.count {
-                let currentCloud = clouds[i]
-                switch currentCloud.cover {
-                case .few: desc += "Few clouds at \( thousandsNumber.string(from: NSNumber(value: currentCloud.height))!) ft"
-                case .scattered: desc += "Scattered clouds at \( thousandsNumber.string(from: NSNumber(value: currentCloud.height))!) ft"
-                case .broken: desc += "Broken clouds at \( thousandsNumber.string(from: NSNumber(value: currentCloud.height))!) ft"
-                case .overcast: desc += "Overcast clouds at \( thousandsNumber.string(from: NSNumber(value: currentCloud.height))!) ft"
-                case .obscured: desc += "Sky obscured, vertical visibility of \( thousandsNumber.string(from: NSNumber(value: currentCloud.height))!) ft"
-                }
-                if i == clouds.count - 1 {
-                    desc += "."
-                } else {
-                    desc += ", "
-                }
-            }
-            return desc
         }
     }
     
