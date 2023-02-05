@@ -36,6 +36,12 @@
 		DC717569298DDC9000674D94 /* TempAndDewpointSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */; };
 		DC71756B298DDEBC00674D94 /* WeatherViewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */; };
 		DC71756D298DE60700674D94 /* WeatherViewTabScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */; };
+		DC71756F298F0BD300674D94 /* DensityAltSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71756E298F0BD300674D94 /* DensityAltSmallView.swift */; };
+		DC717571298F0F0F00674D94 /* WeatherOverviewSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717570298F0F0F00674D94 /* WeatherOverviewSmallView.swift */; };
+		DC717573298F128B00674D94 /* WeatherIconSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717572298F128B00674D94 /* WeatherIconSmallView.swift */; };
+		DC717575298F12FD00674D94 /* FlightRulesIconSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717574298F12FD00674D94 /* FlightRulesIconSmallView.swift */; };
+		DC717577298F1FB400674D94 /* UIDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717576298F1FB400674D94 /* UIDeviceInfo.swift */; };
+		DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -90,6 +96,13 @@
 		DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempAndDewpointSmallView.swift; sourceTree = "<group>"; };
 		DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewTab.swift; sourceTree = "<group>"; };
 		DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewTabScroller.swift; sourceTree = "<group>"; };
+		DC71756E298F0BD300674D94 /* DensityAltSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DensityAltSmallView.swift; sourceTree = "<group>"; };
+		DC717570298F0F0F00674D94 /* WeatherOverviewSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherOverviewSmallView.swift; sourceTree = "<group>"; };
+		DC717572298F128B00674D94 /* WeatherIconSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconSmallView.swift; sourceTree = "<group>"; };
+		DC717574298F12FD00674D94 /* FlightRulesIconSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightRulesIconSmallView.swift; sourceTree = "<group>"; };
+		DC717576298F1FB400674D94 /* UIDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceInfo.swift; sourceTree = "<group>"; };
+		DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabelSmallVIew.swift; sourceTree = "<group>"; };
+		DC71757A298F29B400674D94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +156,7 @@
 		261F7D02292473EF002D3010 /* SkyBlueWX */ = {
 			isa = PBXGroup;
 			children = (
+				DC71757A298F29B400674D94 /* Info.plist */,
 				4E2B02E2296B9DD50003004E /* API */,
 				4E2B02E1296B9D8A0003004E /* Logic */,
 				4E2B02E0296B9D5A0003004E /* IO */,
@@ -207,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */,
+				DC717576298F1FB400674D94 /* UIDeviceInfo.swift */,
 				4E83BDC1295AA250005D8DC3 /* Core.swift */,
 				261F7D2D292475F3002D3010 /* Logic.swift */,
 				DCFECF862982B80A0097DA8C /* Location.swift */,
@@ -233,8 +248,13 @@
 				DC717564298DDA4200674D94 /* TemperatureSmallView.swift */,
 				DC717566298DDB6600674D94 /* DewpointSmallView.swift */,
 				DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */,
+				DC717570298F0F0F00674D94 /* WeatherOverviewSmallView.swift */,
+				DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */,
+				DC717572298F128B00674D94 /* WeatherIconSmallView.swift */,
+				DC717574298F12FD00674D94 /* FlightRulesIconSmallView.swift */,
 				DC71756C298DE60700674D94 /* WeatherViewTabScroller.swift */,
 				DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */,
+				DC71756E298F0BD300674D94 /* DensityAltSmallView.swift */,
 			);
 			path = WeatherView_Components;
 			sourceTree = "<group>";
@@ -371,16 +391,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC71756F298F0BD300674D94 /* DensityAltSmallView.swift in Sources */,
 				4E83BDB829529BB0005D8DC3 /* SettingsView.swift in Sources */,
 				261F7D06292473EF002D3010 /* WeatherView.swift in Sources */,
 				DC717561298C2E2C00674D94 /* WindDirectionView.swift in Sources */,
 				4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */,
 				DC717567298DDB6600674D94 /* DewpointSmallView.swift in Sources */,
+				DC717577298F1FB400674D94 /* UIDeviceInfo.swift in Sources */,
 				4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */,
 				DC71755B298BF57000674D94 /* WindView.swift in Sources */,
 				4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */,
 				261F7D2E292475F3002D3010 /* Logic.swift in Sources */,
 				DCFECF872982B80A0097DA8C /* Location.swift in Sources */,
+				DC717575298F12FD00674D94 /* FlightRulesIconSmallView.swift in Sources */,
+				DC717573298F128B00674D94 /* WeatherIconSmallView.swift in Sources */,
 				4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */,
 				4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */,
 				DC71755D298C291400674D94 /* WindSockView.swift in Sources */,
@@ -391,9 +415,11 @@
 				DC717569298DDC9000674D94 /* TempAndDewpointSmallView.swift in Sources */,
 				DC71755F298C2CAC00674D94 /* WindSpeedView.swift in Sources */,
 				4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */,
+				DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */,
 				261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */,
 				4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */,
 				DC71756B298DDEBC00674D94 /* WeatherViewTab.swift in Sources */,
+				DC717571298F0F0F00674D94 /* WeatherOverviewSmallView.swift in Sources */,
 				DC717565298DDA4200674D94 /* TemperatureSmallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,8 +587,8 @@
 				DEVELOPMENT_TEAM = YG5N57HMZ9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SkyBlueWX/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Uses location to find nearest weather stations";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -593,8 +619,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YG5N57HMZ9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SkyBlueWX/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Uses location to find nearest weather stations";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -12,17 +12,6 @@ enum Errors : Error {
     case noReportFound, noAirportCodes
 }
 
-
-func getGreeting() -> String {
-    let thisHour = Calendar.current.component(.hour, from: Date())
-    switch (thisHour) {
-    case 4..<12: return "Good morning!"
-    case 12..<18: return "Good afternoon!"
-    default: return "Good evening!"
-    }
-}
-
-
 func getFirstRuntime() -> Date {
     // This determines when the first refresh query is going to run. Ideally, it should refresh in the background every 1-2 min or so.
     //let interval = 120 // Cycles are 2 min (120s) long
@@ -34,18 +23,6 @@ func getFirstRuntime() -> Date {
     return Date(timeIntervalSinceReferenceDate: TimeInterval(firstRuntime))
 }
 
-struct WeatherStateTracker {
-    struct Temperature {
-        var unit = TemperatureUnit.C
-        var temp = "---"
-        var dewPt = "---"
-        var humid = 0.0
-        var humidColor = Color.white
-    }
-    
-    var temperature = Temperature()
-}
-
 // Outline that contains the UI
 struct WeatherView: View {
     // Monitor status of the app (active/inactive/background)
@@ -54,67 +31,17 @@ struct WeatherView: View {
     @EnvironmentObject var cockpit : Cockpit
     @Binding var selectedTab : Views
     // @State variables control the app's render. If one is modified, it causes the screen to refresh.
-    @State var wxIndex = 0 // Which report are we looking at?
-    @State var wxText = "What's the weather like?" // Weather report text, if a report exists.
     @State var searchAirport = "" // Airport code that appears in the search box.
     @State var airportSelectorVisible = false;
-    @State var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
-    @State var tracker = WeatherStateTracker() // Condense all state variables into a single struct.
     @State var hasError = false // Self-explanatory
     @State var errorStatement = "" // If an error is encountered, this is what will be shown to the user.
-    @State var wxIcon = "questionmark.square.dashed" // This is the path for the weather icon that will be shown to the user.
-    @State var wxColor = Color.white // Color of the weather icon.
-    var speedUnitText : String {
-        get {
-            switch cockpit.settings.speedUnit {
-            case .knot: return "kt"
-            case .mph: return "mph"
-            case .kmh: return "km/h"
-            }
-        }
-    }
-    @State var windSpeedString : String = "--"
-    @State var windGustString : String = "--"
-    @State var windsockIcon : String = "WindSock00kt"
-    @State var windDirString : String = "---° --"
-    @State var windDirRotate : Int = 0
-    @State var visibilityString : String = "----"
-    @State var visibilityIcon : String = "eye.fill"
-    @State var visibilityColor = Color.white
-    @State var densityAltitudeString = "-----"
-    @State var flightRulesColor = Color.darkGreen
     @State var airportResultDict : AirportDict? = [:]
     let databaseConnection = DataBaseHandler()
-    var greetingText : String = getGreeting() // Placeholder.
     let refreshLock = DispatchSemaphore(value: 1) // Protects the report structure if it is updating. Queries will not fire if this lock is on.
     var weatherRefresher : Timer?
     
-    func moveForward() {
-        if cockpit.moveToNextReport() {printMet()}
-        
-    }
-    
-    func moveBack() {
-        if cockpit.moveToNextReport(reverse: true) {printMet()}
-    }
-    
     func refresh() {
         printMet()
-    }
-    
-    func changeTempUnit() {
-        cockpit.setTemperatureUnit()
-        printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
-    }
-    
-    func changeSpeedUnit() {
-        cockpit.setSpeedUnit()
-        printMet() // Todo: split up printMet() so only spd. is refreshed. Ditto for other units.
-    }
-    
-    func changeVisUnit() {
-        cockpit.setVisibilityUnit()
-        printMet() // Todo: split up printMet() so only temp. is refreshed. Ditto for other units.
     }
     
     func simpleMetLookup() {
@@ -178,22 +105,6 @@ struct WeatherView: View {
         } else {
             errorStatement = "No airports requested"
         }
-        wxIcon = "questionmark.square.dashed"
-        wxColor = Color.white
-        windSpeedString = "--"
-        windGustString = "--"
-        windsockIcon = "WindSock00kt"
-        windDirString = "---° --"
-        windDirRotate = 0
-        visibilityString = "----"
-        visibilityIcon = "eye.fill"
-        visibilityColor = .white
-        tracker.temperature.temp = "---"
-        tracker.temperature.dewPt = "---"
-        densityAltitudeString = "-----"
-        tracker.temperature.humid = 0.0
-        tracker.temperature.humidColor = .white
-        flightRulesColor = Color.darkGreen
         print(errorStatement)
     }
     
@@ -204,30 +115,6 @@ struct WeatherView: View {
         if shownReport.hasData /*Checks if report is valid or not.*/ {
             // Updates text narrative, icon, and icon color accoridng to report data.
             hasError = false
-            wxText = shownReport.reportClouds()
-            wxIcon = shownReport.wxIcon
-            wxColor = shownReport.wxColor
-            windSpeedString = shownReport.windSpeedToString(unit: cockpit.settings.speedUnit)
-            windGustString = shownReport.windGustsToString(unit: cockpit.settings.speedUnit)
-            switch (shownReport.wind.speed) {
-            case 15...: windsockIcon = "WindSock15kt"
-            case 12..<15: windsockIcon = "WindSock12kt"
-            case 9..<12: windsockIcon = "WindSock09kt"
-            case 6..<9: windsockIcon = "WindSock06kt"
-            case 3..<6: windsockIcon = "WindSock03kt"
-            default: windsockIcon = "WindSock00kt"
-            }
-            windDirString = shownReport.windDirToString
-            windDirRotate = shownReport.wind.direction ?? 0
-            visibilityString = shownReport.visibilityToString(unit: cockpit.settings.visibilityUnit)
-            visibilityIcon = shownReport.visibility >= 3.0 ? "eye.fill" : "eye.slash.fill"
-            visibilityColor = shownReport.visibility >= 3.0 ? .white : .yellow
-            tracker.temperature.temp = shownReport.temperatureToString(unit: cockpit.settings.temperatureUnit)
-            tracker.temperature.dewPt = shownReport.dewpointToString(unit: cockpit.settings.temperatureUnit)
-            densityAltitudeString = shownReport.densityAltitudeToString()
-            tracker.temperature.humid = shownReport.relativeHumidity
-            tracker.temperature.humidColor = tracker.temperature.humid >= 80 ? .yellow : .white
-            flightRulesColor = shownReport.flightConditionColor
         } else {
             printBadScreen()
         }
@@ -238,12 +125,10 @@ struct WeatherView: View {
     
     func pushToQueryList(_ icao: String) {
         cockpit.editQueryList(icao, retain: true)
-        queryCodes = cockpit.queryCodes
     }
     
     func editQueryList(_ icao: String) {
         cockpit.editQueryList(icao)
-        queryCodes = cockpit.queryCodes
     }
     
     
@@ -256,21 +141,19 @@ struct WeatherView: View {
     @ViewBuilder
     var body: some View {
         VStack { // Items within a VStack are stacked vertically, HStack, horizontally.
-            Text(greetingText)
-                .foregroundColor(Color.blue)
-                .padding()
+            HStack {}
             HStack (
                 spacing: 10
             ){
                 Spacer()
                 TextField("Lookup", text: $searchAirport).autocorrectionDisabled(true).onChange(of: searchAirport, perform: {newValue in
                     airportSelectorVisible = true
-                    airportResultDict = databaseConnection.getAirports(searchTerm: newValue)}).onSubmit {
+                    airportResultDict = cockpit.getAirportRecords(newValue)}).onSubmit {
                         simpleMetLookup() // Textbox that triggers dropdown menu for airport selection. The textbox's input is no longer used for weather queries.
                     }
                 Button(action: simpleMetLookup) {
-                    Text("Tell me!") // Button does the same as pressing return on the text input box.
-                }
+                    Text("RUN").foregroundColor(.white).font(.system(size: 16)).fontWeight(.bold).padding(7.0) // Button does the same as pressing return on the text input box.
+                }.background{ Color.green }
                 Spacer()
             }
             WeatherViewTabScroller()
@@ -279,12 +162,10 @@ struct WeatherView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Image(systemName: wxIcon).foregroundColor(wxColor)
-                        Image(systemName: "circle.fill").foregroundColor(flightRulesColor)
-                        Text(cockpit.activeReport ?? "----").foregroundColor(.white).font(.system(size: 16)).fontWeight(.bold)
+                        WeatherOverviewSmallView()
                         Spacer()
                         VStack {
-                            Text("Density altitude: \(densityAltitudeString)").foregroundColor(.white).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .trailing)
+                            DensityAltSmallView()
                             TempAndDewpointSmallView()
                         }
                         Spacer()
@@ -320,7 +201,7 @@ struct WeatherView: View {
                                                 Spacer().frame(height: 0)
                                                 Text(airportResultDict![key]!.city).lineLimit(1).truncationMode(.tail)
                                             }.frame(width: UIScreen.main.bounds.width * 0.7)
-                                            Image(systemName: (queryCodes.contains(airportResultDict![key]!.icao) ? "minus.square" : "plus.square")).foregroundColor((queryCodes.contains(airportResultDict![key]!.icao) ? Color.darkRed : Color.darkGreen)).frame(width: UIScreen.main.bounds.width * 0.1).onTapGesture {
+                                            Image(systemName: (cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? "minus.square" : "plus.square")).foregroundColor((cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? Color.darkRed : Color.darkGreen)).frame(width: UIScreen.main.bounds.width * 0.1).onTapGesture {
                                                 editQueryList(airportResultDict![key]!.icao)
                                             }
                                         }.frame(maxWidth: .infinity).background(Color.bicolorInv.opacity(0.85))

@@ -54,12 +54,6 @@ struct SettingsStruct {
     }
 }
 
-enum Device : String {
-    case pad = "iPad"
-    case phone = "iPhone"
-    case other = "other"
-}
-
 final class Cockpit : ObservableObject {
     /// This class is a common interface to store data across the app and handle cross-app integration.
     ///
@@ -68,7 +62,7 @@ final class Cockpit : ObservableObject {
     @Published var settings : SettingsStruct
     // END SETTINGS VARIABLES...
     
-    let dbConnection : DataBaseHandler
+    private let dbConnection : DataBaseHandler
     // var activeView : Views = Views.list // keep track of what the active view is, to be efficient with observers/closures.
     @Published var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
     @Published var reports : [String : WeatherReport] = [:]
@@ -80,9 +74,9 @@ final class Cockpit : ObservableObject {
     @Published var activeReport: String?
     @Published var activeReportStruct : WeatherReport?
 
-    let locationTracker : LocationManager
-    let refreshLock = DispatchSemaphore(value: 1)
-    let deviceType : Device
+    private let locationTracker : LocationManager
+    private let refreshLock = DispatchSemaphore(value: 1)
+    let deviceInfo : UIDeviceInfo
     
     
     init() {
@@ -93,18 +87,15 @@ final class Cockpit : ObservableObject {
         self.activeReport = nil
         self.activeReportStruct = nil
         self.locationTracker = LocationManager()
-        switch(UIDevice.current.userInterfaceIdiom) {
-        case .phone:
-            self.deviceType = .phone
-        case .pad:
-            self.deviceType = .pad
-        default:
-            self.deviceType = .other
-        }
-        print("Running app on \(self.deviceType.rawValue)")
+        self.deviceInfo = UIDeviceInfo()
+        print("Running app on \(self.deviceInfo.deviceType.rawValue)")
         if settings.homeAirport.count == 4 {
             self.queryCodes.insert(settings.homeAirport)
         }
+    }
+    
+    func getAirportRecords(_ term: String) -> AirportDict? {
+        return dbConnection.getAirports(searchTerm: term)
     }
     
     func refreshSettings() {

@@ -72,7 +72,7 @@ struct ListView: View {
                 Spacer()
                 TextField("Lookup", text: $searchAirport).autocorrectionDisabled(true).onChange(of: searchAirport, perform: {newValue in
                     airportSelectorVisible = true
-                    airportResultDict = cockpit.dbConnection.getAirports(searchTerm: newValue)}).onSubmit {
+                    airportResultDict = cockpit.getAirportRecords(newValue)}).onSubmit {
                         nothing() // Textbox that triggers dropdown menu for airport selection. The textbox's input is no longer used for weather queries.
                     }
                 Button(action: nothing) {
