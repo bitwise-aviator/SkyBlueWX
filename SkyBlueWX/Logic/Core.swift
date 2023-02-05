@@ -19,10 +19,14 @@ extension Color {
     static let bicolor = Color("Bicolor")
     static let bicolorInv = Color("BicolorInv")
     static let bicolorCaution = Color("BicolorCaution")
+    static let bicolorCautionInv = Color("BicolorCautionInv")
     static let darkGreen = Color("DarkGreen")
     static let darkBlue = Color("DarkBlue")
     static let darkRed = Color("DarkRed")
     static let magenta = Color("Magenta")
+    static let groundBackground = Color("GroundBackground")
+    static let skyBackground = Color("SkyBackground")
+    static let grayBackground = Color("GrayBackground")
 }
 
 

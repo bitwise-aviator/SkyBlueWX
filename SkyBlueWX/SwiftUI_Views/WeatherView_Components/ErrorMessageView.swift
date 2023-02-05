@@ -35,7 +35,7 @@ struct ErrorMessageView: View {
         if let errorText = boxText {
             VStack {
                 Text(errorText).foregroundColor(.red)
-            }.padding().border(.red, width: 5).background(Color.white)
+            }.padding().border(.red, width: 5).background(Color.bicolorInv)
         } else {
             EmptyView()
         }

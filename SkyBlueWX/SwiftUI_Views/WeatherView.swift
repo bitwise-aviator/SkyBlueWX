@@ -121,14 +121,17 @@ struct WeatherView: View {
                     }.padding(.vertical, 10).background(Color.bicolorInv).frame(maxWidth: .infinity, maxHeight: 0.03 * maxDimension)
                     Spacer().frame(height: 20)
                     HStack {
-                        ErrorMessageView()
-                    }.padding(.vertical, 10).frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.blue)
+                        ZStack {
+                            CloudStackView()
+                            ErrorMessageView()
+                        }
+                    }.padding(.vertical, 10).frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.skyBackground)
                     Spacer().frame(height: 0)
                     HStack {
                         VisibilityView()
                         Spacer().frame(maxWidth: 30)
                         WindView()
-                    }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background(Color.green)
+                    }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background(Color.groundBackground)
                 }
                 if airportSelectorVisible {
                     if let _ = airportResultDict {

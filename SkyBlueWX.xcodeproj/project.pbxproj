@@ -43,6 +43,8 @@
 		DC717577298F1FB400674D94 /* UIDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717576298F1FB400674D94 /* UIDeviceInfo.swift */; };
 		DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */; };
 		DC71757C298F54ED00674D94 /* ErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757B298F54ED00674D94 /* ErrorMessageView.swift */; };
+		DC71757E29900E0800674D94 /* CloudLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757D29900E0800674D94 /* CloudLayerView.swift */; };
+		DC7175802990243F00674D94 /* CloudStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757F2990243F00674D94 /* CloudStackView.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -105,6 +107,8 @@
 		DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLabelSmallVIew.swift; sourceTree = "<group>"; };
 		DC71757A298F29B400674D94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC71757B298F54ED00674D94 /* ErrorMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageView.swift; sourceTree = "<group>"; };
+		DC71757D29900E0800674D94 /* CloudLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLayerView.swift; sourceTree = "<group>"; };
+		DC71757F2990243F00674D94 /* CloudStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStackView.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,6 +254,8 @@
 				DC717564298DDA4200674D94 /* TemperatureSmallView.swift */,
 				DC717566298DDB6600674D94 /* DewpointSmallView.swift */,
 				DC71756A298DDEBC00674D94 /* WeatherViewTab.swift */,
+				DC71757D29900E0800674D94 /* CloudLayerView.swift */,
+				DC71757F2990243F00674D94 /* CloudStackView.swift */,
 				DC717570298F0F0F00674D94 /* WeatherOverviewSmallView.swift */,
 				DC717578298F23DA00674D94 /* WeatherLabelSmallVIew.swift */,
 				DC717572298F128B00674D94 /* WeatherIconSmallView.swift */,
@@ -416,6 +422,7 @@
 				DC71756D298DE60700674D94 /* WeatherViewTabScroller.swift in Sources */,
 				DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */,
 				DC717569298DDC9000674D94 /* TempAndDewpointSmallView.swift in Sources */,
+				DC7175802990243F00674D94 /* CloudStackView.swift in Sources */,
 				DC71755F298C2CAC00674D94 /* WindSpeedView.swift in Sources */,
 				4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */,
 				DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */,
@@ -424,6 +431,7 @@
 				DC71757C298F54ED00674D94 /* ErrorMessageView.swift in Sources */,
 				DC71756B298DDEBC00674D94 /* WeatherViewTab.swift in Sources */,
 				DC717571298F0F0F00674D94 /* WeatherOverviewSmallView.swift in Sources */,
+				DC71757E29900E0800674D94 /* CloudLayerView.swift in Sources */,
 				DC717565298DDA4200674D94 /* TemperatureSmallView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
