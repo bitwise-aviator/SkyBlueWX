@@ -300,9 +300,13 @@ struct WeatherReport {
         }
     }
     
-    func densityAltitudeToString() -> String {
+    func densityAltitudeToString(unit: AltitudeUnit) -> String {
         guard hasData else {return "-----"}
-        return "\(String(format: "%.0f", densityAltitude)) ft"
+        if unit == .m {
+            return "\(String(format: "%.0f", densityAltitude * 0.3048)) m"
+        } else {
+            return "\(String(format: "%.0f", densityAltitude)) ft"
+        }
     }
     
     var wxIcon : String {

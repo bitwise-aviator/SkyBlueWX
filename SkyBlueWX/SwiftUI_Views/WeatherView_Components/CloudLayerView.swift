@@ -23,14 +23,14 @@ struct CloudLayerView: View {
     
     var cloudCoverageIcon : AnyView {
         get {
-            let noDataIcon = AnyView(GeometryReader {g in ZStack {
+            let noDataIcon = AnyView(ZStack {
                 Circle().strokeBorder(Color.bicolor, lineWidth: 5)
-                Text("?").font(.system(size: min(g.size.height,g.size.width,30) * 0.7))
-            }.frame(maxWidth: 30, maxHeight: 30)})
-            // Is this one really used here??
-            let clearIcon = AnyView(ZStack {
-                Circle().strokeBorder(Color.bicolor, lineWidth: 5)
+                Text("?").font(.system(size: 30 * 0.7))
             }.frame(maxWidth: 30, maxHeight: 30))
+            // Is this one really used here??
+            /*let clearIcon = AnyView(ZStack {
+                Circle().strokeBorder(Color.bicolor, lineWidth: 5)
+            }.frame(maxWidth: 30, maxHeight: 30))*/
             let fewIcon = AnyView(ZStack {
                 Circle().strokeBorder(Color.bicolor, lineWidth: 5)
                 Circle().trim(from: 0.0, to: 0.5).rotation(Angle(degrees: -90)).clipShape(Circle().trim(from: 0.0, to: 0.5).rotation(Angle(degrees:180)))
@@ -47,10 +47,10 @@ struct CloudLayerView: View {
             let overcastIcon = AnyView(ZStack {
                 Circle().strokeBorder(  Color.bicolor, lineWidth: 20).background(Circle().fill(Color.bicolor))
             }.frame(maxWidth: 30, maxHeight: 30))
-            let obscuredIcon = AnyView(GeometryReader { g in ZStack {
+            let obscuredIcon = AnyView(ZStack {
                 Circle().strokeBorder(Color.bicolor, lineWidth: 20).background(Circle().fill(Color.bicolor))
-                Text("!").foregroundColor(Color.bicolorInv).font(.system(size: min(g.size.height,g.size.width,30) * 0.7))
-            }.frame(maxWidth: 30, maxHeight: 30)})
+                Text("!").foregroundColor(Color.bicolorInv).font(.system(size: 30 * 0.7))
+            }.frame(maxWidth: 30, maxHeight: 30))
             
             guard let thisLayer = cloudData else {
                 return noDataIcon
@@ -73,7 +73,10 @@ struct CloudLayerView: View {
     
     var cloudZText : String {
         guard let thisLayer = cloudData else {return "-----"}
-        return String(thisLayer.height)
+        if cockpit.settings.altitudeUnit == .m {
+            return "\(String(Int(Double(thisLayer.height) * 0.3048))) m"
+        }
+        return "\(String(thisLayer.height)) ft"
     }
     
     var cloudCoverText : String {
@@ -92,7 +95,9 @@ struct CloudLayerView: View {
                 HStack {
                     cloudCoverageIcon
                     Text(cloudCoverText).font(.system(size: min(g.size.height, 30) * 0.7))
-                    Text(cloudZText).font(.system(size: min(g.size.height, 30) * 0.7))
+                    Text(cloudZText).font(.system(size: min(g.size.height, 30) * 0.7)).onTapGesture {
+                        cockpit.setAltitudeUnit()
+                    }
                 }.frame(maxHeight: 30).padding(10).background(Color.grayBackground).border(isCeiling ? Color.bicolorCaution : .clear, width: 3)
             }
         }

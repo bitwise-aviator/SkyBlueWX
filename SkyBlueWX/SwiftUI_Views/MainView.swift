@@ -19,6 +19,7 @@ struct MainView: View {
     @EnvironmentObject var cockpit : Cockpit
     // Monitor status of the app (active/inactive/background)
     @Environment(\.scenePhase) var scenePhase
+    
     @State private var selectedTab : Views = .weather
     
     
@@ -39,7 +40,7 @@ struct MainView: View {
             SettingsView(selectedTab: $selectedTab).tabItem {
                 Label("Settings", systemImage: "gear")
             }.tag(Views.setting)
-        }.onAppear()
+        }.toolbarColorScheme(.dark, for: .tabBar).onAppear()
             .onChange(of: scenePhase) {newPhase in
                 switch newPhase {
                 case .active, .inactive: cockpit.refreshSettings()

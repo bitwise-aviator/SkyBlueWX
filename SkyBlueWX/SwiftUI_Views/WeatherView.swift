@@ -131,7 +131,7 @@ struct WeatherView: View {
                         VisibilityView()
                         Spacer().frame(maxWidth: 30)
                         WindView()
-                    }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background(Color.groundBackground)
+                    }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background{Color.groundBackground}
                 }
                 if airportSelectorVisible {
                     if let _ = airportResultDict {

@@ -13,6 +13,8 @@ struct SettingsStruct {
     var temperatureUnit : TemperatureUnit
     var speedUnit : SpeedUnit
     var visibilityUnit : VisUnit
+    var altitudeUnit : AltitudeUnit
+    
     var homeAirport : String
     
     mutating func update() {
@@ -32,6 +34,13 @@ struct SettingsStruct {
         case 1: visibilityUnit = .km
         default: visibilityUnit = .mile
         }
+        
+        let altitudeUnitKey = UserDefaults.standard.integer(forKey: "altitudeUnit")
+        switch altitudeUnitKey {
+        case 1: altitudeUnit = .m
+        default: altitudeUnit = .ft
+        }
+        
         homeAirport = UserDefaults.standard.string(forKey: "homeAirport") ?? ""
     }
     
@@ -39,6 +48,7 @@ struct SettingsStruct {
         self.temperatureUnit = .C
         self.speedUnit = .knot
         self.visibilityUnit = .mile
+        self.altitudeUnit = .ft
         self.homeAirport = ""
         update()
     }
@@ -230,6 +240,20 @@ final class Cockpit : ObservableObject {
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newVisUnit.rawValue, forKey: "visibilityUnit")
+        settings.update()
+    }
+    
+    func setAltitudeUnit(_ target: AltitudeUnit? = nil) {
+        let newAltitudeUnit : AltitudeUnit
+        if let _ = target {
+            // Use if a specific unit has been selected - i.e. not toggler.
+            newAltitudeUnit = target!
+        } else {
+            // Use for toggler or for cycling, advance to next one.
+            newAltitudeUnit = settings.altitudeUnit == .ft ? .m : .ft
+        }
+        // Apply changes to user settings (SettingsStruct has computed units)
+        UserDefaults.standard.set(newAltitudeUnit.rawValue, forKey: "altitudeUnit")
         settings.update()
     }
     
