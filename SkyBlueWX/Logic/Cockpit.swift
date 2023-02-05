@@ -176,8 +176,11 @@ final class Cockpit : ObservableObject {
                     hasMoved = self.moveToReport(icao: moveTo!)
                 }
                 if !hasMoved {
-                    self.activeReportStruct = self.reports[self.reportKeys[0]]
-                    self.activeReport = self.reportKeys[0]
+                    if self.activeReport != nil && self.reportKeys.contains(self.activeReport!) { }
+                    else {
+                        self.activeReportStruct = self.reports[self.reportKeys[0]]
+                        self.activeReport = self.reportKeys[0]
+                    }
                 }
             } else {
                 self.activeReportStruct = nil

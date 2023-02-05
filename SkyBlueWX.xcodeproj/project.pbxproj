@@ -45,6 +45,9 @@
 		DC71757C298F54ED00674D94 /* ErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757B298F54ED00674D94 /* ErrorMessageView.swift */; };
 		DC71757E29900E0800674D94 /* CloudLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757D29900E0800674D94 /* CloudLayerView.swift */; };
 		DC7175802990243F00674D94 /* CloudStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71757F2990243F00674D94 /* CloudStackView.swift */; };
+		DC7175832990528400674D94 /* AirportTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175822990528400674D94 /* AirportTileView.swift */; };
+		DC71758529905AC700674D94 /* AirportTileFlightRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71758429905AC700674D94 /* AirportTileFlightRuleView.swift */; };
+		DC71758729905DA300674D94 /* AirportTileWindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71758629905DA300674D94 /* AirportTileWindView.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -109,6 +112,9 @@
 		DC71757B298F54ED00674D94 /* ErrorMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageView.swift; sourceTree = "<group>"; };
 		DC71757D29900E0800674D94 /* CloudLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLayerView.swift; sourceTree = "<group>"; };
 		DC71757F2990243F00674D94 /* CloudStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStackView.swift; sourceTree = "<group>"; };
+		DC7175822990528400674D94 /* AirportTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportTileView.swift; sourceTree = "<group>"; };
+		DC71758429905AC700674D94 /* AirportTileFlightRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportTileFlightRuleView.swift; sourceTree = "<group>"; };
+		DC71758629905DA300674D94 /* AirportTileWindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportTileWindView.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,6 +208,7 @@
 		4E2B02DF296B9D230003004E /* SwiftUI_Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC7175812990525600674D94 /* ListView_Components */,
 				DC717559298BF55100674D94 /* WeatherView_Components */,
 				4E83BDBD29529E1A005D8DC3 /* MapView.swift */,
 				261F7D05292473EF002D3010 /* WeatherView.swift */,
@@ -266,6 +273,16 @@
 				DC717562298DD1EB00674D94 /* VisibilityView.swift */,
 			);
 			path = WeatherView_Components;
+			sourceTree = "<group>";
+		};
+		DC7175812990525600674D94 /* ListView_Components */ = {
+			isa = PBXGroup;
+			children = (
+				DC7175822990528400674D94 /* AirportTileView.swift */,
+				DC71758429905AC700674D94 /* AirportTileFlightRuleView.swift */,
+				DC71758629905DA300674D94 /* AirportTileWindView.swift */,
+			);
+			path = ListView_Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -412,6 +429,7 @@
 				4E83BDBA29529BC3005D8DC3 /* FlightPlanView.swift in Sources */,
 				261F7D2E292475F3002D3010 /* Logic.swift in Sources */,
 				DCFECF872982B80A0097DA8C /* Location.swift in Sources */,
+				DC7175832990528400674D94 /* AirportTileView.swift in Sources */,
 				DC717575298F12FD00674D94 /* FlightRulesIconSmallView.swift in Sources */,
 				DC717573298F128B00674D94 /* WeatherIconSmallView.swift in Sources */,
 				4E83BDC2295AA250005D8DC3 /* Core.swift in Sources */,
@@ -422,10 +440,12 @@
 				DC71756D298DE60700674D94 /* WeatherViewTabScroller.swift in Sources */,
 				DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */,
 				DC717569298DDC9000674D94 /* TempAndDewpointSmallView.swift in Sources */,
+				DC71758529905AC700674D94 /* AirportTileFlightRuleView.swift in Sources */,
 				DC7175802990243F00674D94 /* CloudStackView.swift in Sources */,
 				DC71755F298C2CAC00674D94 /* WindSpeedView.swift in Sources */,
 				4E83BDBE29529E1A005D8DC3 /* MapView.swift in Sources */,
 				DC717579298F23DA00674D94 /* WeatherLabelSmallVIew.swift in Sources */,
+				DC71758729905DA300674D94 /* AirportTileWindView.swift in Sources */,
 				261F7D04292473EF002D3010 /* SkyBlueWXApp.swift in Sources */,
 				4E83BDBC29529BE0005D8DC3 /* ListView.swift in Sources */,
 				DC71757C298F54ED00674D94 /* ErrorMessageView.swift in Sources */,
