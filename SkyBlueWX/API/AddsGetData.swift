@@ -134,8 +134,25 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
                         case "OVX": cloudCover = CloudCover.obscured // METARs use VV (vertical visibility) but server uses OVX when reporting this layer. This means that the sky is obscured and cloud boundaries cannot be identified, the measurement indicates how high up can be seen from the ground.
                         default: cloudCover = nil; // If none apply, return a nil. This will trigger the guard and break out.
                         }
+                        let cloudHeight : Int
+                        if cloudCover == .obscured {
+                            let fullMetar : String = csvItems[0]
+                            let vvRegex = /.*VV(?<base>[0-9]{3})(?<rmk>\S*).*/
+                            if let captures = try? vvRegex.wholeMatch(in: fullMetar) {
+                                if let goodHeight = Int(captures.base) {
+                                    cloudHeight = goodHeight * 100
+                                } else {
+                                    cloudHeight = 0
+                                }
+                            } else {
+                                cloudHeight = 0
+                            }
+                        } else {
+                            cloudHeight = Int(csvItems[idx+1])!
+                        }
+                        
                         guard let cloudCover = cloudCover else {break}
-                        reportedClouds.append((cloudCover, Int(csvItems[idx+1])!, nil)) // If cloud cover is matched, pass it along with the unwrapped height value casted as an integer, as per the CSV schema.
+                        reportedClouds.append((cloudCover, cloudHeight, nil)) // If cloud cover is matched, pass it along with the unwrapped height value casted as an integer, as per the CSV schema.
                     } else {break} // If a bad pair (i.e. either value missing) is encountered, stop. It could mean that no further clouds were observed.
                 }
                 /* The syntax a = x ?? y means that:
