@@ -14,6 +14,7 @@ struct SettingsStruct {
     var speedUnit : SpeedUnit
     var visibilityUnit : VisUnit
     var altitudeUnit : AltitudeUnit
+    var pressureUnit : PressureUnit
     
     var homeAirport : String
     
@@ -41,6 +42,12 @@ struct SettingsStruct {
         default: altitudeUnit = .ft
         }
         
+        let pressureUnitKey = UserDefaults.standard.integer(forKey: "pressureUnit")
+        switch pressureUnitKey {
+        case 1: pressureUnit = .mbar
+        default: pressureUnit = .inHg
+        }
+        
         homeAirport = UserDefaults.standard.string(forKey: "homeAirport") ?? ""
     }
     
@@ -49,6 +56,7 @@ struct SettingsStruct {
         self.speedUnit = .knot
         self.visibilityUnit = .mile
         self.altitudeUnit = .ft
+        self.pressureUnit = .inHg
         self.homeAirport = ""
         update()
     }
@@ -270,6 +278,20 @@ final class Cockpit : ObservableObject {
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newAltitudeUnit.rawValue, forKey: "altitudeUnit")
+        settings.update()
+    }
+    
+    func setPressureUnit(_ target: PressureUnit? = nil) {
+        let newPressureUnit : PressureUnit
+        if let _ = target {
+            // Use if a specific unit has been selected - i.e. not toggler.
+            newPressureUnit = target!
+        } else {
+            // Use for toggler or for cycling, advance to next one.
+            newPressureUnit = settings.pressureUnit == .inHg ? .mbar : .inHg
+        }
+        // Apply changes to user settings (SettingsStruct has computed units)
+        UserDefaults.standard.set(newPressureUnit.rawValue, forKey: "pressureUnit")
         settings.update()
     }
     

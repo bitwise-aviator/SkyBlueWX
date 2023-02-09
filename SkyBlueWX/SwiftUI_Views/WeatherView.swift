@@ -128,6 +128,8 @@ struct WeatherView: View {
                     }.padding(.vertical, 10).frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.skyBackground)
                     Spacer().frame(height: 0)
                     HStack {
+                        AltimeterView()
+                        Spacer().frame(maxWidth: 30)
                         VisibilityView()
                         Spacer().frame(maxWidth: 30)
                         WindView()

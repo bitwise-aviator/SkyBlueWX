@@ -54,6 +54,11 @@ enum AltitudeUnit : Int {
     case m = 1 // meters
 }
 
+enum PressureUnit : Int {
+    case inHg = 0 // inches of mercury
+    case mbar = 1 // millibars
+}
+
 // Enumeration for flight conditions. Color pallette follows SkyVector planning tools. These are a function of ceiling height & visibility, ordered from least to most restrictive. The governing condition is the most restrictive one for which criteria are met.
 enum FlightConditions : String {
     // Visual Flight Rules (VFR): No ceiling OR ceiling > 3000ft AND visibility > 5mi

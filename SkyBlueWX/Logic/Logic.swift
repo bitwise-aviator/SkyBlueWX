@@ -230,8 +230,16 @@ struct WeatherReport {
         if !hasData {return "--"}
         switch unit {
         case .knot: return String(wind.speed)
-        case .kmh: return String(Int(Double(wind.speed) * 1.852))
-        case .mph: return String(Int(Double(wind.speed) * 1.15078))
+        case .kmh: return String(Int((Double(wind.speed) * 1.852).rounded()))
+        case .mph: return String(Int((Double(wind.speed) * 1.15078).rounded()))
+        }
+    }
+    
+    func altimeterToString(unit: PressureUnit) -> String {
+        if !hasData {return "----"}
+        switch unit {
+        case .inHg: return "\(String(format: "%.2f", altimeter))\""
+        case .mbar: return "Q\(String(format: "%.0f", altimeter * 33.8639))"
         }
     }
     
@@ -240,8 +248,8 @@ struct WeatherReport {
         guard let gusts = wind.gusts else {return "--"}
         switch unit {
         case .knot: return String(gusts)
-        case .kmh: return String(Int(Double(gusts) * 1.852))
-        case .mph: return String(Int(Double(gusts) * 1.15078))
+        case .kmh: return String(Int((Double(gusts) * 1.852).rounded()))
+        case .mph: return String(Int((Double(gusts) * 1.15078).rounded()))
         }
     }
     

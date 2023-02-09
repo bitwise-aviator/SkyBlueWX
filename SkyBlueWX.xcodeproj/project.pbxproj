@@ -51,6 +51,7 @@
 		DC7175C82991DA2300674D94 /* DataStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC7175C62991DA2300674D94 /* DataStorage.xcdatamodeld */; };
 		DC7175CB29932F2000674D94 /* DropdownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175CA29932F2000674D94 /* DropdownItem.swift */; };
 		DC7175CD2994769800674D94 /* DropdownList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175CC2994769800674D94 /* DropdownList.swift */; };
+		DC7175CF2994863800674D94 /* AltimeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175CE2994863800674D94 /* AltimeterView.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -121,6 +122,7 @@
 		DC7175C72991DA2300674D94 /* DataStorage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataStorage.xcdatamodel; sourceTree = "<group>"; };
 		DC7175CA29932F2000674D94 /* DropdownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownItem.swift; sourceTree = "<group>"; };
 		DC7175CC2994769800674D94 /* DropdownList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownList.swift; sourceTree = "<group>"; };
+		DC7175CE2994863800674D94 /* AltimeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltimeterView.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -279,6 +281,7 @@
 				DC717568298DDC9000674D94 /* TempAndDewpointSmallView.swift */,
 				DC71756E298F0BD300674D94 /* DensityAltSmallView.swift */,
 				DC717562298DD1EB00674D94 /* VisibilityView.swift */,
+				DC7175CE2994863800674D94 /* AltimeterView.swift */,
 			);
 			path = WeatherView_Components;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC7175CF2994863800674D94 /* AltimeterView.swift in Sources */,
 				DC71756F298F0BD300674D94 /* DensityAltSmallView.swift in Sources */,
 				4E83BDB829529BB0005D8DC3 /* SettingsView.swift in Sources */,
 				261F7D06292473EF002D3010 /* WeatherView.swift in Sources */,

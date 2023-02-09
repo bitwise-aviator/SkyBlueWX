@@ -112,6 +112,26 @@
 				<integer>1</integer>
 			</array>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Pressure</string>
+			<key>Key</key>
+			<string>pressureUnit</string>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Titles</key>
+			<array>
+				<string>in Hg</string>
+				<string>mbar</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

@@ -20,6 +20,7 @@ struct AirportTileWindView: View {
     var windIsCalm : Bool {
         boundReport!.wind.speed == 0
     }
+
     
     var windDirectionString : String {
         if boundReport!.wind.isVariable { return "VRB" }
