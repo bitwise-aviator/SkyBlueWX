@@ -14,6 +14,7 @@ struct WindView: View {
     var body: some View {
         HStack{
             WindDirectionView()
+            Spacer().frame(maxWidth: 10)
             WindSpeedView()
             WindSockView()
         }

@@ -80,7 +80,7 @@
 			<key>Key</key>
 			<string>visibilityUnit</string>
 			<key>DefaultValue</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Titles</key>
 			<array>
 				<string>miles</string>
@@ -100,7 +100,7 @@
 			<key>Key</key>
 			<string>altitudeUnit</string>
 			<key>DefaultValue</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Titles</key>
 			<array>
 				<string>ft</string>
@@ -120,7 +120,7 @@
 			<key>Key</key>
 			<string>pressureUnit</string>
 			<key>DefaultValue</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Titles</key>
 			<array>
 				<string>in Hg</string>

@@ -37,7 +37,7 @@ struct WindSockView: View {
     var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
     
     var body: some View {
-        Image(windSockIcon.rawValue).resizable().frame(width: maxDimension * 0.1, height: maxDimension * 0.1)/*.onReceive(cockpit, perform: updateWindSock)*/
+        Image(windSockIcon.rawValue).resizable().frame(width: maxDimension * 0.08, height: maxDimension * 0.08)/*.onReceive(cockpit, perform: updateWindSock)*/
     }
 }
 
