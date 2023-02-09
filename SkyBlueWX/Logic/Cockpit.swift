@@ -83,10 +83,13 @@ final class Cockpit : ObservableObject {
     }
     @Published var activeReport: String?
     @Published var activeReportStruct : WeatherReport?
+    @Published var dbQueryResults : AirportDict? = [:]
 
     private let locationTracker : LocationManager
     private let refreshLock = DispatchSemaphore(value: 1)
     let deviceInfo : UIDeviceInfo
+    
+    var storedAirports : [String : Airport] = [:]
     
     
     init() {
@@ -100,12 +103,22 @@ final class Cockpit : ObservableObject {
         self.deviceInfo = UIDeviceInfo()
         print("Running app on \(self.deviceInfo.deviceType.rawValue)")
         if settings.homeAirport.count == 4 {
-            self.queryCodes.insert(settings.homeAirport)
+            self.getAirportRecords(settings.homeAirport, onlyByIcao: true)
+            let homeAirportResults = self.dbQueryResults
+            if let _ = homeAirportResults, homeAirportResults!.count == 1 {
+                self.queryCodes.insert(settings.homeAirport)
+                
+            }
         }
     }
     
-    func getAirportRecords(_ term: String) -> AirportDict? {
-        return dbConnection.getAirports(searchTerm: term)
+    func getAirportRecords(_ term: String, onlyByIcao : Bool = false) {
+        dbQueryResults = dbConnection.getAirports(searchTerm: term, onlyByIcao: onlyByIcao)
+        if let dict = dbQueryResults {
+            for (_, value) in dict {
+                storedAirports[value.icao] = value
+            }
+        }
     }
     
     func refreshSettings() {
@@ -274,6 +287,7 @@ final class Cockpit : ObservableObject {
             queryCodes.remove(icao)
         } else if !queryCodes.contains(icao) && !exclude {
             queryCodes.insert(icao)
+            
         }
     }
     

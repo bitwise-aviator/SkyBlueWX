@@ -30,7 +30,6 @@ struct WeatherView: View {
     @State var airportSelectorVisible = false;
     @State var hasError = false // Self-explanatory
     @State var errorStatement = "" // If an error is encountered, this is what will be shown to the user.
-    @State var airportResultDict : AirportDict? = [:]
     let databaseConnection = DataBaseHandler()
     let refreshLock = DispatchSemaphore(value: 1) // Protects the report structure if it is updating. Queries will not fire if this lock is on.
     var weatherRefresher : Timer?
@@ -40,10 +39,10 @@ struct WeatherView: View {
     
     func simpleMetLookup() {
         // Shorthand get-met function, where user can press return with a valid airport code and get the weather report.
-        guard let _ = airportResultDict else {return}
+        guard let _ = cockpit.dbQueryResults else {return}
         var matchingAirport : Airport? = nil
         let searchTerm : String = searchAirport.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        for item in airportResultDict!.values {
+        for item in cockpit.dbQueryResults!.values {
             if item.icao == searchTerm {
                 matchingAirport = item
                 break
@@ -97,7 +96,8 @@ struct WeatherView: View {
                 Spacer()
                 TextField("Lookup", text: $searchAirport).autocorrectionDisabled(true).onChange(of: searchAirport, perform: {newValue in
                     airportSelectorVisible = true
-                    airportResultDict = cockpit.getAirportRecords(newValue)}).onSubmit {
+                    cockpit.getAirportRecords(newValue)
+                }).onSubmit {
                         simpleMetLookup() // Textbox that triggers dropdown menu for airport selection. The textbox's input is no longer used for weather queries.
                     }
                 Button(action: simpleMetLookup) {
@@ -134,28 +134,7 @@ struct WeatherView: View {
                     }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background{Color.groundBackground}
                 }
                 if airportSelectorVisible {
-                    if let _ = airportResultDict {
-                        VStack {
-                            ScrollView {
-                                VStack {
-                                    ForEach(Array(airportResultDict!.keys).sorted(by: <), id: \.self) { key in
-                                        HStack {
-                                            Text(airportResultDict![key]!.icao).fontWeight(.bold).frame(width: UIScreen.main.bounds.width * 0.2)
-                                            VStack {
-                                                Text(airportResultDict![key]!.name).lineLimit(1).truncationMode(.tail)
-                                                Spacer().frame(height: 0)
-                                                Text(airportResultDict![key]!.city).lineLimit(1).truncationMode(.tail)
-                                            }.frame(width: UIScreen.main.bounds.width * 0.7)
-                                            Image(systemName: (cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? "minus.square" : "plus.square")).foregroundColor((cockpit.queryCodes.contains(airportResultDict![key]!.icao) ? Color.darkRed : Color.darkGreen)).frame(width: UIScreen.main.bounds.width * 0.1).onTapGesture {
-                                                editQueryList(airportResultDict![key]!.icao)
-                                            }
-                                        }.frame(maxWidth: .infinity).background(Color.bicolorInv.opacity(0.85))
-                                    }
-                                }
-                            }.frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height * 0.4)
-                            Spacer()
-                        }.frame(maxHeight: .infinity)
-                    }
+                    DropdownList()
                 }
             }
         }.onAppear{

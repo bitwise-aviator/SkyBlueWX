@@ -15,7 +15,10 @@ struct WeatherLabelSmallVIew: View {
     }
     
     var subText : String {
-        "(placeholder for airport name)"
+        guard let active = cockpit.activeReport else {
+            return ("---------")
+        }
+        return cockpit.storedAirports[active]?.name ?? "---------"
     }
     
     @ViewBuilder

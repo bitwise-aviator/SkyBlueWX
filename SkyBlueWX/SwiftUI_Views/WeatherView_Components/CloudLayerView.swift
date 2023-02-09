@@ -88,8 +88,9 @@ struct CloudLayerView: View {
     var body: some View {
         ZStack {
             Path() {path in
+                let screenWidth = UIScreen.main.bounds.width
                 path.move(to: CGPoint(x: 0, y: 25))
-                path.addLine(to: CGPoint(x: 400, y: 25))
+                path.addLine(to: CGPoint(x: screenWidth, y: 25))
             }.stroke(.red, style: StrokeStyle(lineWidth: 3, dash: [5]))
             GeometryReader {g in
                 HStack {

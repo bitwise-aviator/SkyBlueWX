@@ -26,7 +26,7 @@ struct AirportTileFlightRuleView: View {
     }
     
     var body: some View {
-        Text(textString).padding([.horizontal], 15).padding([.vertical], 5).background(textBackground)
+        Text(textString).padding([.horizontal], 10).padding([.vertical], 5).background(textBackground)
     }
 }
 
