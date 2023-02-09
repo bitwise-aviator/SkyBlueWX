@@ -128,13 +128,9 @@ struct WeatherView: View {
                     }.padding(.vertical, 10).frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.skyBackground)
                     Spacer().frame(height: 0)
                     HStack {
-                        Spacer()
                         AltimeterView()
-                        Spacer()
                         VisibilityView()
-                        Spacer()
                         WindView()
-                        Spacer()
                     }.padding(.vertical, 20).frame(maxWidth: .infinity, maxHeight: maxDimension * 0.15).background{Color.groundBackground}
                 }
                 if airportSelectorVisible {

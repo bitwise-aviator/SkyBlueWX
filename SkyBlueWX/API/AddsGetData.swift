@@ -47,7 +47,7 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
     // Need to initialize the result here, as to keep the reference. Not sure if this is really necessary. Can experiment later.
     
     for code in query.sorted() {
-        await wxReports.assign(key: code, value: WeatherReport(location: code)) // This is a basic initialization. The instance will have a bool property to track if it's good or not, it will start as bad. Calling the update method will make it good.
+        await wxReports.assign(key: code, value: WeatherReport(location: code, airport: cockpit.storedAirports[code])) // This is a basic initialization. The instance will have a bool property to track if it's good or not, it will start as bad. Calling the update method will make it good.
     }
     
     
