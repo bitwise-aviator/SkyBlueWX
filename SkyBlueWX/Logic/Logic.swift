@@ -140,6 +140,7 @@ struct WeatherReport {
     var icao : String
     var airport : Airport?
     var coords : CLLocation
+    var reportTime : Date?
     
     var clouds : [CloudLayer]
     
@@ -275,6 +276,17 @@ struct WeatherReport {
         }
     }
     
+    var timeSinceReport : (hours: Int, minutes: Int)? {
+        guard let timestamp = reportTime else {return nil}
+        let timeDiff = Int(Date.now - timestamp)
+        print(timeDiff)
+        let hrs = timeDiff.quotientAndRemainder(dividingBy: 3600)
+        let mins = hrs.remainder / 60
+        print(hrs.quotient, mins)
+        return (hours: hrs.quotient, minutes: mins)
+        
+    }
+    
     var details : WeatherDetails
 
     var altimeter : Double
@@ -376,6 +388,7 @@ struct WeatherReport {
         self.airport = _airport
         self.hasData = false
         self.coords = CLLocation(latitude: 0.0, longitude: 0.0)
+        self.reportTime = nil
         self.clouds = []
         self.visibility = 0.0
         self.temperature = 0.0
@@ -386,11 +399,12 @@ struct WeatherReport {
         self.elevation = 0.0
     }
         
-    init(location _icao : String, coordinates _coords : CLLocation, clouds _clouds: [CloudLayer], visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double, airport _airport: Airport? = nil) {
+    init(location _icao : String, coordinates _coords : CLLocation, reportTime _reportTime: Date?, clouds _clouds: [CloudLayer], visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double, airport _airport: Airport? = nil) {
         self.icao = _icao
         self.airport = _airport
         self.hasData = true
         self.coords = _coords
+        self.reportTime = _reportTime
         self.clouds = _clouds
         self.visibility = _visibility
         self.temperature = _temperature
@@ -401,10 +415,11 @@ struct WeatherReport {
         self.elevation = _elevation
     }
     
-    mutating func update(location _icao : String, coordinates _coords : CLLocation, clouds _clouds: [CloudLayer],  visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double) {
+    mutating func update(location _icao : String, coordinates _coords : CLLocation, reportTime _reportTime: Date?, clouds _clouds: [CloudLayer],  visibility _visibility: Double, temperature _temperature: Double = 0.0, dewPoint _dewPoint: Double = 0.0, wind _wind: Wind, details _details : String, altimeter _altimeter : Double, elevation _elevation : Double) {
         icao = _icao
         hasData = true
         coords = _coords
+        reportTime = _reportTime
         clouds = _clouds
         visibility = _visibility
         temperature = _temperature

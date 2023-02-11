@@ -14,7 +14,7 @@ struct WeatherOverviewSmallView: View {
         HStack {
             WeatherIconSmallView()
             FlightRulesIconSmallView()
-            WeatherLabelSmallVIew()
+            WeatherLabelSmallView()
         }
     }
 }

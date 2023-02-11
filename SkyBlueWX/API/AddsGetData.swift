@@ -14,7 +14,7 @@ actor WXReports {
     var data : [String : WeatherReport] = [:]
     
     func vacate() {
-        // empty out data safelyl.
+        // empty out data safely.
         data = [:]
     }
     
@@ -26,9 +26,9 @@ actor WXReports {
         return data[key]
     }
     
-    func update(key: String, coordinates: CLLocation, clouds: [CloudLayer], visibility: Double, temperature: Double, dewPoint: Double, wind: Wind, details: String, altimeter: Double, elevation: Double) {
+    func update(key: String, coordinates: CLLocation, reportTime: Date?, clouds: [CloudLayer], visibility: Double, temperature: Double, dewPoint: Double, wind: Wind, details: String, altimeter: Double, elevation: Double) {
         if let _ = data[key] {
-            data[key]!.update(location: key, coordinates: coordinates, clouds: clouds, visibility: visibility, temperature: temperature, dewPoint: dewPoint, wind: wind, details: details, altimeter: altimeter, elevation: elevation)
+            data[key]!.update(location: key, coordinates: coordinates, reportTime: reportTime, clouds: clouds, visibility: visibility, temperature: temperature, dewPoint: dewPoint, wind: wind, details: details, altimeter: altimeter, elevation: elevation)
         }
     }
 }
@@ -42,7 +42,7 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
     if query.count == 0 { return allBadData }
     let formattedQuery = query.joined(separator: "+")
     // Query URL casted from a string.
-    let url = URL(string: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&stationString=\(formattedQuery)&hoursBeforeNow=2")!; // URLs don't accept spaces, use + instead.
+    let url = URL(string: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&stationString=\(formattedQuery)&hoursBeforeNow=24")!; // URLs don't accept spaces, use + instead.
     
     // Need to initialize the result here, as to keep the reference. Not sure if this is really necessary. Can experiment later.
     
@@ -114,6 +114,10 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
                 
                 // Start parsing the report
                 let location : String = csvItems[1] // ICAO code
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                let reportTime = dateFormatter.date(from: csvItems[2])
                 let stationLatitude = Double(csvItems[3]) ?? 0.0
                 let stationLongitude = Double(csvItems[4]) ?? 0.0
                 let stationCoordinates = CLLocation(latitude: stationLatitude, longitude: stationLongitude)
@@ -170,7 +174,7 @@ func loadMe(icao query: Set<String>, cockpit: Cockpit) async -> [String : Weathe
                 let wind = Wind(direction: windDirection, speed: windSpeed, gusts: windGusts) // Create a Wind struct to store this.
                 let weatherDetail = csvItems[21] // This field will store data regarding non-numeric weather info (rain, snow, hail, fog, etc.)
                 let stationElevation = Double(csvItems[43]) ?? 0.0
-                await wxReports.update(key: location, coordinates: stationCoordinates, clouds: reportedClouds, visibility: visibility, temperature: temp, dewPoint: dewPt, wind: wind, details: weatherDetail, altimeter: altimeter, elevation: stationElevation) // Pass the parsed/extracted data to the existing WeatherReport instance.
+                await wxReports.update(key: location, coordinates: stationCoordinates, reportTime: reportTime, clouds: reportedClouds, visibility: visibility, temperature: temp, dewPoint: dewPt, wind: wind, details: weatherDetail, altimeter: altimeter, elevation: stationElevation) // Pass the parsed/extracted data to the existing WeatherReport instance.
             }
         }
         

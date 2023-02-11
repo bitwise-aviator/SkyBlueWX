@@ -14,6 +14,12 @@ enum Errors : Error {
     case noReportFound, noAirportCodes
 }
 
+extension Date {
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
+}
+
 // Loads custom colors from assets folder and assigns them as properties to the Color struct.
 extension Color {
     static let bicolor = Color("Bicolor")
