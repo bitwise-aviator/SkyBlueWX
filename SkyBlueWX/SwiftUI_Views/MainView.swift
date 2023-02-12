@@ -16,19 +16,16 @@ enum Views {
 }
 
 struct MainView: View {
-    @EnvironmentObject var cockpit : Cockpit
+    @EnvironmentObject var cockpit: Cockpit
     // Monitor status of the app (active/inactive/background)
     @Environment(\.scenePhase) var scenePhase
-    
-    @State private var selectedTab : Views = .weather
-    
-    
+    @State private var selectedTab: Views = .weather
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavigationStack{ListView(selectedTab: $selectedTab)}.tabItem {
+            NavigationStack {ListView(selectedTab: $selectedTab)}.tabItem {
                 Label("Airports", systemImage: "airplane.departure")
             }.tag(Views.list)
-            NavigationStack{MapView(selectedTab: $selectedTab)}.tabItem {
+            NavigationStack {MapView(selectedTab: $selectedTab)}.tabItem {
                 Label("Map", systemImage: "map.fill")
             }.tag(Views.map)
             WeatherView(selectedTab: $selectedTab).tabItem {
@@ -46,7 +43,6 @@ struct MainView: View {
                 case .active, .inactive: cockpit.refreshSettings()
                 default: ()
                 }
-                
             }
     }
 }

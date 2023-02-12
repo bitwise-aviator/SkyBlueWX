@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct CloudStackView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
+    @EnvironmentObject var cockpit: Cockpit
     var cloudStack: AnyView? {
-        guard let _ = cockpit.activeReportStruct else {
+        guard let report = cockpit.activeReportStruct else {
             return nil
         }
-        let count = cockpit.activeReportStruct!.clouds.count
+        let count = report.clouds.count
         if count > 0 {
             return AnyView(VStack {
                 ForEach((0..<count).reversed(), id: \.self) {

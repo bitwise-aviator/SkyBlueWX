@@ -10,19 +10,17 @@ import SwiftUI
 
 struct SettingsStruct {
     // default cases should have settings value of zero.
-    var temperatureUnit : TemperatureUnit
-    var speedUnit : SpeedUnit
-    var visibilityUnit : VisUnit
-    var altitudeUnit : AltitudeUnit
-    var pressureUnit : PressureUnit
-    
-    var homeAirport : String
-    
+    var temperatureUnit: TemperatureUnit
+    var speedUnit: SpeedUnit
+    var visibilityUnit: VisUnit
+    var altitudeUnit: AltitudeUnit
+    var pressureUnit: PressureUnit
+    var homeAirport: String
     mutating func update() {
         let temperatureUnitKey = UserDefaults.standard.integer(forKey: "temperatureUnit")
         switch temperatureUnitKey {
-        case 1: temperatureUnit = .F
-        default: temperatureUnit = .C
+        case 1: temperatureUnit = .fahrenheit
+        default: temperatureUnit = .celsius
         }
         let speedUnitKey = UserDefaults.standard.integer(forKey: "speedUnit")
         switch speedUnitKey {
@@ -32,74 +30,63 @@ struct SettingsStruct {
         }
         let visibilityUnitKey = UserDefaults.standard.integer(forKey: "visibilityUnit")
         switch visibilityUnitKey {
-        case 1: visibilityUnit = .km
+        case 1: visibilityUnit = .kilometer
         default: visibilityUnit = .mile
         }
-        
         let altitudeUnitKey = UserDefaults.standard.integer(forKey: "altitudeUnit")
         switch altitudeUnitKey {
-        case 1: altitudeUnit = .m
-        default: altitudeUnit = .ft
+        case 1: altitudeUnit = .meter
+        default: altitudeUnit = .feet
         }
-        
         let pressureUnitKey = UserDefaults.standard.integer(forKey: "pressureUnit")
         switch pressureUnitKey {
         case 1: pressureUnit = .mbar
         default: pressureUnit = .inHg
         }
-        
         homeAirport = UserDefaults.standard.string(forKey: "homeAirport") ?? ""
     }
-    
+    //
     init() {
-        self.temperatureUnit = .C
+        self.temperatureUnit = .celsius
         self.speedUnit = .knot
         self.visibilityUnit = .mile
-        self.altitudeUnit = .ft
+        self.altitudeUnit = .feet
         self.pressureUnit = .inHg
         self.homeAirport = ""
         update()
     }
-    
-    var speedUnitString : String {
-        get {
-            switch (speedUnit) {
-            case .knot: return "kt"
-            case .mph: return "mph"
-            case .kmh: return "km/h"
-            }
+    var speedUnitString: String {
+        switch speedUnit {
+        case .knot: return "kt"
+        case .mph: return "mph"
+        case .kmh: return "km/h"
         }
     }
 }
 
-final class Cockpit : ObservableObject {
+final class Cockpit: ObservableObject {
     /// This class is a common interface to store data across the app and handle cross-app integration.
     ///
     /// The @Published wrapper for ObservableObjects denotes properties that will trigger re-renders for all views that are observing it.
     // Settings variables:
-    @Published var settings : SettingsStruct
+    @Published var settings: SettingsStruct
     // END SETTINGS VARIABLES...
-    
-    private let dbConnection : DataBaseHandler
-    // var activeView : Views = Views.list // keep track of what the active view is, to be efficient with observers/closures.
-    @Published var queryCodes : Set<String> = [] // Codes sent to server as part of query. Use set to avoid repeated codes.
-    @Published var reports : [String : WeatherReport] = [:]
-    var reportKeys : [String] {
-        get {
-            Array(reports.keys).sorted()
-        }
+    private let dbConnection: DataBaseHandler
+    // Codes sent to server as part of query. Use set to avoid repeated codes.
+    @Published var queryCodes: Set<String> = []
+    @Published var reports: [String: WeatherReport] = [:]
+    var reportKeys: [String] {
+        Array(reports.keys).sorted()
     }
     @Published var activeReport: String?
-    @Published var activeReportStruct : WeatherReport?
-    @Published var dbQueryResults : AirportDict? = [:]
+    @Published var activeReportStruct: WeatherReport?
+    @Published var dbQueryResults: AirportDict? = [:]
 
-    private let locationTracker : LocationManager
+    private let locationTracker: LocationManager
     private let refreshLock = DispatchSemaphore(value: 1)
-    let deviceInfo : UIDeviceInfo
-    
-    var storedAirports : [String : Airport] = [:]
-    
-    
+    let deviceInfo: UIDeviceInfo
+    var storedAirports: [String: Airport] = [:]
+    var timer: Timer?
     init() {
         /// Interface with sqlite database.
         self.dbConnection = DataBaseHandler()
@@ -113,14 +100,17 @@ final class Cockpit : ObservableObject {
         if settings.homeAirport.count == 4 {
             self.getAirportRecords(settings.homeAirport, onlyByIcao: true)
             let homeAirportResults = self.dbQueryResults
-            if let _ = homeAirportResults, homeAirportResults!.count == 1 {
+            if homeAirportResults != nil && homeAirportResults!.count == 1 {
                 self.queryCodes.insert(settings.homeAirport)
-                
             }
         }
+        postInit()
     }
-    
-    func getAirportRecords(_ term: String, onlyByIcao : Bool = false) {
+    func postInit() {
+        self.timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(weatherFromTimer),
+                                          userInfo: nil, repeats: true)
+    }
+    func getAirportRecords(_ term: String, onlyByIcao: Bool = false) {
         dbQueryResults = dbConnection.getAirports(searchTerm: term, onlyByIcao: onlyByIcao)
         if let dict = dbQueryResults {
             for (_, value) in dict {
@@ -128,15 +118,13 @@ final class Cockpit : ObservableObject {
             }
         }
     }
-    
     func refreshSettings() {
         settings.update()
     }
-    
     func moveToNextReport(reverse: Bool = false) -> Bool {
-        guard let _ = activeReport else {return false}
+        guard activeReport != nil else {return false}
         guard let currentIndex = reportKeys.firstIndex(of: activeReport!) else {return false}
-        let index : Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
+        let index: Int = reportKeys.distance(from: reportKeys.startIndex, to: currentIndex)
         if index < reportKeys.count - 1 && !reverse {
             activeReport = reportKeys[index + 1]
             activeReportStruct = reports[activeReport!]
@@ -149,16 +137,14 @@ final class Cockpit : ObservableObject {
             return false
         }
     }
-    
     func moveToReport(icao: String) -> Bool {
-        guard let _ = reports[icao] else { return false }
+        guard reports[icao] != nil else { return false }
         activeReport = icao
         activeReportStruct = reports[icao]
         return true
     }
-    
     func removeReport(icao: String) {
-        guard let _ = reports[icao] else {return}
+        guard reports[icao] != nil else {return}
         if icao == activeReport {
             // This makes the app move to the previous tab. If it was the
             if icao == reportKeys[0] && reportKeys.count > 1 { _ = moveToNextReport()
@@ -171,34 +157,35 @@ final class Cockpit : ObservableObject {
                 activeReport = nil
                 activeReportStruct = nil
             }
-            
         } else {
             reports[icao] = nil
             queryCodes.remove(icao)
         }
-        
-        
     }
-    
-    
-    func getWeather(moveTo: String? = nil) async throws {
+    @objc func weatherFromTimer() {
+        print("Fired query from timer @\(Date.now)")
+        Task {
+            try await getWeather(useExisting: true)
+        }
+    }
+    func getWeather(moveTo: String? = nil, useExisting: Bool = false) async throws {
         // Only handle the backend weather-fetching here. Renders are kept in their respective views.
+        let queries: Set<String> = useExisting ? Set(reportKeys): queryCodes
         let lookup = Task {
             do {
-                return await loadMe(icao: queryCodes, cockpit: self)
+                return await loadMe(icao: queries, cockpit: self)
             }
         }
-        let results : [String : WeatherReport] = await lookup.value
+        let results: [String: WeatherReport] = await lookup.value
         DispatchQueue.main.async {
             self.reports = results
             if self.reportKeys.count > 0 {
                 var hasMoved = false
-                if let _ = moveTo {
+                if moveTo != nil {
                     hasMoved = self.moveToReport(icao: moveTo!)
                 }
                 if !hasMoved {
-                    if self.activeReport != nil && self.reportKeys.contains(self.activeReport!) { }
-                    else {
+                    if self.activeReport != nil && self.reportKeys.contains(self.activeReport!) { } else {
                         self.activeReportStruct = self.reports[self.reportKeys[0]]
                         self.activeReport = self.reportKeys[0]
                     }
@@ -208,27 +195,24 @@ final class Cockpit : ObservableObject {
                 self.activeReport = nil
             }
         }
-        
-        
     }
-    
     func setTemperatureUnit(_ target: TemperatureUnit? = nil) {
-        let newTempUnit : TemperatureUnit
-        if let _ = target {
+        let newTempUnit: TemperatureUnit
+        if target != nil {
             // Use if a specific unit has been selected - i.e. not toggler.
             newTempUnit = target!
         } else {
             // Use for toggler or for cycling, advance to next one.
-            newTempUnit = settings.temperatureUnit == TemperatureUnit.C ? TemperatureUnit.F : TemperatureUnit.C
+            newTempUnit = settings.temperatureUnit == TemperatureUnit.celsius ?
+            TemperatureUnit.fahrenheit: TemperatureUnit.celsius
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newTempUnit.rawValue, forKey: "temperatureUnit")
         settings.update()
     }
-    
     func setSpeedUnit(_ target: SpeedUnit? = nil) {
-        let newSpeedUnit : SpeedUnit
-        if let _ = target {
+        let newSpeedUnit: SpeedUnit
+        if target != nil {
             // Use if a specific unit has been selected - i.e. not toggler.
             newSpeedUnit = target!
         } else {
@@ -243,7 +227,6 @@ final class Cockpit : ObservableObject {
         UserDefaults.standard.set(newSpeedUnit.rawValue, forKey: "speedUnit")
         settings.update()
     }
-    
     func getSpeedUnitText(_ unit: SpeedUnit? = nil) -> String {
         let sourceUnit = unit ?? settings.speedUnit
         switch sourceUnit {
@@ -252,55 +235,49 @@ final class Cockpit : ObservableObject {
         case .kmh: return "km/h"
         }
     }
-    
     func setVisibilityUnit(_ target: VisUnit? = nil) {
-        let newVisUnit : VisUnit
-        if let _ = target {
+        let newVisUnit: VisUnit
+        if target != nil {
             // Use if a specific unit has been selected - i.e. not toggler.
             newVisUnit = target!
         } else {
             // Use for toggler or for cycling, advance to next one.
-            newVisUnit = settings.visibilityUnit == VisUnit.mile ? VisUnit.km : VisUnit.mile
+            newVisUnit = settings.visibilityUnit == VisUnit.mile ? VisUnit.kilometer: VisUnit.mile
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newVisUnit.rawValue, forKey: "visibilityUnit")
         settings.update()
     }
-    
     func setAltitudeUnit(_ target: AltitudeUnit? = nil) {
-        let newAltitudeUnit : AltitudeUnit
-        if let _ = target {
+        let newAltitudeUnit: AltitudeUnit
+        if target != nil {
             // Use if a specific unit has been selected - i.e. not toggler.
             newAltitudeUnit = target!
         } else {
             // Use for toggler or for cycling, advance to next one.
-            newAltitudeUnit = settings.altitudeUnit == .ft ? .m : .ft
+            newAltitudeUnit = settings.altitudeUnit == .feet ? .meter: .feet
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newAltitudeUnit.rawValue, forKey: "altitudeUnit")
         settings.update()
     }
-    
     func setPressureUnit(_ target: PressureUnit? = nil) {
-        let newPressureUnit : PressureUnit
-        if let _ = target {
+        let newPressureUnit: PressureUnit
+        if target != nil {
             // Use if a specific unit has been selected - i.e. not toggler.
             newPressureUnit = target!
         } else {
             // Use for toggler or for cycling, advance to next one.
-            newPressureUnit = settings.pressureUnit == .inHg ? .mbar : .inHg
+            newPressureUnit = settings.pressureUnit == .inHg ? .mbar: .inHg
         }
         // Apply changes to user settings (SettingsStruct has computed units)
         UserDefaults.standard.set(newPressureUnit.rawValue, forKey: "pressureUnit")
         settings.update()
     }
-    
     func setHomeAirport(_ icao: String) {
-        
         UserDefaults.standard.set(icao, forKey: "homeAirport")
         settings.update()
     }
-    
     func editQueryList(_ icao: String, retain: Bool = false, exclude: Bool = false) {
         // Set retain to true to not remove airport code if already available.
         // Set exclude to true to not add airport code if not in set.
@@ -309,8 +286,6 @@ final class Cockpit : ObservableObject {
             queryCodes.remove(icao)
         } else if !queryCodes.contains(icao) && !exclude {
             queryCodes.insert(icao)
-            
         }
     }
-    
 }

@@ -10,7 +10,6 @@ import CoreLocation
 
 struct GeodesicLine {
     init() {
-        
     }
 }
 
@@ -20,11 +19,11 @@ final class LocationManager: NSObject, ObservableObject {
     ///
     @Published var location: CLLocation?
     private let locationManager = CLLocationManager()
-    
     override init() {
         super.init()
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters // Position only needs to be +/- 100m
-        locationManager.distanceFilter = CLLocationDistance(1000) // Do not trigger updates until user has moved at least 1km from last position.
+        // Do not trigger updates until user has moved at least 1km from last position.
+        locationManager.distanceFilter = CLLocationDistance(1000)
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
@@ -37,8 +36,8 @@ extension LocationManager: CLLocationManagerDelegate {
         guard let location = locations.last else {return}
         DispatchQueue.main.async {
             self.location = location
-            print("Location is\n\(self.location?.coordinate.latitude ?? 0)\n\(self.location?.coordinate.longitude ?? 0)")
+            print(
+                "Location is\n\(self.location?.coordinate.latitude ?? 0)\n\(self.location?.coordinate.longitude ?? 0)")
         }
-        
     }
 }

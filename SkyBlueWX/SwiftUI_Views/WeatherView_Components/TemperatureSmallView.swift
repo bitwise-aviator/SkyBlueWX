@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct TemperatureSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
-    var temperatureString : String {
+    @EnvironmentObject var cockpit: Cockpit
+    var temperatureString: String {
         return cockpit.activeReportStruct?.temperatureToString(unit: cockpit.settings.temperatureUnit) ?? "----"
     }
-    
     var body: some View {
         HStack {
             Image(systemName: "thermometer.medium").foregroundColor(.bicolor)

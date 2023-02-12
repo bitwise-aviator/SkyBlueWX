@@ -8,23 +8,19 @@
 import SwiftUI
 
 struct AirportTileFlightRuleView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
+    @EnvironmentObject var cockpit: Cockpit
     let icao: String
-    var boundReport : WeatherReport? {
+    var boundReport: WeatherReport? {
         guard let report = cockpit.reports[icao] else {return nil}
         guard cockpit.reports[icao]!.hasData else {return nil}
         return report
     }
-    
-    var textString : String {
+    var textString: String {
         boundReport?.flightCondition.rawValue ?? "---"
     }
-    
-    var textBackground : Color {
+    var textBackground: Color {
         boundReport?.flightConditionColor ?? Color.grayBackground
     }
-    
     var body: some View {
         Text(textString).padding([.horizontal], 10).padding([.vertical], 5).background(textBackground)
     }

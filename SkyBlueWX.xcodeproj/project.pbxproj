@@ -52,6 +52,7 @@
 		DC7175CB29932F2000674D94 /* DropdownItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175CA29932F2000674D94 /* DropdownItem.swift */; };
 		DC7175CD2994769800674D94 /* DropdownList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175CC2994769800674D94 /* DropdownList.swift */; };
 		DC7175CF2994863800674D94 /* AltimeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7175CE2994863800674D94 /* AltimeterView.swift */; };
+		DC74203129985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC74203029985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		DC7175CA29932F2000674D94 /* DropdownItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownItem.swift; sourceTree = "<group>"; };
 		DC7175CC2994769800674D94 /* DropdownList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownList.swift; sourceTree = "<group>"; };
 		DC7175CE2994863800674D94 /* AltimeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltimeterView.swift; sourceTree = "<group>"; };
+		DC74203029985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportTileDensityAltitudeView.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -291,6 +293,7 @@
 			children = (
 				DC7175822990528400674D94 /* AirportTileView.swift */,
 				DC71758429905AC700674D94 /* AirportTileFlightRuleView.swift */,
+				DC74203029985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift */,
 				DC71758629905DA300674D94 /* AirportTileWindView.swift */,
 			);
 			path = ListView_Components;
@@ -315,6 +318,7 @@
 				261F7CFC292473EF002D3010 /* Sources */,
 				261F7CFD292473EF002D3010 /* Frameworks */,
 				261F7CFE292473EF002D3010 /* Resources */,
+				DC74203229988B4600CEB8F2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -432,6 +436,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DC74203229988B4600CEB8F2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		261F7CFC292473EF002D3010 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -459,6 +483,7 @@
 				4E1E0B8E294E0319006F51E7 /* DataMgmt.swift in Sources */,
 				DC71755D298C291400674D94 /* WindSockView.swift in Sources */,
 				DC717563298DD1EB00674D94 /* VisibilityView.swift in Sources */,
+				DC74203129985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift in Sources */,
 				262952F6292480FE00F2A644 /* AddsGetData.swift in Sources */,
 				DC71756D298DE60700674D94 /* WeatherViewTabScroller.swift in Sources */,
 				DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */,

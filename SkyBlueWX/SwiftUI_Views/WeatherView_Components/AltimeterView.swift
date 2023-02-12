@@ -8,20 +8,18 @@
 import SwiftUI
 
 struct AltimeterView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    var altimeterIcon : Image {
+    @EnvironmentObject var cockpit: Cockpit
+    var altimeterIcon: Image {
         Image(systemName: "barometer")
     }
-    
-    var altimeterString : String {
+    var altimeterString: String {
         return cockpit.activeReportStruct?.altimeterToString(unit: cockpit.settings.pressureUnit) ?? "----"
     }
-    
     var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-    
     var body: some View {
         VStack {
-            altimeterIcon.resizable().frame(width: maxDimension * 0.03, height: maxDimension * 0.03).foregroundColor(.white)
+            altimeterIcon.resizable().frame(width: maxDimension * 0.03, height: maxDimension * 0.03)
+                .foregroundColor(.white)
             Text(altimeterString).foregroundColor(.white).fontWeight(.bold)
         }.onTapGesture {
             cockpit.setPressureUnit()

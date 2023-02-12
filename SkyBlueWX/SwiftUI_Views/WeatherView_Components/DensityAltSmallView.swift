@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct DensityAltSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    var densityAltitudeString : String {
-        get {
-            cockpit.activeReportStruct?.densityAltitudeToString(unit: cockpit.settings.altitudeUnit) ?? "-----"
-        }
+    @EnvironmentObject var cockpit: Cockpit
+    var densityAltitudeString: String {
+        cockpit.activeReportStruct?.densityAltitudeToString(unit: cockpit.settings.altitudeUnit) ?? "-----"
     }
-    
     var body: some View {
-        Text("Density altitude: \(densityAltitudeString)").foregroundColor(.bicolor).fontWeight(.bold).frame(maxWidth: .infinity, alignment: .trailing).onTapGesture {
+        Text("Density altitude: \(densityAltitudeString)").foregroundColor(.bicolor).fontWeight(.bold)
+            .frame(maxWidth: .infinity, alignment: .trailing).onTapGesture {
             cockpit.setAltitudeUnit()
         }
     }

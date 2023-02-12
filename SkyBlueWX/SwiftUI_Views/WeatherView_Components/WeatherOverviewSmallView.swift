@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct WeatherOverviewSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
+    @EnvironmentObject var cockpit: Cockpit
     var body: some View {
         HStack {
             WeatherIconSmallView()

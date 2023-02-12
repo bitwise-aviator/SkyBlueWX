@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct WeatherIconSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
-    var weatherIconPath : String {
+    @EnvironmentObject var cockpit: Cockpit
+    var weatherIconPath: String {
         return cockpit.activeReportStruct?.wxIcon ?? "questionmark.square.dashed"
     }
-    
-    var weatherIconColor : Color {
+    var weatherIconColor: Color {
         return cockpit.activeReportStruct?.wxColor ?? .bicolor
     }
-    
     var body: some View {
         Image(systemName: weatherIconPath).foregroundColor(weatherIconColor)
     }

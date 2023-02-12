@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// This part's not going in for now...
 /*
  func karneyInverse(_ p1: CLLocation, _ p2: CLLocation) -> GeodesicLine? {

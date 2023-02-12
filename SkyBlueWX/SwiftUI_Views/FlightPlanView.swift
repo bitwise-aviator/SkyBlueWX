@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct FlightPlanView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    @Binding var selectedTab : Views
-    
+    @EnvironmentObject var cockpit: Cockpit
+    @Binding var selectedTab: Views
     var body: some View {
         Text("The Flight Plan mode will soon be available here...")
     }

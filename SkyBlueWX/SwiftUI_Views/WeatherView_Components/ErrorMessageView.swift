@@ -7,29 +7,23 @@
 
 import SwiftUI
 
-
 struct ErrorMessageView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
+    @EnvironmentObject var cockpit: Cockpit
     func checkForErrors() -> Errors? {
         if cockpit.reports.isEmpty {
             return .noAirportCodes
         }
         guard let activeReport = cockpit.activeReportStruct else {return .noAirportCodes}
         guard activeReport.hasData else {return .noReportFound}
-        
-        
         return nil
     }
-    
-    var boxText : String? {
+    var boxText: String? {
         guard let foundError = checkForErrors() else {return nil}
         switch foundError {
         case .noReportFound: return "Airport \(cockpit.activeReport!) did not return a report."
         case .noAirportCodes: return "No reports available."
         }
     }
-    
     @ViewBuilder
     var body: some View {
         if let errorText = boxText {
@@ -40,7 +34,6 @@ struct ErrorMessageView: View {
             EmptyView()
         }
     }
-    
 }
 
 struct ErrorMessageView_Previews: PreviewProvider {

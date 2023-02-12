@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    @Binding var selectedTab : Views
-    
+    @EnvironmentObject var cockpit: Cockpit
+    @Binding var selectedTab: Views
     var body: some View {
         Text("App settings will soon be available here...")
     }

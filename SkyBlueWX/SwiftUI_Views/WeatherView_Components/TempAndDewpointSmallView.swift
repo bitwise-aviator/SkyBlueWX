@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TempAndDewpointSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
+    @EnvironmentObject var cockpit: Cockpit
     var body: some View {
         HStack {
             Spacer().frame(maxWidth: .infinity)

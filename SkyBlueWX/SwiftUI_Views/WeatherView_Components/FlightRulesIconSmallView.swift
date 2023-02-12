@@ -8,28 +8,21 @@
 import SwiftUI
 
 struct FlightRulesIconSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
-    var flightRulesIconPath : String {
-        get {
-            guard let _ = cockpit.activeReportStruct else { return "x.circle.fill" }
-            switch cockpit.activeReportStruct!.flightCondition {
-            case .vfr: return "v.circle.fill"
-            case .mvfr: return "m.circle.fill"
-            case .ifr: return "i.circle.fill"
-            case .lifr: return "l.circle.fill"
-            case .unknown: return "x.circle.fill"
-            }
+    @EnvironmentObject var cockpit: Cockpit
+    var flightRulesIconPath: String {
+        guard let report = cockpit.activeReportStruct else { return "x.circle.fill" }
+        switch report.flightCondition {
+        case .vfr: return "v.circle.fill"
+        case .mvfr: return "m.circle.fill"
+        case .ifr: return "i.circle.fill"
+        case .lifr: return "l.circle.fill"
+        case .unknown: return "x.circle.fill"
         }
     }
-    
-    var flightRulesColor : Color {
-        get {
-            guard let _ = cockpit.activeReportStruct else { return .bicolor }
-            return cockpit.activeReportStruct!.flightConditionColor
-        }
+    var flightRulesColor: Color {
+        guard let report =  cockpit.activeReportStruct else { return .bicolor }
+        return report.flightConditionColor
     }
-    
     var body: some View {
         Image(systemName: flightRulesIconPath).foregroundColor(flightRulesColor)
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeatherViewTabScroller: View {
-    @EnvironmentObject var cockpit : Cockpit
+    @EnvironmentObject var cockpit: Cockpit
     var body: some View {
         ScrollView(.horizontal) {
             HStack {

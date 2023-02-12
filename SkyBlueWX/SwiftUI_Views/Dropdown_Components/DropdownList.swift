@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct DropdownList: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
+    @EnvironmentObject var cockpit: Cockpit
     @ViewBuilder
     var body: some View {
-        if let _ = cockpit.dbQueryResults {
+        if cockpit.dbQueryResults != nil {
             VStack {
                 ScrollView {
                     VStack {

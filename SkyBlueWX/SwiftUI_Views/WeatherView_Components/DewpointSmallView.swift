@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct DewpointSmallView: View {
-    @EnvironmentObject var cockpit : Cockpit
-    
-    var dewpointString : String {
+    @EnvironmentObject var cockpit: Cockpit
+    var dewpointString: String {
         return cockpit.activeReportStruct?.dewpointToString(unit: cockpit.settings.temperatureUnit) ?? "----"
     }
-    
-    var humidColor : Color {
-        guard let _ = cockpit.activeReportStruct else { return .bicolor }
-        return cockpit.activeReportStruct!.relativeHumidity >= 80 ? .bicolorCaution : .bicolor
+    var humidColor: Color {
+        guard let report = cockpit.activeReportStruct else { return .bicolor }
+        return report.relativeHumidity >= 80 ? .bicolorCaution : .bicolor
     }
-    
     var body: some View {
         HStack {
             Image(systemName: "thermometer.and.liquid.waves").foregroundColor(humidColor)
