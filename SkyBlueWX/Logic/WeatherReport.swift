@@ -1,5 +1,5 @@
 //
-//  Logic.swift
+//  WeatherReport.swift
 //  SkyBlueWX
 //
 //  Created by Daniel Sanchez on 11/15/22.
@@ -10,31 +10,6 @@ import SwiftUI
 import CoreLocation
 
 let thousandsNumber = NumberFormatter()
-
-typealias CloudLayer = (cover: CloudCover, height: Int, specialCloud: SpecialClouds?)
-
-enum CloudCover: String {
-    case few = "FEW"
-    case scattered = "SCT"
-    case broken = "BKN"
-    case overcast = "OVC"
-    case obscured = "VV"
-}
-
-enum SpecialClouds {
-    case cumulonimbus, toweringCumulus
-}
-
-enum CardinalDirections {
-    case north
-    case northeast
-    case east
-    case southeast
-    case south
-    case southwest
-    case west
-    case northwest
-}
 
 enum Precipitation {
     case light
@@ -75,61 +50,23 @@ struct WeatherDetails {
     }
 }
 
-struct Wind {
-    var direction: Int? // If left to nil, wind direction is variable.
-    var cardinal: String?
-    var isVariable: Bool { // True: VRB in a METAR.
-        direction == nil || direction == 0 // FAA returns VRB as direction 0.
-    }
-    var speed: Int
-    // Gusts: Leave as nil if no gusts are recorded.
-    var gusts: Int? {
-        didSet {
-            if gusts != nil {
-                // If gusts are reported as below the wind speed, this is likely an error -> Report no gusts.
-                if gusts! < speed {
-                    gusts = nil
-                }
-            }
-        }
-    }
-    var hasGusts: Bool {
-        gusts != nil
-    }
-    // Initializer for winds.
-    init(direction: Int?, speed: Int, gusts: Int?) {
-        self.direction = direction // API reports in degrees true.
-        self.speed = speed // API reports in knots.
-        self.gusts = gusts // API reports in knots.
-    }
-    /*func toText() -> String {
-        var desc: String = ""
-        if speed == 0 {
-            return "The wind is calm."
-        } else {
-            if isVariable {
-                desc += "The wind has variable direction "
-            } else {
-                desc += "The wind is blowing from the \(getCardinalDirection(degrees: direction)!) "
-            }
-            desc += "at a speed of \(speed) knots"
-            if hasGusts {
-                desc += " gusting to \(gusts!) knots."
-            } else {
-                desc += "."
-            }
-        }
-        return desc
-    }*/
-}
-
 struct WeatherReport {
+    // Stored
     var hasData: Bool
     var icao: String
     var airport: Airport?
-    var coords: CLLocation
+    var coords = CLLocation(latitude: 0.0, longitude: 0.0)
     var reportTime: Date?
-    var clouds: [CloudLayer]
+    var clouds: [CloudLayer] = []
+    var visibility: Double = 0.0
+    var temperature: Double = 0.0
+    var dewPoint: Double = 0.0
+    var wind = Wind(direction: 0, speed: 0, gusts: nil)
+    var details = WeatherDetails(text: "")
+    var altimeter: Double = 0.0
+    var elevation: Double = 0.0
+    //
+    // Computed
     var ceilingLayer: CloudLayer? {
         findCeiling(cloudList: clouds)
     }
@@ -138,24 +75,6 @@ struct WeatherReport {
     }
     var ceilingHeight: Int? {
         hasCeiling ? (ceilingLayer)!.height: nil
-    }
-    var visibility: Double
-    func visibilityToString(unit: VisUnit) -> String {
-        guard hasData else {return "----"}
-        if unit == .mile {
-            if visibility.truncatingRemainder(dividingBy: 1) == 0 {
-                return "\(String(Int(visibility))) mi"
-            } else {
-                return "\(String(format: "%.2f", visibility)) mi"
-            }
-        } else {
-            if 1.609 * visibility >= 1.0 {
-                return "\(String(format: "%.2f", 1.609 * visibility)) km"
-            } else {
-                print(1609 * visibility)
-                return "\(String(Int(1609 * visibility))) m"
-            }
-        }
     }
     var flightCondition: FlightConditions {
         guard hasData else {return .unknown}
@@ -175,50 +94,9 @@ struct WeatherReport {
         case .unknown: return .bicolor
         }
     }
-    var temperature: Double
-    func temperatureToString(unit: TemperatureUnit) -> String {
-        guard hasData else {return "----"}
-        switch unit {
-        case .celsius: return "\(Int(round(temperature)))°C"
-        case .fahrenheit: return "\(Int(round((1.8 * temperature) + 32)))°F"
-        }
-    }
-    var dewPoint: Double
-    func dewpointToString(unit: TemperatureUnit) -> String {
-        guard hasData else {return "----"}
-        switch unit {
-        case .celsius: return "\(Int(round(dewPoint)))°C"
-        case .fahrenheit: return "\(Int(round((1.8 * dewPoint) + 32)))°F"
-        }
-    }
     var relativeHumidity: Double {
         guard hasData else {return 0.0}
         return relHumidity(temperature: temperature, dewpoint: dewPoint)
-    }
-    var wind: Wind
-    func windSpeedToString(unit: SpeedUnit) -> String {
-        if !hasData {return "--"}
-        switch unit {
-        case .knot: return String(wind.speed)
-        case .kmh: return String(Int((Double(wind.speed) * 1.852).rounded()))
-        case .mph: return String(Int((Double(wind.speed) * 1.15078).rounded()))
-        }
-    }
-    func altimeterToString(unit: PressureUnit) -> String {
-        if !hasData {return "----"}
-        switch unit {
-        case .inHg: return "\(String(format: "%.2f", altimeter))\""
-        case .mbar: return "Q\(String(format: "%.0f", altimeter * 33.8639))"
-        }
-    }
-    func windGustsToString(unit: SpeedUnit) -> String {
-        if !hasData {return "--"}
-        guard let gusts = wind.gusts else {return "--"}
-        switch unit {
-        case .knot: return String(gusts)
-        case .kmh: return String(Int((Double(gusts) * 1.852).rounded()))
-        case .mph: return String(Int((Double(gusts) * 1.15078).rounded()))
-        }
     }
     var windDirToString: String {
         guard hasData else {return "---° --"}
@@ -247,9 +125,6 @@ struct WeatherReport {
         print(hrs.quotient, mins)
         return (hours: hrs.quotient, minutes: mins)
     }
-    var details: WeatherDetails
-    var altimeter: Double
-    var elevation: Double
     var stationPressure: Double {
         /* Weather reports return sea level atmospheric pressure. Need to convert to local pressure
         */
@@ -275,27 +150,8 @@ struct WeatherReport {
         let tvRankine = (1.8 * (virtualTemperature - 273.16) + 32) + 459.69// need virtual temperature in Rankine
         return 145366 * (1 - pow(17.326 * stnPressure / tvRankine, 0.235))
     }
-    func densityAltitudeToString(unit: AltitudeUnit) -> String {
-        guard hasData else {return "-----"}
-        if unit == .meter {
-            return "\(String(format: "%.0f", densityAltitude * 0.3048)) m"
-        } else {
-            return "\(String(format: "%.0f", densityAltitude)) ft"
-        }
-    }
     var densityAltitudeDelta: Double {
         densityAltitude - elevation.metersToFeet
-    }
-    func densityAltitudeDeltaToString(unit: AltitudeUnit) -> String {
-        guard hasData else {return "-----"}
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 0
-        formatter.positivePrefix = formatter.plusSign
-        if unit == .meter {
-            return "\(formatter.string(for: densityAltitudeDelta * 0.3048)!) m"
-        } else {
-            return "\(formatter.string(for: densityAltitudeDelta)!) ft"
-        }
     }
     var wxIcon: String {
         guard hasData else {return "questionmark.square.dashed"}
@@ -333,21 +189,13 @@ struct WeatherReport {
             return Color.yellow
         }
     }
+    //
+    // Initializers
     init(location icao: String, airport: Airport? = nil) {
         // Outline initializer. It is not considered a working struct until updated.
         self.icao = icao
         self.airport = airport
         self.hasData = false
-        self.coords = CLLocation(latitude: 0.0, longitude: 0.0)
-        self.reportTime = nil
-        self.clouds = []
-        self.visibility = 0.0
-        self.temperature = 0.0
-        self.dewPoint = 0.0
-        self.wind = Wind(direction: 0, speed: 0, gusts: nil)
-        self.details = WeatherDetails(text: "")
-        self.altimeter = 0.0
-        self.elevation = 0.0
     }
     init(location icao: String, coordinates: CLLocation, reportTime: Date?, clouds: [CloudLayer], visibility: Double,
          temperature: Double = 0.0, dewPoint: Double = 0.0, wind: Wind, details: String, altimeter: Double,
@@ -366,22 +214,88 @@ struct WeatherReport {
         self.altimeter = altimeter
         self.elevation = elevation
     }
-    mutating func update(location icao: String, coordinates: CLLocation, reportTime: Date?, clouds: [CloudLayer],
-                         visibility: Double, temperature: Double = 0.0, dewPoint: Double = 0.0, wind: Wind,
-                         details: String, altimeter: Double, elevation: Double) {
-        self.icao = icao
-        self.hasData = true
-        self.coords = coordinates
-        self.reportTime = reportTime
-        self.clouds = clouds
-        self.visibility = visibility
-        self.temperature = temperature
-        self.dewPoint = dewPoint
-        self.wind = wind
-        self.details = WeatherDetails(text: details)
-        self.altimeter = altimeter
-        self.elevation = elevation
+    //
+    // Functions
+    func visibilityToString(unit: VisUnit) -> String {
+        guard hasData else {return "----"}
+        if unit == .mile {
+            if visibility.truncatingRemainder(dividingBy: 1) == 0 {
+                return "\(String(Int(visibility))) mi"
+            } else {
+                return "\(String(format: "%.2f", visibility)) mi"
+            }
+        } else {
+            if 1.609 * visibility >= 1.0 {
+                return "\(String(format: "%.2f", 1.609 * visibility)) km"
+            } else {
+                print(1609 * visibility)
+                return "\(String(Int(1609 * visibility))) m"
+            }
+        }
     }
+    //
+    func temperatureToString(unit: TemperatureUnit) -> String {
+        guard hasData else {return "----"}
+        switch unit {
+        case .celsius: return "\(Int(round(temperature)))°C"
+        case .fahrenheit: return "\(Int(round((1.8 * temperature) + 32)))°F"
+        }
+    }
+    //
+    func dewpointToString(unit: TemperatureUnit) -> String {
+        guard hasData else {return "----"}
+        switch unit {
+        case .celsius: return "\(Int(round(dewPoint)))°C"
+        case .fahrenheit: return "\(Int(round((1.8 * dewPoint) + 32)))°F"
+        }
+    }
+    //
+    func windSpeedToString(unit: SpeedUnit) -> String {
+        if !hasData {return "--"}
+        switch unit {
+        case .knot: return String(wind.speed)
+        case .kmh: return String(Int((Double(wind.speed) * 1.852).rounded()))
+        case .mph: return String(Int((Double(wind.speed) * 1.15078).rounded()))
+        }
+    }
+    //
+    func altimeterToString(unit: PressureUnit) -> String {
+        if !hasData {return "----"}
+        switch unit {
+        case .inHg: return "\(String(format: "%.2f", altimeter))\""
+        case .mbar: return "Q\(String(format: "%.0f", altimeter * 33.8639))"
+        }
+    }
+    //
+    func windGustsToString(unit: SpeedUnit) -> String {
+        if !hasData {return "--"}
+        guard let gusts = wind.gusts else {return "--"}
+        switch unit {
+        case .knot: return String(gusts)
+        case .kmh: return String(Int((Double(gusts) * 1.852).rounded()))
+        case .mph: return String(Int((Double(gusts) * 1.15078).rounded()))
+        }
+    }
+    func densityAltitudeToString(unit: AltitudeUnit) -> String {
+        guard hasData else {return "-----"}
+        if unit == .meter {
+            return "\(String(format: "%.0f", densityAltitude * 0.3048)) m"
+        } else {
+            return "\(String(format: "%.0f", densityAltitude)) ft"
+        }
+    }
+    func densityAltitudeDeltaToString(unit: AltitudeUnit) -> String {
+        guard hasData else {return "-----"}
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 0
+        formatter.positivePrefix = formatter.plusSign
+        if unit == .meter {
+            return "\(formatter.string(for: densityAltitudeDelta * 0.3048)!) m"
+        } else {
+            return "\(formatter.string(for: densityAltitudeDelta)!) ft"
+        }
+    }
+    //
 }
 
 func relHumidity (temperature temp: Double, dewpoint dewpt: Double) -> Double {
@@ -407,22 +321,3 @@ func findCeiling (cloudList: [CloudLayer]) -> CloudLayer? {
     }
     return ceilingLayer
 }
-/*
-func getCardinalDirection(degrees: Int?) -> String? {
-    guard let deg = degrees else {
-        return nil
-    }
-    switch deg {
-    case 0: return nil
-    case 338...360, 0..<23: return CardinalDirections.north.rawValue
-    case 23..<68: return CardinalDirections.northeast.rawValue
-    case 68..<113: return CardinalDirections.east.rawValue
-    case 113..<158: return CardinalDirections.southeast.rawValue
-    case 158..<203: return CardinalDirections.south.rawValue
-    case 203..<248: return CardinalDirections.southwest.rawValue
-    case 248..<293: return CardinalDirections.west.rawValue
-    case 293..<338: return CardinalDirections.northwest.rawValue
-    default: return nil
-    }
-}
- */

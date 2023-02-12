@@ -8,66 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct SettingsStruct {
-    // default cases should have settings value of zero.
-    var temperatureUnit: TemperatureUnit
-    var speedUnit: SpeedUnit
-    var visibilityUnit: VisUnit
-    var altitudeUnit: AltitudeUnit
-    var pressureUnit: PressureUnit
-    var homeAirport: String
-    mutating func update() {
-        let temperatureUnitKey = UserDefaults.standard.integer(forKey: "temperatureUnit")
-        switch temperatureUnitKey {
-        case 1: temperatureUnit = .fahrenheit
-        default: temperatureUnit = .celsius
-        }
-        let speedUnitKey = UserDefaults.standard.integer(forKey: "speedUnit")
-        switch speedUnitKey {
-        case 1: speedUnit = .mph
-        case 2: speedUnit = .kmh
-        default: speedUnit = .knot
-        }
-        let visibilityUnitKey = UserDefaults.standard.integer(forKey: "visibilityUnit")
-        switch visibilityUnitKey {
-        case 1: visibilityUnit = .kilometer
-        default: visibilityUnit = .mile
-        }
-        let altitudeUnitKey = UserDefaults.standard.integer(forKey: "altitudeUnit")
-        switch altitudeUnitKey {
-        case 1: altitudeUnit = .meter
-        default: altitudeUnit = .feet
-        }
-        let pressureUnitKey = UserDefaults.standard.integer(forKey: "pressureUnit")
-        switch pressureUnitKey {
-        case 1: pressureUnit = .mbar
-        default: pressureUnit = .inHg
-        }
-        homeAirport = UserDefaults.standard.string(forKey: "homeAirport") ?? ""
-    }
-    //
-    init() {
-        self.temperatureUnit = .celsius
-        self.speedUnit = .knot
-        self.visibilityUnit = .mile
-        self.altitudeUnit = .feet
-        self.pressureUnit = .inHg
-        self.homeAirport = ""
-        update()
-    }
-    var speedUnitString: String {
-        switch speedUnit {
-        case .knot: return "kt"
-        case .mph: return "mph"
-        case .kmh: return "km/h"
-        }
-    }
-}
-
+/// This class is a common interface to store data across the app and handle cross-app integration.
 final class Cockpit: ObservableObject {
-    /// This class is a common interface to store data across the app and handle cross-app integration.
-    ///
-    /// The @Published wrapper for ObservableObjects denotes properties that will trigger re-renders for all views that are observing it.
+    /* The @Published wrapper for ObservableObjects denotes properties that will trigger
+     re-renders for all views that are observing it.*/
     // Settings variables:
     @Published var settings: SettingsStruct
     // END SETTINGS VARIABLES...
@@ -173,7 +117,7 @@ final class Cockpit: ObservableObject {
         let queries: Set<String> = useExisting ? Set(reportKeys): queryCodes
         let lookup = Task {
             do {
-                return await loadMe(icao: queries, cockpit: self)
+                return await getData(icao: queries, cockpit: self)
             }
         }
         let results: [String: WeatherReport] = await lookup.value

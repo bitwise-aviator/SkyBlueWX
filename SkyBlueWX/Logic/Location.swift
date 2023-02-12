@@ -15,7 +15,8 @@ struct GeodesicLine {
 
 final class LocationManager: NSObject, ObservableObject {
     /// Published wrappers are contained in classes only:
-    /// Within SwiftUI, if there are views that reference "published" variables, a refresh of those views' body methods will be called at that time.
+    /// Within SwiftUI, if there are views that reference "published" variables,
+    /// a refresh of those views' body methods will be called at that time.
     ///
     @Published var location: CLLocation?
     private let locationManager = CLLocationManager()

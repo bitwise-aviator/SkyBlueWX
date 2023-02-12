@@ -18,7 +18,14 @@ enum DataBaseHandlerError: Error {
     case sqlLoadError
 }
 
-typealias Airport = (id: Int, icao: String, name: String, city: String)
+// Replacement of Airport tuple as a constant struct.
+struct Airport {
+    let id: Int
+    let icao: String
+    let name: String
+    let city: String
+}
+
 typealias AirportDict = [Int: Airport]
 
 let airportTable = "airports"
@@ -56,7 +63,7 @@ struct DataBaseHandler {
             String(cString: sqlite3_column_text(statement, 3)!): ""
             let city = sqlite3_column_text(statement, 10) != nil ?
             String(cString: sqlite3_column_text(statement, 10)!): ""
-            return (id: id, icao: ident, name: name, city: city)
+            return Airport(id: id, icao: ident, name: name, city: city)
         }
         func closeAsPass() {
             sqlite3_finalize(statement)
@@ -86,9 +93,23 @@ struct DataBaseHandler {
         if searchTerm.count < 2 {return nil}
         let queryString: String
         if onlyByIcao {
-            queryString = "SELECT * FROM \(airportTable) WHERE type != 'closed' AND gps_code IS NOT NULL AND ident LIKE '\(searchTerm)%'"
+            queryString = """
+SELECT * FROM \(airportTable)
+WHERE type != 'closed'
+AND gps_code IS NOT NULL
+AND ident LIKE '\(searchTerm)%'
+"""
         } else {
-            queryString = "SELECT * FROM \(airportTable) WHERE type != 'closed' AND gps_code IS NOT NULL AND (ident LIKE '\(searchTerm)%' OR gps_code LIKE '\(searchTerm)%' OR iata_code LIKE '\(searchTerm)%' OR municipality LIKE '\(searchTerm)%') LIMIT 100"
+            queryString = """
+SELECT * FROM \(airportTable)
+WHERE type != 'closed'
+AND gps_code IS NOT NULL
+AND (ident LIKE '\(searchTerm)%'
+OR gps_code LIKE '\(searchTerm)%'
+OR iata_code LIKE '\(searchTerm)%'
+OR municipality LIKE '\(searchTerm)%')
+LIMIT 100
+"""
         }
         let airportOutput: AirportDict? = runQuery(query: queryString, returnType: .airport)
         return airportOutput

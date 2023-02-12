@@ -6,8 +6,8 @@
 //
 
 import Foundation
+// For future expansion...
 
-/// This part's not going in for now...
 /*
  func karneyInverse(_ p1: CLLocation, _ p2: CLLocation) -> GeodesicLine? {
  let lat1 = p1.coordinate.latitude
