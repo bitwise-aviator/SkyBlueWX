@@ -59,6 +59,7 @@
 		DCFECF10299B056E0081D7E8 /* CloudLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF0F299B056E0081D7E8 /* CloudLayerTests.swift */; };
 		DCFECF12299B09E70081D7E8 /* WeatherReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF11299B09E70081D7E8 /* WeatherReportTests.swift */; };
 		DCFECF16299B2F380081D7E8 /* WindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF15299B2F380081D7E8 /* WindTests.swift */; };
+		DCFECF1C299BF9450081D7E8 /* CockpitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF1B299BF9450081D7E8 /* CockpitTests.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -137,6 +138,7 @@
 		DCFECF0F299B056E0081D7E8 /* CloudLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLayerTests.swift; sourceTree = "<group>"; };
 		DCFECF11299B09E70081D7E8 /* WeatherReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherReportTests.swift; sourceTree = "<group>"; };
 		DCFECF15299B2F380081D7E8 /* WindTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindTests.swift; sourceTree = "<group>"; };
+		DCFECF1B299BF9450081D7E8 /* CockpitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitTests.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				261F7D14292473F3002D3010 /* SkyBlueWXTests.swift */,
+				DCFECF1B299BF9450081D7E8 /* CockpitTests.swift */,
 				DCFECF11299B09E70081D7E8 /* WeatherReportTests.swift */,
 				DCFECF0F299B056E0081D7E8 /* CloudLayerTests.swift */,
 				DCFECF15299B2F380081D7E8 /* WindTests.swift */,
@@ -532,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				261F7D15292473F3002D3010 /* SkyBlueWXTests.swift in Sources */,
+				DCFECF1C299BF9450081D7E8 /* CockpitTests.swift in Sources */,
 				DCFECF10299B056E0081D7E8 /* CloudLayerTests.swift in Sources */,
 				DCFECF12299B09E70081D7E8 /* WeatherReportTests.swift in Sources */,
 				DCFECF16299B2F380081D7E8 /* WindTests.swift in Sources */,

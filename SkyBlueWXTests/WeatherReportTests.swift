@@ -183,4 +183,29 @@ final class WeatherReportTests: XCTestCase {
         XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .mile), "0.50 mi")
         XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .kilometer), "804 m")
     }
+    func testAltimeterString() {
+        // No data
+        XCTAssertEqual(weatherReportOne!.altimeterToString(unit: .inHg), "----")
+        // Test with 29.92 inHg
+        weatherReportOne!.hasData = true
+        weatherReportOne!.altimeter = 29.92
+        // Test inHg output
+        XCTAssertEqual(weatherReportOne!.altimeterToString(unit: .inHg), "29.92\"")
+        // Test MB (Q) output
+        XCTAssertEqual(weatherReportOne!.altimeterToString(unit: .mbar), "Q1013")
+    }
+    func testTimeSinceReport() {
+        // Test with no data
+        XCTAssertNil(weatherReportOne!.timeSinceReport)
+        // Test with data but no timestamp
+        weatherReportOne!.hasData = true
+        XCTAssertNil(weatherReportOne!.timeSinceReport)
+        // Test with data and timestamp
+        // Because this function's result will change
+        // because of execution time, using contant diff.
+        weatherReportOne!.reportTime = Date.now
+        let timeSinceTuple = weatherReportOne!.timeSinceReport
+        XCTAssertEqual(timeSinceTuple?.hours, 0)
+        XCTAssertEqual(timeSinceTuple?.minutes, 5)
+    }
 }

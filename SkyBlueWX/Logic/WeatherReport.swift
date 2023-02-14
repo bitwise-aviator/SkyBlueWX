@@ -116,8 +116,13 @@ struct WeatherReport {
         return "\(String(format: "%03d", wind.direction!))° \(windDir)"
     }
     var timeSinceReport: (hours: Int, minutes: Int)? {
+        guard hasData else {return nil}
         guard let timestamp = reportTime else {return nil}
+        #if TESTING
+        let timeDiff = 300 // Set a 5-minute age for testing.
+        #else
         let timeDiff = Int(Date.now - timestamp)
+        #endif
         print(timeDiff)
         let hrs = timeDiff.quotientAndRemainder(dividingBy: 3600)
         let mins = hrs.remainder / 60
@@ -150,6 +155,7 @@ struct WeatherReport {
         return 145366 * (1 - pow(17.326 * stnPressure / tvRankine, 0.235))
     }
     var densityAltitudeDelta: Double {
+        // returns in feet.
         densityAltitude - elevation.metersToFeet
     }
     var wxIcon: String {
@@ -227,7 +233,6 @@ struct WeatherReport {
             if 1.609 * visibility >= 1.0 {
                 return "\(String(format: "%.2f", 1.609 * visibility)) km"
             } else {
-                print(1609 * visibility)
                 return "\(String(Int(1609 * visibility))) m"
             }
         }
