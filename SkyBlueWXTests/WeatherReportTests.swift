@@ -40,6 +40,44 @@ final class WeatherReportTests: XCTestCase {
         XCTAssertTrue(moderateSnow.isSnowing)
         XCTAssertFalse(heavySnow.isRaining)
         XCTAssertFalse(lightRain.isSnowing)
+        // Add weather details to report to test colors & icons
+        // No data
+        XCTAssertEqual(weatherReportOne!.wxColor, .bicolor)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "questionmark.square.dashed")
+        // Good weather
+        weatherReportOne!.hasData = true
+        weatherReportOne!.visibility = 10.0
+        XCTAssertEqual(weatherReportOne!.wxColor, .yellow)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "sun.max.fill")
+        // Cloudy
+        weatherReportOne!.clouds = [CloudLayer(.overcast, 500, nil)]
+        XCTAssertEqual(weatherReportOne!.wxColor, .gray)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.fill")
+        // Heavy rain
+        weatherReportOne!.details = heavyRain
+        XCTAssertEqual(weatherReportOne!.wxColor, .blue)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.heavyrain.fill")
+        // Moderate/light rain
+        weatherReportOne!.details = lightRain
+        XCTAssertEqual(weatherReportOne!.wxColor, .blue)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.rain.fill")
+        // Any snow
+        weatherReportOne!.details = heavySnow
+        XCTAssertEqual(weatherReportOne!.wxColor, .cyan)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.snow.fill")
+        // Thunderstorms, no precipitation, no ceiling
+        weatherReportOne!.details = WeatherDetails(text: "TS")
+        weatherReportOne!.clouds = []
+        XCTAssertEqual(weatherReportOne!.wxColor, .bicolorCaution)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.sun.bolt.fill")
+        // Thunderstorms, no precipitation, has ceiling
+        weatherReportOne!.clouds = [CloudLayer(.broken, 1000, .toweringCumulus)]
+        XCTAssertEqual(weatherReportOne!.wxColor, .bicolorCaution)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.bolt.fill")
+        // Thunderstorms with precipitation
+        weatherReportOne!.details = WeatherDetails(text: "TSRA")
+        XCTAssertEqual(weatherReportOne!.wxColor, .bicolorCaution)
+        XCTAssertEqual(weatherReportOne!.wxIcon, "cloud.bolt.rain.fill")
     }
     //
     func testCeilingHeight() {
@@ -103,5 +141,46 @@ final class WeatherReportTests: XCTestCase {
         weatherReportOne!.temperature = 14
         weatherReportOne!.dewPoint = 9
         XCTAssertEqual(weatherReportOne!.densityAltitude, 182, accuracy: 5)
+    }
+    func testRelativeHumidity() {
+        // Test no data
+        XCTAssertEqual(weatherReportOne!.relativeHumidity, 0.0)
+        // Test 100% humidity (T == D)
+        weatherReportOne!.hasData = true
+        weatherReportOne!.temperature = 15.0
+        weatherReportOne!.dewPoint = 15.0
+        XCTAssertEqual(weatherReportOne!.relativeHumidity, 100.0)
+        // Test RDU report vs. ForeFlight
+        weatherReportOne!.hasData = true
+        weatherReportOne!.temperature = 4.0
+        weatherReportOne!.dewPoint = -1.0
+        XCTAssertEqual(weatherReportOne!.relativeHumidity, 70.0, accuracy: 2.0)
+    }
+    func testTemperatureStrings() {
+        // No data
+        XCTAssertEqual(weatherReportOne!.temperatureToString(unit: .celsius), "----")
+        XCTAssertEqual(weatherReportOne!.dewpointToString(unit: .celsius), "----")
+        // Test in Celsius
+        weatherReportOne!.hasData = true
+        weatherReportOne!.temperature = 15.0
+        weatherReportOne!.dewPoint = 0.0
+        XCTAssertEqual(weatherReportOne!.temperatureToString(unit: .celsius), "15°C")
+        XCTAssertEqual(weatherReportOne!.dewpointToString(unit: .celsius), "0°C")
+        // Test in Fahrenheit
+        XCTAssertEqual(weatherReportOne!.temperatureToString(unit: .fahrenheit), "59°F")
+        XCTAssertEqual(weatherReportOne!.dewpointToString(unit: .fahrenheit), "32°F")
+    }
+    func testVisibilityStrings() {
+        // No data
+        XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .mile), "----")
+        // Test 1 mile
+        weatherReportOne!.hasData = true
+        weatherReportOne!.visibility = 1.0
+        XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .mile), "1 mi")
+        XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .kilometer), "1.61 km")
+        // Test 0.5 mile
+        weatherReportOne!.visibility = 0.5
+        XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .mile), "0.50 mi")
+        XCTAssertEqual(weatherReportOne!.visibilityToString(unit: .kilometer), "804 m")
     }
 }
