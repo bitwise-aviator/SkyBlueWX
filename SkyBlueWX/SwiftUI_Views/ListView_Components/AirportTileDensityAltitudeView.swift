@@ -28,9 +28,11 @@ struct AirportTileDensityAltitudeView: View {
     }
 }
 
+#if !TESTING
 struct AirportTileDensityAltitudeView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         AirportTileDensityAltitudeView(icao: "").environmentObject(cockpit)
     }
 }
+#endif

@@ -36,9 +36,11 @@ struct ErrorMessageView: View {
     }
 }
 
+#if !TESTING
 struct ErrorMessageView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         ErrorMessageView().environmentObject(cockpit)
     }
 }
+#endif

@@ -81,9 +81,8 @@ struct WeatherReport {
         let ceiling = ceilingHeight ?? Int.max
         if ceiling < 500 || visibility < 1 {return .lifr} else
         if ceiling < 1000 || visibility < 3 {return .ifr} else
-        if ceiling <= 3000 || visibility <= 5 {return .mvfr} else {
-            return .vfr
-        }
+        if ceiling <= 3000 || visibility <= 5 {return .mvfr}
+        return .vfr
     }
     var flightConditionColor: Color {
         switch flightCondition {
@@ -112,7 +111,7 @@ struct WeatherReport {
         case 203..<248: windDir = "SW"
         case 248..<293: windDir = "W"
         case 293..<338: windDir = "NW"
-        default: windDir = "--"
+        default: return "---° --"
         }
         return "\(String(format: "%03d", wind.direction!))° \(windDir)"
     }

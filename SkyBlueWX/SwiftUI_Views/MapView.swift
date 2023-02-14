@@ -15,9 +15,11 @@ struct MapView: View {
     }
 }
 
+#if !TESTING
 struct MapView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         MapView(selectedTab: .constant(.map)).environmentObject(cockpit)
     }
 }
+#endif

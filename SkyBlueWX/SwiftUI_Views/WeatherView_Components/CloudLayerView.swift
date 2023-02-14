@@ -98,9 +98,11 @@ struct CloudLayerView: View {
     }
 }
 
+#if !TESTING
 struct CloudLayerView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         CloudLayerView(layerIndex: nil).environmentObject(cockpit)
     }
 }
+#endif

@@ -27,9 +27,11 @@ struct AltimeterView: View {
     }
 }
 
+#if !TESTING
 struct AltimeterView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         AltimeterView().environmentObject(cockpit)
     }
 }
+#endif

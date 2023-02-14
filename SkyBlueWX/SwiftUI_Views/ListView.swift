@@ -55,9 +55,11 @@ struct ListView: View {
     }
 }
 
+#if !TESTING
 struct ListView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         ListView(selectedTab: .constant(.list)).environmentObject(cockpit)
     }
 }
+#endif

@@ -58,6 +58,7 @@
 		DC74203129985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC74203029985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift */; };
 		DCFECF10299B056E0081D7E8 /* CloudLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF0F299B056E0081D7E8 /* CloudLayerTests.swift */; };
 		DCFECF12299B09E70081D7E8 /* WeatherReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF11299B09E70081D7E8 /* WeatherReportTests.swift */; };
+		DCFECF16299B2F380081D7E8 /* WindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF15299B2F380081D7E8 /* WindTests.swift */; };
 		DCFECF872982B80A0097DA8C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF862982B80A0097DA8C /* Location.swift */; };
 		DCFECF892987703F0097DA8C /* Geodesy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFECF882987703F0097DA8C /* Geodesy.swift */; };
 /* End PBXBuildFile section */
@@ -135,6 +136,7 @@
 		DC74203029985CE100CEB8F2 /* AirportTileDensityAltitudeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportTileDensityAltitudeView.swift; sourceTree = "<group>"; };
 		DCFECF0F299B056E0081D7E8 /* CloudLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLayerTests.swift; sourceTree = "<group>"; };
 		DCFECF11299B09E70081D7E8 /* WeatherReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherReportTests.swift; sourceTree = "<group>"; };
+		DCFECF15299B2F380081D7E8 /* WindTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindTests.swift; sourceTree = "<group>"; };
 		DCFECF862982B80A0097DA8C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DCFECF882987703F0097DA8C /* Geodesy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geodesy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +217,7 @@
 				261F7D14292473F3002D3010 /* SkyBlueWXTests.swift */,
 				DCFECF11299B09E70081D7E8 /* WeatherReportTests.swift */,
 				DCFECF0F299B056E0081D7E8 /* CloudLayerTests.swift */,
+				DCFECF15299B2F380081D7E8 /* WindTests.swift */,
 			);
 			path = SkyBlueWXTests;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				261F7D15292473F3002D3010 /* SkyBlueWXTests.swift in Sources */,
 				DCFECF10299B056E0081D7E8 /* CloudLayerTests.swift in Sources */,
 				DCFECF12299B09E70081D7E8 /* WeatherReportTests.swift in Sources */,
+				DCFECF16299B2F380081D7E8 /* WindTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +818,135 @@
 			};
 			name = Release;
 		};
+		DCFECF17299B32F20081D7E8 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TESTING;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Testing;
+		};
+		DCFECF18299B32F20081D7E8 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SkyBlueWX/Preview Content\"";
+				DEVELOPMENT_TEAM = YG5N57HMZ9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SkyBlueWX/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Uses location to find nearest weather stations";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Testing;
+		};
+		DCFECF19299B32F20081D7E8 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkyBlueWX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SkyBlueWX";
+			};
+			name = Testing;
+		};
+		DCFECF1A299B32F20081D7E8 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "deltasierra-aero.SkyBlueWXUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Testing;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -821,6 +954,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				261F7D22292473F3002D3010 /* Debug */,
+				DCFECF17299B32F20081D7E8 /* Testing */,
 				261F7D23292473F3002D3010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -830,6 +964,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				261F7D25292473F3002D3010 /* Debug */,
+				DCFECF18299B32F20081D7E8 /* Testing */,
 				261F7D26292473F3002D3010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -839,6 +974,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				261F7D28292473F3002D3010 /* Debug */,
+				DCFECF19299B32F20081D7E8 /* Testing */,
 				261F7D29292473F3002D3010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -848,6 +984,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				261F7D2B292473F3002D3010 /* Debug */,
+				DCFECF1A299B32F20081D7E8 /* Testing */,
 				261F7D2C292473F3002D3010 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

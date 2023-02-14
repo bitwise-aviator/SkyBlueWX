@@ -15,9 +15,11 @@ struct FlightPlanView: View {
     }
 }
 
+#if !TESTING
 struct FlightPlanView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         FlightPlanView(selectedTab: .constant(.flightPlan)).environmentObject(cockpit)
     }
 }
+#endif

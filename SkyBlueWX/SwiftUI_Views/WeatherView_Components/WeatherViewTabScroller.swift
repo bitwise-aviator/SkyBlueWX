@@ -24,9 +24,11 @@ struct WeatherViewTabScroller: View {
     }
 }
 
+#if !TESTING
 struct WeatherViewTabScroller_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         WeatherViewTabScroller().environmentObject(cockpit)
     }
 }
+#endif

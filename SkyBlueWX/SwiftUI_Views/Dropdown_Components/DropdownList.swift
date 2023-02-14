@@ -28,9 +28,11 @@ struct DropdownList: View {
     }
 }
 
+#if !TESTING
 struct DropdownList_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         DropdownList().environmentObject(cockpit)
     }
 }
+#endif

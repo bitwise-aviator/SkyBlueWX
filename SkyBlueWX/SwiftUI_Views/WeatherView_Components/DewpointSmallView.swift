@@ -24,9 +24,11 @@ struct DewpointSmallView: View {
     }
 }
 
+#if !TESTING
 struct DewpointSmallView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         DewpointSmallView().environmentObject(cockpit)
     }
 }
+#endif

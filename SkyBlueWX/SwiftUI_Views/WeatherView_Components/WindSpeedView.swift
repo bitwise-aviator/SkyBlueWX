@@ -37,9 +37,11 @@ struct WindSpeedView: View {
     }
 }
 
+#if !TESTING
 struct WindSpeedView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         WindSpeedView().environmentObject(cockpit)
     }
 }
+#endif

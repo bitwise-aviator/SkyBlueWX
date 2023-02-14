@@ -47,8 +47,10 @@ struct MainView: View {
     }
 }
 
+#if !TESTING
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
     }
 }
+#endif

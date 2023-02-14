@@ -28,9 +28,11 @@ struct FlightRulesIconSmallView: View {
     }
 }
 
+#if !TESTING
 struct FlightRulesIconSmallView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         FlightRulesIconSmallView().environmentObject(cockpit)
     }
 }
+#endif

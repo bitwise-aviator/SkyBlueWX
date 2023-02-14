@@ -44,9 +44,11 @@ struct AirportTileWindView: View {
     }
 }
 
+#if !TESTING
 struct AirportTileWindView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         AirportTileWindView(icao: "TEST").environmentObject(cockpit)
     }
 }
+#endif

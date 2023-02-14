@@ -20,7 +20,6 @@ enum CardinalDirections {
 
 struct Wind {
     var direction: Int? // If left to nil, wind direction is variable.
-    var cardinal: String?
     var isVariable: Bool { // True: VRB in a METAR.
         direction == nil || direction == 0 // FAA returns VRB as direction 0.
     }

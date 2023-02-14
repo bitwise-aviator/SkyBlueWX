@@ -138,9 +138,11 @@ struct WeatherView: View {
     }
 }
 
+#if !TESTING
 struct WeatherView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         WeatherView(selectedTab: .constant(.weather)).environmentObject(cockpit)
     }
 }
+#endif

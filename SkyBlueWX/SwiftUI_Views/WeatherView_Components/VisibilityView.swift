@@ -34,9 +34,11 @@ struct VisibilityView: View {
     }
 }
 
+#if !TESTING
 struct VisibilityView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         VisibilityView().environmentObject(cockpit)
     }
 }
+#endif

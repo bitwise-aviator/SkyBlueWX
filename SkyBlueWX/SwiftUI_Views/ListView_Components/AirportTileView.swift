@@ -58,6 +58,7 @@ struct AirportTileView: View {
     }
 }
 
+#if !TESTING
 struct AirportTileView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
@@ -65,3 +66,4 @@ struct AirportTileView_Previews: PreviewProvider {
             .environmentObject(cockpit)
     }
 }
+#endif

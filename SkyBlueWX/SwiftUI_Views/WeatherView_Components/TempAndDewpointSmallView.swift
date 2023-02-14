@@ -20,9 +20,11 @@ struct TempAndDewpointSmallView: View {
     }
 }
 
+#if !TESTING
 struct TempAndDewpointSmallView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         TempAndDewpointSmallView().environmentObject(cockpit)
     }
 }
+#endif

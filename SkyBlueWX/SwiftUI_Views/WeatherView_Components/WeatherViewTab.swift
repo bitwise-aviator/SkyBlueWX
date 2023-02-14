@@ -37,9 +37,11 @@ struct WeatherViewTab: View {
     }
 }
 
+#if !TESTING
 struct WeatherViewTab_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         WeatherViewTab(isPlaceholder: false, airportCode: "XXXX").environmentObject(cockpit)
     }
 }
+#endif

@@ -20,9 +20,11 @@ struct WeatherIconSmallView: View {
     }
 }
 
+#if !TESTING
 struct WeatherIconSmallView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         WeatherIconSmallView().environmentObject(cockpit)
     }
 }
+#endif

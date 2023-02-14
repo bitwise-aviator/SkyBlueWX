@@ -29,9 +29,11 @@ struct CloudStackView: View {
     }
 }
 
+#if !TESTING
 struct CloudStackView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         CloudStackView().environmentObject(cockpit)
     }
 }
+#endif

@@ -26,9 +26,11 @@ struct AirportTileFlightRuleView: View {
     }
 }
 
+#if !TESTING
 struct AirportTileFlightRuleView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         AirportTileFlightRuleView(icao: "").environmentObject(cockpit)
     }
 }
+#endif

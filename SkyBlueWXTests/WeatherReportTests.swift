@@ -57,12 +57,15 @@ final class WeatherReportTests: XCTestCase {
         // Test with no data
         XCTAssertEqual(weatherReportOne!.flightCondition, .unknown)
         XCTAssertEqual(weatherReportOne!.flightConditionColor, .bicolor)
-        // Set VFR
+        // Set VFR without ceiling.
         weatherReportOne!.hasData = true
-        weatherReportOne!.clouds = [CloudLayer(.broken, 3500, nil)]
+        weatherReportOne!.clouds = [CloudLayer(.scattered, 3500, nil)]
         weatherReportOne!.visibility = 10
         XCTAssertEqual(weatherReportOne!.flightCondition, .vfr)
         XCTAssertEqual(weatherReportOne!.flightConditionColor, .darkGreen)
+        // Set VFR with ceiling (no need to repeat color test for VFR)
+        weatherReportOne!.clouds = [CloudLayer(.broken, 3500, nil)]
+        XCTAssertEqual(weatherReportOne!.flightCondition, .vfr)
         // Set MVFR
         weatherReportOne!.visibility = 4
         XCTAssertEqual(weatherReportOne!.flightCondition, .mvfr)

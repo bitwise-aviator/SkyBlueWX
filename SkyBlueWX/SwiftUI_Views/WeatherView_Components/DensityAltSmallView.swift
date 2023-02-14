@@ -20,9 +20,11 @@ struct DensityAltSmallView: View {
     }
 }
 
+#if !TESTING
 struct DensityAltSmallView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
     static var previews: some View {
         DensityAltSmallView().environmentObject(cockpit)
     }
 }
+#endif
