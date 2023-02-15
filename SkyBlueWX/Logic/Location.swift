@@ -8,11 +8,6 @@
 import Foundation
 import CoreLocation
 
-struct GeodesicLine {
-    init() {
-    }
-}
-
 final class LocationManager: NSObject, ObservableObject {
     /// Published wrappers are contained in classes only:
     /// Within SwiftUI, if there are views that reference "published" variables,

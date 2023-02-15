@@ -94,6 +94,51 @@ final class CockpitTests: XCTestCase {
         cockpit!.setPressureUnit()
         XCTAssertEqual(cockpit!.settings.pressureUnit, .inHg)
     }
+    func testSetTemperatureUnit() {
+        // Force set to C
+        cockpit!.setTemperatureUnit(.celsius)
+        XCTAssertEqual(cockpit!.settings.temperatureUnit, .celsius)
+        // Force set to F
+        cockpit!.setTemperatureUnit(.fahrenheit)
+        XCTAssertEqual(cockpit!.settings.temperatureUnit, .fahrenheit)
+        // Toggle from F to C
+        cockpit!.setTemperatureUnit()
+        XCTAssertEqual(cockpit!.settings.temperatureUnit, .celsius)
+        // Toggle from C to F
+        cockpit!.setTemperatureUnit()
+        XCTAssertEqual(cockpit!.settings.temperatureUnit, .fahrenheit)
+    }
+    func testSpeedUnitText() {
+        // Set speed unit to km/h.
+        cockpit!.setSpeedUnit(.kmh)
+        // function should return km/h with default args.
+        XCTAssertEqual(cockpit!.getSpeedUnitText(), "km/h")
+        // Test with args.
+        XCTAssertEqual(cockpit!.getSpeedUnitText(.kmh), "km/h")
+        XCTAssertEqual(cockpit!.getSpeedUnitText(.mph), "mph")
+        XCTAssertEqual(cockpit!.getSpeedUnitText(.knot), "kt")
+    }
+    func testSetSpeedUnit() {
+        // Going to go against toggle order to test forced assignments
+        // Force set to km/h
+        cockpit!.setSpeedUnit(.kmh)
+        XCTAssertEqual(cockpit!.settings.speedUnit, .kmh)
+        // Force set to mph
+        cockpit!.setSpeedUnit(.mph)
+        XCTAssertEqual(cockpit!.settings.speedUnit, .mph)
+        // Force set to knots
+        cockpit!.setSpeedUnit(.knot)
+        XCTAssertEqual(cockpit!.settings.speedUnit, .knot)
+        // Cycle: knot to mph
+        cockpit!.setSpeedUnit()
+        XCTAssertEqual(cockpit!.settings.speedUnit, .mph)
+        // Cycle: mph to km/h
+        cockpit!.setSpeedUnit()
+        XCTAssertEqual(cockpit!.settings.speedUnit, .kmh)
+        // Cycle: km/h to knot
+        cockpit!.setSpeedUnit()
+        XCTAssertEqual(cockpit!.settings.speedUnit, .knot)
+    }
     func testSetHomeAirport() {
         cockpit!.setHomeAirport("ABCD")
         XCTAssertEqual(cockpit!.settings.homeAirport, "ABCD")
