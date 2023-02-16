@@ -8,6 +8,9 @@ A simple aviation weather app for iOS
 ### Project status
 **Currently on a feature freeze while I build and run XCode tests.** Targeting late February or early March to continue adding features.
 
+### Eye candy, anyone?
+Check out the **screenshots** folder to see how it's coming along :)
+
 ### What's done?
 - WeatherView is functional, but can add more.
 - ListView is functional.
