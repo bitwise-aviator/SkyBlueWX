@@ -16,6 +16,7 @@ Check out the **screenshots** folder to see how it's coming along :)
 - ListView is functional.
 
 ### What's next?
+- Study getting the AWC cached data: each CSV download's about 900kb in size for 2k+ records. Need to look at resulting struct size. Currently starting to notice latency issues when several airports are requested.
 - FlightPlanView, allows users to look at origin, destination, and alternate weather in one screen.
 - SettingsView, currently, most settings can be changed on taps on WeatherView or through iOS settings, want to have a dedicated one on app.
-- MapView, tied to whether I decide to start using AWC's cached 5-minute data, and then we'll take it from there.
+- MapView, tied to whether I decide to start using AWC's cached 5-minute data vs. per-airport API queries, and then we'll take it from there.
