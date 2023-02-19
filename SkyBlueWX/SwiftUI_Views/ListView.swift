@@ -7,50 +7,42 @@
 
 import SwiftUI
 
-typealias ListViewBoxDict = [String: ListViewBoxHolder]
-
-struct ListViewBoxContents {
-    let airportName: String
-    var flightCondtions: FlightConditions
-}
-
-class ListViewBoxHolder {
-    let airport: String
-    var isWaitingForData: Bool
-    var parameters: ListViewBoxContents?
-    init(airport: String) {
-        // Use this simple init if data is pending.
-        self.airport = airport
-        self.isWaitingForData = true
-        self.parameters = nil
+class ListViewTimer: ObservableObject {
+    @Published private(set) var date = Date.now
+    private static var timer: Timer?
+    var timerIsRunning: Bool {
+        ListViewTimer.timer != nil && ListViewTimer.timer?.isValid == true
     }
-    init(airport: String, parameters: ListViewBoxContents) {
-        self.airport = airport
-        self.isWaitingForData = false
-        self.parameters = parameters
+    func spawnTimer() {
+        if !timerIsRunning {
+            ListViewTimer.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(refreshDate),
+                                              userInfo: nil, repeats: true)
+        }
     }
-    func renderView() -> any View {
-        return Text(airport)
+    func killTimer() {
+        if ListViewTimer.timer != nil {ListViewTimer.timer!.invalidate()}
+    }
+    @objc func refreshDate() {
+        date = Date.now
     }
 }
 
 struct ListView: View {
     @EnvironmentObject var cockpit: Cockpit
     @Binding var selectedTab: Views
-    @State var nowTime = Date.now
-    @State var refresher = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @StateObject var listViewTimer = ListViewTimer()
     var body: some View {
         ScrollView {
             LazyVGrid(columns: Array.init(
                 repeating: GridItem(.flexible()), count: cockpit.deviceInfo.deviceType == .pad ? 4: 2), spacing: 20) {
                 ForEach(cockpit.reportKeys, id: \.self) {
-                    AirportTileView(selectedTab: $selectedTab, icao: $0, now: $nowTime)
+                    AirportTileView(selectedTab: $selectedTab, icao: $0).environmentObject(listViewTimer)
                 }
             }
-        }.onReceive(refresher) { newDate in
-            nowTime = newDate
+        }.onAppear {
+            listViewTimer.spawnTimer()
         }.onDisappear {
-            refresher.upstream.connect().cancel()
+            listViewTimer.killTimer()
         }
     }
 }
