@@ -56,7 +56,7 @@ final class Cockpit: ObservableObject {
         postInit()
     }
     func postInit() {
-        self.timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(weatherFromTimer),
+        self.timer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(weatherFromTimer),
                                           userInfo: nil, repeats: true)
     }
     func saveCoreData() {
@@ -124,7 +124,7 @@ final class Cockpit: ObservableObject {
     @objc func weatherFromTimer() {
         print("Fired query from timer @\(Date.now)")
         Task {
-            try await getWeather(useExisting: true)
+            try await getWeather(moveTo: activeReport, useExisting: true)
         }
     }
     func getWeather(moveTo: String? = nil, useExisting: Bool = false) async throws {

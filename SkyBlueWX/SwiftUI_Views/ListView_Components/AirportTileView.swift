@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AirportTileView: View {
     @EnvironmentObject var cockpit: Cockpit
+    @EnvironmentObject var timer: ListViewTimer
     @Binding var selectedTab: Views
     let icao: String
-    @Binding var now: Date
     var boundReport: WeatherReport? {
         guard let report = cockpit.reports[icao] else {return nil}
         guard cockpit.reports[icao]!.hasData else {return nil}
@@ -61,9 +61,10 @@ struct AirportTileView: View {
 #if !TESTING
 struct AirportTileView_Previews: PreviewProvider {
     static let cockpit = Cockpit()
+    static let listViewTimer = ListViewTimer()
     static var previews: some View {
-        AirportTileView(selectedTab: .constant(.list), icao: "TEST", now: .constant(Date.now))
-            .environmentObject(cockpit)
+        AirportTileView(selectedTab: .constant(.list), icao: "TEST")
+            .environmentObject(cockpit).environmentObject(listViewTimer)
     }
 }
 #endif

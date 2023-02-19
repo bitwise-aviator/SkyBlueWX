@@ -11,7 +11,7 @@ struct WindView: View {
     @EnvironmentObject var cockpit: Cockpit
     var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
     var body: some View {
-        HStack {
+        HStack(spacing: cockpit.deviceInfo.deviceType == .pad ? 30 : 20) {
             WindDirectionView()
             WindSpeedView()
             WindSockView()
