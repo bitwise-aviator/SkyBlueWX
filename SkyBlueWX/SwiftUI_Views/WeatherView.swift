@@ -124,7 +124,7 @@ struct WeatherView: View {
             }
         }.onAppear {
             if cockpit.queryCodes.count != 0 {
-                getMet()
+                getMet(moveTarget: cockpit.activeReport)
             }
             // Fix units based on user settings, not allowed at initialization.
             refresh()

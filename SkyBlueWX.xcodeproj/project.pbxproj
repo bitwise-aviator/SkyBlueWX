@@ -31,6 +31,7 @@
 		DC2CFB19299969B2007E1D48 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2CFB18299969B2007E1D48 /* Settings.swift */; };
 		DC662E82299F1763001C351E /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC662E81299F1763001C351E /* CoreTests.swift */; };
 		DC662E84299F18F7001C351E /* GetDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC662E83299F18F7001C351E /* GetDataTests.swift */; };
+		DC662E8629A27177001C351E /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC662E8529A27177001C351E /* PersistenceController.swift */; };
 		DC71755B298BF57000674D94 /* WindView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755A298BF57000674D94 /* WindView.swift */; };
 		DC71755D298C291400674D94 /* WindSockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755C298C291400674D94 /* WindSockView.swift */; };
 		DC71755F298C2CAC00674D94 /* WindSpeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC71755E298C2CAC00674D94 /* WindSpeedView.swift */; };
@@ -111,6 +112,7 @@
 		DC2CFB18299969B2007E1D48 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		DC662E81299F1763001C351E /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		DC662E83299F18F7001C351E /* GetDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataTests.swift; sourceTree = "<group>"; };
+		DC662E8529A27177001C351E /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		DC71755A298BF57000674D94 /* WindView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindView.swift; sourceTree = "<group>"; };
 		DC71755C298C291400674D94 /* WindSockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindSockView.swift; sourceTree = "<group>"; };
 		DC71755E298C2CAC00674D94 /* WindSpeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindSpeedView.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				4E83BDBF2952A59C005D8DC3 /* Cockpit.swift */,
+				DC662E8529A27177001C351E /* PersistenceController.swift */,
 				DC2CFB18299969B2007E1D48 /* Settings.swift */,
 				DC717576298F1FB400674D94 /* UIDeviceInfo.swift */,
 				4E83BDC1295AA250005D8DC3 /* Core.swift */,
@@ -498,6 +501,7 @@
 				4E83BDC02952A59C005D8DC3 /* Cockpit.swift in Sources */,
 				DC717567298DDB6600674D94 /* DewpointSmallView.swift in Sources */,
 				DC717577298F1FB400674D94 /* UIDeviceInfo.swift in Sources */,
+				DC662E8629A27177001C351E /* PersistenceController.swift in Sources */,
 				DC7175CD2994769800674D94 /* DropdownList.swift in Sources */,
 				4E83BDB629529AF9005D8DC3 /* MainView.swift in Sources */,
 				DC71755B298BF57000674D94 /* WindView.swift in Sources */,

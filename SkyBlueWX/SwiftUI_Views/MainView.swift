@@ -39,6 +39,8 @@ struct MainView: View {
             }.tag(Views.setting)
         }.toolbarColorScheme(.dark, for: .tabBar).onAppear()
             .onChange(of: scenePhase) {newPhase in
+                print(newPhase)
+                cockpit.saveCoreData()
                 switch newPhase {
                 case .active, .inactive: cockpit.refreshSettings()
                 default: ()
