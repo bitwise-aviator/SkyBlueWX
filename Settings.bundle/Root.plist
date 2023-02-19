@@ -14,15 +14,13 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSTitleValueSpecifier</string>
+			<key>DefaultValue</key>
+			<string></string>
 			<key>Title</key>
 			<string>Home Airport</string>
 			<key>Key</key>
 			<string>homeAirport</string>
-			<key>AutocapitalizationType</key>
-			<string>AllCharacters</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
 		</dict>
 		<dict>
 			<key>Type</key>
