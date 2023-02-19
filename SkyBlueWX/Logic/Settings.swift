@@ -16,6 +16,14 @@ struct SettingsStruct {
     var pressureUnit: PressureUnit
     var homeAirport: String
     //
+    func unitsMatch(of other: SettingsStruct) -> Bool {
+        return temperatureUnit == other.temperatureUnit &&
+        speedUnit == other.speedUnit &&
+        visibilityUnit == other.visibilityUnit &&
+        altitudeUnit == other.altitudeUnit &&
+        pressureUnit == other.pressureUnit
+    }
+    //
     mutating func updateTemperature() {
         let temperatureUnitKey = UserDefaults.standard.integer(forKey: "temperatureUnit")
         switch temperatureUnitKey {
