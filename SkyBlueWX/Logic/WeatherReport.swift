@@ -123,10 +123,10 @@ struct WeatherReport {
         #else
         let timeDiff = Int(Date.now - timestamp)
         #endif
-        print(timeDiff)
+        // print(timeDiff)
         let hrs = timeDiff.quotientAndRemainder(dividingBy: 3600)
         let mins = hrs.remainder / 60
-        print(hrs.quotient, mins)
+        // print(hrs.quotient, mins)
         return (hours: hrs.quotient, minutes: mins)
     }
     var stationPressure: Double {

@@ -14,7 +14,7 @@ struct DropdownList: View {
         if cockpit.dbQueryResults != nil {
             VStack {
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 0) {
                         ForEach(Array(cockpit.dbQueryResults!.keys).sorted(by: <), id: \.self) { key in
                             DropdownItem(id: key)
                         }

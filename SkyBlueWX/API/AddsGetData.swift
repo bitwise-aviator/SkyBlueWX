@@ -128,9 +128,9 @@ func parseReport(query: Set<String>, weatherRows: [String: String], wxReports: W
         // Pass the comma-separated report into an array.
         let csvItems = currentReport.components(separatedBy: ",")
         // This for loop is a debugging test and also provides indices for reference.
-        for idx in 0..<csvItems.count {
+        /*for idx in 0..<csvItems.count {
             print(idx, csvItems[idx])
-        }
+        }*/
         // Start parsing the report
         let location: String = csvItems[1] // ICAO code
         let reportTime = parseReportTime(dateText: csvItems[2])

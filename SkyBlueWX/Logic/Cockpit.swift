@@ -13,17 +13,18 @@ final class Cockpit: ObservableObject {
     /* The @Published wrapper for ObservableObjects denotes properties that will trigger
      re-renders for all views that are observing it.*/
     // Settings variables:
-    @Published var settings: SettingsStruct
+    @Published private(set) var settings: SettingsStruct
     // END SETTINGS VARIABLES...
+    private let persistenceController = PersistenceController.shared
     private let dbConnection: DataBaseHandler
     // Codes sent to server as part of query. Use set to avoid repeated codes.
-    @Published var queryCodes: Set<String> = []
-    @Published var reports: [String: WeatherReport] = [:]
+    @Published private(set) var queryCodes: Set<String> = []
+    @Published private(set) var reports: [String: WeatherReport] = [:]
     var reportKeys: [String] {
         Array(reports.keys).sorted()
     }
-    @Published var activeReport: String?
-    @Published var activeReportStruct: WeatherReport?
+    @Published private(set) var activeReport: String?
+    @Published private(set) var activeReportStruct: WeatherReport?
     @Published var dbQueryResults: AirportDict? = [:]
 
     private let locationTracker: LocationManager
@@ -45,14 +46,26 @@ final class Cockpit: ObservableObject {
             self.getAirportRecords(settings.homeAirport, onlyByIcao: true)
             let homeAirportResults = self.dbQueryResults
             if homeAirportResults != nil && homeAirportResults!.count == 1 {
-                self.queryCodes.insert(settings.homeAirport)
+                self.editQueryList(settings.homeAirport, retain: true)
             }
+        }
+        queryCodes = queryCodes.union( persistenceController.getStartupAirports())
+        if queryCodes.contains(settings.homeAirport) {
+            _ = moveToReport(icao: settings.homeAirport, forceMove: true)
         }
         postInit()
     }
     func postInit() {
         self.timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(weatherFromTimer),
                                           userInfo: nil, repeats: true)
+    }
+    func saveCoreData() {
+        print("core data saving")
+        if persistenceController.save() {
+            print("core data saved")
+        } else {
+            print("failed to save core data")
+        }
     }
     func getAirportRecords(_ term: String, onlyByIcao: Bool = false) {
         dbQueryResults = dbConnection.getAirports(searchTerm: term, onlyByIcao: onlyByIcao)
@@ -81,8 +94,10 @@ final class Cockpit: ObservableObject {
             return false
         }
     }
-    func moveToReport(icao: String) -> Bool {
-        guard reports[icao] != nil else { return false }
+    func moveToReport(icao: String, forceMove: Bool = false) -> Bool {
+        if !forceMove {
+            guard reports[icao] != nil else { return false }
+        }
         activeReport = icao
         activeReportStruct = reports[icao]
         return true
@@ -228,8 +243,10 @@ final class Cockpit: ObservableObject {
         // Do not set retain & exclude to true on the same call: it will do nothing.
         if queryCodes.contains(icao) && !retain {
             queryCodes.remove(icao)
+            _ = persistenceController.updateStoredAirports(code: icao, atStart: false)
         } else if !queryCodes.contains(icao) && !exclude {
             queryCodes.insert(icao)
+            _ = persistenceController.updateStoredAirports(code: icao, atStart: true)
         }
     }
 }
