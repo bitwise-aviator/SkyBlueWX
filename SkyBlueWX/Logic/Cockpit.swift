@@ -49,7 +49,11 @@ final class Cockpit: ObservableObject {
                 self.editQueryList(settings.homeAirport, retain: true)
             }
         }
-        queryCodes = queryCodes.union( persistenceController.getStartupAirports())
+        let startupAirports = persistenceController.getStartupAirports()
+        for airport in startupAirports {
+            getAirportRecords(airport)
+        }
+        queryCodes = queryCodes.union(startupAirports)
         if queryCodes.contains(settings.homeAirport) {
             _ = moveToReport(icao: settings.homeAirport, forceMove: true)
         }
