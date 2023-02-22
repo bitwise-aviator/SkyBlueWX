@@ -23,10 +23,10 @@ struct WindSpeedView: View {
             Text(windSpeedString).fontWeight(.bold).font(.system(size: 32)).fixedSize().foregroundColor(.white)
             Text(cockpit.settings.speedUnitString).fixedSize().foregroundColor(.white)
             if windGustString != "--" {
-                HStack {
+                HStack(spacing: 0) {
                     if windGustString != "--" {
                         Image(systemName: "wind").foregroundColor(.yellow)
-                        Text(windGustString).fixedSize().foregroundColor(.yellow).fontWeight(.bold)} else {
+                        Text("G \(windGustString)").fixedSize().foregroundColor(.yellow).fontWeight(.bold)} else {
                             Text("")
                         }
                 }.frame(height: 25)
