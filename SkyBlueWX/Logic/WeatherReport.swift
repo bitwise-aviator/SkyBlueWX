@@ -221,19 +221,38 @@ struct WeatherReport {
     }
     //
     // Functions
+    //
     func visibilityToString(unit: VisUnit) -> String {
         guard hasData else {return "----"}
         if unit == .mile {
             if visibility.truncatingRemainder(dividingBy: 1) == 0 {
                 return "\(String(Int(visibility))) mi"
+            } else if [0.25, 0.5, 0.75].contains(visibility.truncatingRemainder(dividingBy: 1)) {
+                let remainder = visibility.truncatingRemainder(dividingBy: 1)
+                let fraction: String
+                switch remainder {
+                case 0.25: fraction = "1/4"
+                case 0.5: fraction = "1/2"
+                case 0.75: fraction = "3/4"
+                default: fraction = ""
+                }
+                if visibility >= 1 {
+                    let visibilityInteger = formatNumber(NSNumber(value: Int(visibility)), decimals: 0)
+                    return "\(visibilityInteger) \(fraction) mi"
+                } else {
+                    return "\(fraction) mi"
+                }
             } else {
-                return "\(String(format: "%.2f", visibility)) mi"
+                let visibilityString = formatNumber(NSNumber(value: visibility), decimals: 2)
+                return "\(visibilityString) mi"
             }
         } else {
-            if 1.609 * visibility >= 1.0 {
-                return "\(String(format: "%.2f", 1.609 * visibility)) km"
+            if visibility.mileToKm >= 1.0 {
+                let visibilityString = formatNumber(NSNumber(value: visibility.mileToKm), decimals: 2)
+                return "\(visibilityString) km"
             } else {
-                return "\(String(Int(1609 * visibility))) m"
+                let visibilityString = formatNumber(NSNumber(value: visibility.mileToMeter))
+                return "\(visibilityString) m"
             }
         }
     }
@@ -258,16 +277,19 @@ struct WeatherReport {
         if !hasData {return "--"}
         switch unit {
         case .knot: return String(wind.speed)
-        case .kmh: return String(Int((Double(wind.speed) * 1.852).rounded()))
-        case .mph: return String(Int((Double(wind.speed) * 1.15078).rounded()))
+        case .kmh: return String(wind.speed.nautMileToKm)
+        case .mph: return String(wind.speed.nautMileToStatute)
         }
     }
     //
     func altimeterToString(unit: PressureUnit) -> String {
         if !hasData {return "----"}
         switch unit {
-        case .inHg: return "\(String(format: "%.2f", altimeter))\""
-        case .mbar: return "Q\(String(format: "%.0f", altimeter * 33.8639))"
+        case .inHg:
+            let altimeterString = formatNumber(NSNumber(value: altimeter), decimals: 2, atLeast: 2)
+            return "\(altimeterString)\""
+        case .mbar:
+            return "Q\(String(format: "%.0f", altimeter * 33.8639))"
         }
     }
     //
@@ -276,27 +298,26 @@ struct WeatherReport {
         guard let gusts = wind.gusts else {return "--"}
         switch unit {
         case .knot: return String(gusts)
-        case .kmh: return String(Int((Double(gusts) * 1.852).rounded()))
-        case .mph: return String(Int((Double(gusts) * 1.15078).rounded()))
+        case .kmh: return String(gusts.nautMileToKm)
+        case .mph: return String(gusts.nautMileToStatute)
         }
     }
     func densityAltitudeToString(unit: AltitudeUnit) -> String {
         guard hasData else {return "-----"}
         if unit == .meter {
-            return "\(String(format: "%.0f", densityAltitude * 0.3048)) m"
+            let resultString = formatNumber(NSNumber(value: densityAltitude.feetToMeters))
+            return "\(resultString) m"
         } else {
-            return "\(String(format: "%.0f", densityAltitude)) ft"
+            let resultString = formatNumber(NSNumber(value: densityAltitude))
+            return "\(resultString) ft"
         }
     }
     func densityAltitudeDeltaToString(unit: AltitudeUnit) -> String {
         guard hasData else {return "-----"}
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 0
-        formatter.positivePrefix = formatter.plusSign
         if unit == .meter {
-            return "\(formatter.string(for: densityAltitudeDelta * 0.3048)!) m"
+            return "\(formatNumber(NSNumber(value: densityAltitudeDelta.feetToMeters), showPlusSign: true)) m"
         } else {
-            return "\(formatter.string(for: densityAltitudeDelta)!) ft"
+            return "\(formatNumber(NSNumber(value: densityAltitudeDelta), showPlusSign: true)) ft"
         }
     }
     //
