@@ -105,7 +105,8 @@ enum FlightConditions: String {
     case unknown = "Unknown"
 }
 
-func formatNumber(_ input: NSNumber, decimals: Int = 0, atLeast minDecimals: Int = 0, showPlusSign: Bool = false) -> String {
+func formatNumber(_ input: NSNumber,
+                  decimals: Int = 0, atLeast minDecimals: Int = 0, showPlusSign: Bool = false) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = max(decimals, 0)
