@@ -22,6 +22,25 @@ extension Date {
 extension Double {
     var metersToFeet: Double {self / 0.3048}
     var feetToMeters: Double {self * 0.3048}
+    var kmToMile: Double {self / 1.609}
+    var mileToKm: Double {self * 1.609}
+    var meterToMile: Double {self / 1609}
+    var mileToMeter: Double {self * 1609}
+    var kmToNautMile: Double {self / 1.852}
+    var nautMileToKm: Double {self * 1.852}
+    var nautMileToStatute: Double {self * 1.15078}
+}
+
+extension Int {
+    var metersToFeet: Int {Int(Double(self).metersToFeet.rounded())}
+    var feetToMeters: Int {Int(Double(self).feetToMeters.rounded())}
+    var kmToMile: Int {Int(Double(self).kmToMile.rounded())}
+    var mileToKm: Int {Int(Double(self).mileToKm.rounded())}
+    var meterToMile: Int {Int(Double(self).meterToMile.rounded())}
+    var mileToMeter: Int {Int(Double(self).mileToMeter.rounded())}
+    var kmToNautMile: Int {Int(Double(self).kmToNautMile.rounded())}
+    var nautMileToKm: Int {Int(Double(self).nautMileToKm.rounded())}
+    var nautMileToStatute: Int {Int(Double(self).nautMileToStatute.rounded())}
 }
 
 // Loads custom colors from assets folder and assigns them as properties to the Color struct.
@@ -84,4 +103,18 @@ enum FlightConditions: String {
     case lifr = "LIFR"
     // Unknown, for when there is no data.
     case unknown = "Unknown"
+}
+
+func formatNumber(_ input: NSNumber,
+                  decimals: Int = 0, atLeast minDecimals: Int = 0, showPlusSign: Bool = false) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.maximumFractionDigits = max(decimals, 0)
+    if minDecimals > 0 {
+        formatter.minimumFractionDigits = min(minDecimals, formatter.maximumFractionDigits)
+    }
+    if showPlusSign {
+        formatter.positivePrefix = formatter.plusSign
+    }
+    return formatter.string(from: input)!
 }

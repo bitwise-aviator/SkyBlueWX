@@ -68,9 +68,12 @@ struct CloudLayerView: View {
     var cloudZText: String {
         guard let thisLayer = cloudData else {return "-----"}
         if cockpit.settings.altitudeUnit == .meter {
-            return "\(String(Int(Double(thisLayer.height) * 0.3048))) m"
+            let heightString = formatNumber(NSNumber(value: thisLayer.height.feetToMeters))
+            return "\(heightString) m"
+        } else {
+            let heightString = formatNumber(NSNumber(value: thisLayer.height))
+            return "\(heightString) ft"
         }
-        return "\(String(thisLayer.height)) ft"
     }
     var cloudCoverText: String {
         guard let thisLayer = cloudData else {return "---"}
