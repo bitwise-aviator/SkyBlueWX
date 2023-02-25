@@ -17,6 +17,16 @@ enum Precipitation {
     case heavy
 }
 
+enum Obscuration {
+    case mist
+    case fog
+    case smoke
+    case ash
+    case dust
+    case sand
+    case haze
+}
+
 struct WeatherDetails {
     var rain: Precipitation?
     var snow: Precipitation?
@@ -29,6 +39,7 @@ struct WeatherDetails {
         snow != nil
     }
     var thunderStormsReported: Bool
+    var obscurations: [Obscuration] = []
     init(text txt: String) {
         rain = nil
         snow = nil
@@ -36,17 +47,35 @@ struct WeatherDetails {
         showers = nil
         thunderStormsReported = txt.contains("TS")
         if txt.contains("RA") {
-            if txt.contains("-RA") {rain = Precipitation.light} else
-            if txt.contains("+RA") {rain = Precipitation.heavy} else {
-            rain = Precipitation.moderate
+            let rainRegex = /([+-])?[A-Z]*(RA)/
+            let rainExtract = txt.firstMatch(of: rainRegex)
+            if let rainResult = rainExtract {
+                if rainResult.1 == nil {rain = Precipitation.moderate} else
+                if rainResult.1! == "+" {rain = Precipitation.heavy} else {
+                    rain = Precipitation.light
+                }
             }
         }
         if txt.contains("SN") {
-            if txt.contains("-SN") {snow = Precipitation.light} else
-            if txt.contains("+SN") {snow = Precipitation.heavy} else {
-                snow = Precipitation.moderate
+            let snowRegex = /([+-])?[A-Z]*(SN)/
+            let snowExtract = txt.firstMatch(of: snowRegex)
+            if let snowResult = snowExtract {
+                if snowResult.1 == nil {snow = Precipitation.moderate} else
+                if snowResult.1! == "+" {snow = Precipitation.heavy} else {
+                    snow = Precipitation.light
+                }
             }
         }
+        self.parseObscurations(txt)
+    }
+    mutating func parseObscurations(_ txt: String) {
+        if txt.contains("BR") {obscurations.append(.mist)}
+        if txt.contains("FG") {obscurations.append(.fog)}
+        if txt.contains("FU") {obscurations.append(.smoke)}
+        if txt.contains("VA") {obscurations.append(.ash)}
+        if txt.contains("DU") {obscurations.append(.dust)}
+        if txt.contains("SA") {obscurations.append(.sand)}
+        if txt.contains("HZ") {obscurations.append(.haze)}
     }
 }
 

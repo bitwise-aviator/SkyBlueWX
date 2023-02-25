@@ -38,10 +38,13 @@ struct Wind {
     var hasGusts: Bool {
         gusts != nil
     }
+    var range: (from: Int, to: Int)?
+    //
     // Initializer for winds.
-    init(direction: Int?, speed: Int, gusts: Int?) {
+    init(direction: Int?, speed: Int, gusts: Int?, range: (from: Int, to: Int)? = nil) {
         self.direction = direction // API reports in degrees true.
         self.speed = speed // API reports in knots.
         self.gusts = gusts // API reports in knots.
+        self.range = range // For variable directions with a specified range.
     }
 }

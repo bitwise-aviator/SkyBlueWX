@@ -120,6 +120,14 @@ func parseClouds(cloudItems: ArraySlice<String>, fullMetar: String) -> [CloudLay
     return clouds
 }
 //
+func checkWindVariance(fullMetar: String) -> (from: Int, to: Int)? {
+    let varianceRegex = /(?<from>[0-9]{3})V(?<to>[0-9]{3})/
+    let match = fullMetar.firstMatch(of: varianceRegex)
+    guard let match else {return nil}
+    return (from: Int(match.output.from)!, to: Int(match.output.to)!)
+}
+
+//
 // Extracts matched rows into WeatherReport structs
 func parseReport(query: Set<String>, weatherRows: [String: String], wxReports: WXReports) async {
     for icao in query.sorted() {
@@ -128,9 +136,9 @@ func parseReport(query: Set<String>, weatherRows: [String: String], wxReports: W
         // Pass the comma-separated report into an array.
         let csvItems = currentReport.components(separatedBy: ",")
         // This for loop is a debugging test and also provides indices for reference.
-        /*for idx in 0..<csvItems.count {
+        for idx in 0..<csvItems.count {
             print(idx, csvItems[idx])
-        }*/
+        }
         // Start parsing the report
         let location: String = csvItems[1] // ICAO code
         let reportTime = parseReportTime(dateText: csvItems[2])
@@ -151,8 +159,9 @@ func parseReport(query: Set<String>, weatherRows: [String: String], wxReports: W
         let windDirection = Int(csvItems[7]) ?? 0 // Wind direction (degrees)
         let windSpeed = Int(csvItems[8]) ?? 0 // Wind speed (knots)
         let windGusts = Int(csvItems[9]) ?? nil // Wind gusts (knots, optional)
+        let windVariance = checkWindVariance(fullMetar: csvItems[0])
         // Create a Wind struct to store this.
-        let wind = Wind(direction: windDirection, speed: windSpeed, gusts: windGusts)
+        let wind = Wind(direction: windDirection, speed: windSpeed, gusts: windGusts, range: windVariance)
         // This field will store data regarding non-numeric weather info (rain, snow, hail, fog, etc.)
         let weatherDetail = csvItems[21]
         let stationElevation = Double(csvItems[43]) ?? 0.0
