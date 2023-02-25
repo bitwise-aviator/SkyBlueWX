@@ -106,7 +106,8 @@ enum FlightConditions: String {
 }
 
 func formatNumber(_ input: NSNumber,
-                  decimals: Int = 0, atLeast minDecimals: Int = 0, showPlusSign: Bool = false) -> String {
+                  decimals: Int = 0, atLeast minDecimals: Int = 0,
+                  integerDigits minInts: Int? = nil, showPlusSign: Bool = false) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = max(decimals, 0)
@@ -115,6 +116,9 @@ func formatNumber(_ input: NSNumber,
     }
     if showPlusSign {
         formatter.positivePrefix = formatter.plusSign
+    }
+    if let minInts {
+        formatter.minimumIntegerDigits = minInts
     }
     return formatter.string(from: input)!
 }

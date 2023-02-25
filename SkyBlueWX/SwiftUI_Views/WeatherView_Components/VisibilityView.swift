@@ -22,12 +22,31 @@ struct VisibilityView: View {
     var visibilityString: String {
         return cockpit.activeReportStruct?.visibilityToString(unit: cockpit.settings.visibilityUnit) ?? "----"
     }
+    var visibilityObscuration: String? {
+        guard let report = cockpit.activeReportStruct, report.hasData,
+              !report.details.obscurations.isEmpty else { return nil }
+        let obscurations = report.details.obscurations
+        var obscurationString = "( "
+        if obscurations.contains(.fog) {obscurationString += "FOG "}
+        if obscurations.contains(.mist) {obscurationString += "MIST "}
+        if obscurations.contains(.smoke) {obscurationString += "SMOKE "}
+        if obscurations.contains(.ash) {obscurationString += "ASH "}
+        if obscurations.contains(.dust) {obscurationString += "DUST "}
+        if obscurations.contains(.sand) {obscurationString += "SAND "}
+        if obscurations.contains(.haze) {obscurationString += "HAZE "}
+        return obscurationString + ")"
+    }
     var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+    
+    @ViewBuilder
     var body: some View {
         VStack {
             visibilityIcon.resizable().frame(width: maxDimension * 0.03, height: maxDimension * 0.03)
                 .foregroundColor(visibilityColor)
             Text(visibilityString).foregroundColor(visibilityColor).fontWeight(.bold)
+            if visibilityObscuration != nil {
+                Text(visibilityObscuration!).foregroundColor(visibilityColor).fontWeight(.bold)
+            }
         }.onTapGesture {
             cockpit.setVisibilityUnit()
         }
