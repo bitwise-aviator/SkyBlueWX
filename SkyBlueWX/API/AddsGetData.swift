@@ -121,7 +121,7 @@ func parseClouds(cloudItems: ArraySlice<String>, fullMetar: String) -> [CloudLay
 }
 //
 func checkWindVariance(fullMetar: String) -> (from: Int, to: Int)? {
-    let varianceRegex = /(?<from>[0-9]{3})V(?<to>[0-9]{3})/
+    let varianceRegex = /(KT|MPS)\s(?<from>[0-9]{3})V(?<to>[0-9]{3})\s/ // swiftlint:disable:this opening_brace
     let match = fullMetar.firstMatch(of: varianceRegex)
     guard let match else {return nil}
     return (from: Int(match.output.from)!, to: Int(match.output.to)!)

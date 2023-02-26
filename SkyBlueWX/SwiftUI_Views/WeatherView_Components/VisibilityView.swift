@@ -36,8 +36,7 @@ struct VisibilityView: View {
         if obscurations.contains(.haze) {obscurationString += "HAZE "}
         return obscurationString + ")"
     }
-    var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-    
+    var maxDimension = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)    
     @ViewBuilder
     var body: some View {
         VStack {
